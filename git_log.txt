@@ -1,0 +1,868 @@
+commit 64fee36a609ce68fb9be877feff2a5829c7b0ac5
+Author: JM <67851073+M2tch2@users.noreply.github.com>
+Date:   Thu Nov 24 22:31:57 2022 -0700
+
+    Update ScanItemListener.java
+
+commit 195fa8c3e17e9f19815fa85f266fd0bec7e557fe
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 22:02:52 2022 -0700
+
+    updated log and readme files
+
+commit 47b0e61ceff3b14a5582f9225b8c61875428f990
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 21:56:13 2022 -0700
+
+    Fixed double payment bug
+
+commit a97f0e0274eac4c106e392e873aa6679b69dd8ec
+Merge: a9d038e 7eb6db8
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 21:37:42 2022 -0700
+
+    Merge remote-tracking branch 'origin/JC'
+
+commit 7eb6db81f4a17d3c55ea2968bd20d62eb0dc9a24
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 21:36:11 2022 -0700
+
+    Update ScanScreenGUI.java
+
+commit 2b8e7d0acca5b434f1ddd750eea636e947c80f2d
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 21:35:43 2022 -0700
+
+    Update EnterMemberNumberGUI.java
+
+commit a9d038e59542c2bf59661a01fd6508f16b33d5e3
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 21:33:16 2022 -0700
+
+    removed unused code and updated tests
+
+commit 7a1425f9b974bc721d6a38c7e7b362adf6dd4ff7
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 21:21:27 2022 -0700
+
+    Fixed and removed some tests
+
+commit 9a88b2b0fba7e2597f3d1d143534f845e089d1c7
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Thu Nov 24 20:46:03 2022 -0700
+
+    Update LowInkLowPaper.java
+
+commit e4f0e382787b058f19c8c2591f90f0e2d4448510
+Merge: 9f3ec61 01d4b07
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 20:25:05 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit 01d4b07d3ef862ee4459485c1cd6200e08dc171b
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Thu Nov 24 20:24:38 2022 -0700
+
+    Update PayByDebitCardTest.java
+    
+    Remove unused classes
+
+commit 9f3ec61a947761c75fd87ed9456650f037d0a945
+Merge: fa93102 23e8344
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 20:24:27 2022 -0700
+
+    Merge remote-tracking branch 'origin/JC'
+
+commit 051c20cbe8ea6c97dfad8d0f4ec37f380db0c9a0
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Thu Nov 24 20:19:35 2022 -0700
+
+    Update CustomerUI.java
+
+commit 8cda03c1d5767b7c44391645695151919d5350e8
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Thu Nov 24 20:18:46 2022 -0700
+
+    CustomerUI.java
+    
+    fixed class endSession
+
+commit 23e8344525fe27be60565898a4fd13b25a9df631
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 20:07:51 2022 -0700
+
+    Update ScanScreenGUI.java
+
+commit 55647e020a6c93e9480173e279fecbfdd9b14ff5
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 20:07:21 2022 -0700
+
+    Update EnterMemberNumberGUI.java
+
+commit 7cbb3a11898f8111cbdd33a02bc38225c8cdc8c5
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 20:06:54 2022 -0700
+
+    Create CustomerUI.java
+
+commit 9cb20090489bd45455d8a29d669924bdafeee135
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 20:05:53 2022 -0700
+
+    Create Simulation.java
+
+commit 918c37acb0ee87a8fa22083a68e3eb4ebc544f25
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 20:04:59 2022 -0700
+
+    Create MembershipNumber.java
+
+commit fa93102430c6910109cbe6dca157f61c0f9625ba
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 19:12:10 2022 -0700
+
+    Removed unsued classes
+
+commit c7163d9a7102008335ae83a25fa1d33fa804402d
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 17:43:13 2022 -0700
+
+    Update ScanScreenGUI.java
+
+commit 9d5f01ebeb63e1ba9237b156d7096af87c97163f
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 17:42:34 2022 -0700
+
+    Update CustomerUI.java
+
+commit 1776db1154c92a0f0886a2468603dbcb3eb86df1
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 17:41:56 2022 -0700
+
+    Update MembershipNumber.java
+
+commit 2551abd3eb31be83b755e151df705179853079ec
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 17:41:01 2022 -0700
+
+    Create EnterMemberNumberGUI.java
+
+commit 4cb0c0088d26bec03660bcedd517797020ca8700
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Thu Nov 24 17:39:43 2022 -0700
+
+    Update Simulation.java
+
+commit 9d1fd9324c19733b0a43213a966049359a66bbc9
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 14:47:36 2022 -0700
+
+    Edited stub for debug only
+
+commit 1f6d4a24a7aa8024b9da4c64364d09d1be4aa082
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Thu Nov 24 14:15:52 2022 -0700
+
+    Link membership here
+
+commit 097739b21ab7b3b8c11440df9cc9722a089b4124
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Thu Nov 24 13:03:38 2022 -0700
+
+    Created new view class to enter member number. It's just a clone of the
+    KeypadGUI again.
+
+commit 8098176bb21410eb85eb2fd3faa70fdd7ee0781c
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Wed Nov 23 23:27:04 2022 -0700
+
+    Started attendant gui integration
+
+commit aa9da41430099dcf0f4bec53a26b01e1f908d0a4
+Merge: 6128032 6bb2c86
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Wed Nov 23 21:24:35 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit 6128032e83a32ce97e7d9e58cc14ac3b7fd2df81
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Wed Nov 23 21:24:11 2022 -0700
+
+    removed duplicate class
+
+commit 6bb2c86c60dae3dd064cbd89b4e15b2e7c186928
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Wed Nov 23 21:23:32 2022 -0700
+
+    Delete MembershipNumber.java
+
+commit 2ba72d61496b11291fde46fbb8dbd02da00a5566
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Wed Nov 23 15:26:23 2022 -0700
+
+    Started integration of add own bags
+
+commit c198b085d19c5fc0710f0e001ad83633a7859c10
+Merge: 283f3a1 723718a
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Wed Nov 23 14:43:53 2022 -0700
+
+    Merge remote-tracking branch 'origin/JC'
+    
+    # Conflicts:
+    #       com.diy.software.test/src/MembershipNumberTest.java
+
+commit 723718a25206a13e754b8db6146b35034aeb5048
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Wed Nov 23 14:15:49 2022 -0700
+
+    Create MembershipNumberTest.java
+
+commit e652d7be8f2132797e84961fc897b5ed372cdf4b
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Wed Nov 23 14:14:39 2022 -0700
+
+    Update MembershipNumber.java
+
+commit 0767e8ed4cf1a0e5c8ebab6b3e07f3fb4539c0ad
+Author: jcsicat <74794260+jcsicat@users.noreply.github.com>
+Date:   Wed Nov 23 01:05:20 2022 -0700
+
+    Create MembershipNumber.java
+
+commit 283f3a1afd94372c92c704c04513b989f9341d23
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 22:00:18 2022 -0700
+
+    Fixed tests and changed setScanningEnabled to startScanning
+
+commit b7fb751dd308778e8ed988c271952ba7fa80129c
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:34:57 2022 -0700
+
+    fixed Membership test to use junit 4 instead of 5
+
+commit 76d888329f48c7869429f72c6ebabc8539ac3198
+Merge: ffaef37 4016159
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:30:51 2022 -0700
+
+    Merge remote-tracking branch 'origin/hera-entermembershipnumberbytyping'
+
+commit ffaef37322cf27a38eebf4a95cc786caaf563571
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:30:49 2022 -0700
+
+    added documentation
+
+commit 5a51edb1918cfadba6a17d866e933c9b238a13ee
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:30:27 2022 -0700
+
+    fixed format
+
+commit a708842f684a7e9f780c77390393410ee1570493
+Merge: a56c2c8 575d55a
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:08:01 2022 -0700
+
+    Merge remote-tracking branch 'origin/collin0426-AddOwnBags'
+
+commit a56c2c81656dbeb7f8f948e6d0e6cbe39da7ccd1
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 21:05:02 2022 -0700
+
+    setup notification for out of cash
+
+commit 4016159544be9f75b04e54255531d30bdbc82e33
+Author: Hera-Naeem <105568645+Hera-Naeem@users.noreply.github.com>
+Date:   Tue Nov 22 18:25:35 2022 -0700
+
+    Add files via upload
+
+commit 135052f4e09e0dd38cd62312d6232d6bcad9dadb
+Merge: d69fd33 e06f300
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 17:46:51 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit d69fd33720f1010af141dfa695f8c296a4b107da
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 17:46:22 2022 -0700
+
+    fixed bug in cash payment and added alert for missing change
+
+commit e06f300fe56322d062faf91305cb0fc878483a0b
+Author: TaylorWong <taylorwong159@gmail.com>
+Date:   Tue Nov 22 14:04:47 2022 -0700
+
+    Update README.md
+
+commit 6f6ec4877177ecdef403425b933a0f5b906eb539
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 13:51:36 2022 -0700
+
+    Added and integrated a simulator class for maintenance
+
+commit 22c1c5ac42e9897274068353fff9e1401e4fb383
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 13:24:50 2022 -0700
+
+    Integerated LowInkLowPaper into simulation
+
+commit b960c9626d8ef9dc27e56ac2d9467e7bef52b7a1
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 13:17:06 2022 -0700
+
+    Added some default prints and added optional titles to customer guis
+
+commit 64c6e0b73bd2d7ee9b212c36795282d37aa7f9e7
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 13:03:39 2022 -0700
+
+    Removed unnecessary code
+
+commit 0271911a230f0c76e1518679cb0401bc290d9b32
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Tue Nov 22 13:00:21 2022 -0700
+
+    Fixed weight of the bag from a magic number to a constant
+
+commit c6e17aaf97d8d95a6b0d5e6cfbee340afe84939a
+Author: Josh <joshdavis258@gmail.com>
+Date:   Tue Nov 22 12:17:45 2022 -0700
+
+    Cleaned up code
+
+commit b150e7651c947f78b92c0f3c71be0da0f6f36e47
+Merge: d9004d0 a3a7471
+Author: Josh <joshdavis258@gmail.com>
+Date:   Tue Nov 22 12:12:24 2022 -0700
+
+    Merge branch 'main' into Josh---Low-Ink/Paper
+
+commit d9004d006d9600977a161bcca6c69230f06bf345
+Author: Josh <joshdavis258@gmail.com>
+Date:   Tue Nov 22 12:11:27 2022 -0700
+
+    Completed test cases
+
+commit a3a7471e720c11a190c473b531dab981c97e9301
+Merge: 84cb616 3daf08e
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 23:06:12 2022 -0700
+
+    Merge branch 'main' into SimulationControlSnapshot
+
+commit 84cb61629e9476a55293c85bf745c3e8ab5172ab
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 21:22:08 2022 -0700
+
+    Integerated purchase bags
+
+commit c069a9f1ae018ad90406be5d16292e663c624133
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 20:53:42 2022 -0700
+
+    added documentation
+
+commit 9d4c5228f35d4b54869360bfca25a735773e1647
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 20:17:42 2022 -0700
+
+    Removed print lines
+
+commit cd377d7c34953a86cfa91db6a6f6e58558a3903b
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 20:04:45 2022 -0700
+
+    fixed issue with payment view
+
+commit c93cc5a52f0d3b7905f77a9fea483da189d795b2
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 20:01:11 2022 -0700
+
+    integrated payment into simulation
+
+commit e6eecd4e3ce7273c12ba3b21026c61360a366869
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 19:44:26 2022 -0700
+
+    Added remove item simulation
+
+commit 87a77abc79b291787fe677abd4073cca193f884e
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 19:16:23 2022 -0700
+
+    removed unused import
+
+commit 18475be2af8371cca746bc3b8b41973b332647f9
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 19:15:20 2022 -0700
+
+    Fixed Weight Discrepancy implementation
+
+commit 3c93023970005ff9befe558a5d8008ed330bd92e
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 18:39:54 2022 -0700
+
+    Removed main methods from views
+
+commit e4b815206277d9e8f0ca02a15168401d46e66183
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 18:33:05 2022 -0700
+
+    Working on attendant implementation
+
+commit 3daf08e43281f5165bc61046cc288c6c6f88dee1
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 17:38:09 2022 -0700
+
+    Craeted to PurchaseBagsGUI and Few changes to others
+
+commit b815d0bcc171115cfedbf8a044e72d338c9b7e50
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 16:59:01 2022 -0700
+
+    Added beautiful new method setScreenVisiblility(int, bool);
+
+commit e9f1bc5959b912caa91d31372ef743d9e34e07de
+Merge: 93f93bb 6bc8ad0
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 16:16:59 2022 -0700
+
+    Merge remote-tracking branch 'origin/main' into main
+
+commit 93f93bb018f9d6343141514185e276053f829c75
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 16:15:39 2022 -0700
+
+    Changed all views so MainGUILauncher is only class with a main method.
+
+commit 6bc8ad0f8d854b1f9084d8b67ee3e862315792eb
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 15:57:25 2022 -0700
+
+    fixed test cases
+
+commit f99466ff257cc06de25f52c1d7a99844e0276035
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 15:57:15 2022 -0700
+
+    fix looping bug
+
+commit 50c570f525f5d79fe63822d3b52158910dceeda5
+Merge: db92c10 8194640
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 15:06:29 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit db92c10eb3d006498ec672b5b6681000aabbd4a1
+Merge: b103676 ddc2824
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 15:06:17 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+    
+    # Conflicts:
+    #       com.diy.software/src/util/PurchaseBags.java
+
+commit 81946407f9007bd21b8c9abc05bec1a7d0a9fc14
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 15:01:35 2022 -0700
+
+    KeypadGUI is empty class But Keypad has button layout
+
+commit b1036768f05c0f8315aad94c64727eefd8d9650b
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 14:58:36 2022 -0700
+
+    Added test fixes
+
+commit ddc28247f81295adb1532cf9b023f0fa92dc46eb
+Author: Shaheryar Syed <63892413+shaheryar99@users.noreply.github.com>
+Date:   Mon Nov 21 14:51:55 2022 -0700
+
+    Update PurchaseBags.java
+
+commit 575d55a0c2a65b1a0114cb25f6bf0f25a290681f
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Mon Nov 21 14:41:56 2022 -0700
+
+    Update AddOwnBags
+
+commit 2340d02080896c6104a3bb43601469e76d78f7b7
+Merge: b4f5b78 bbc45a0
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 14:40:56 2022 -0700
+
+    Merge remote-tracking branch 'origin/taylor-addItemPartialPayment'
+
+commit bbc45a06d3c650333e78449c74665ede8df97d30
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 14:40:20 2022 -0700
+
+    Fixed rounding
+
+commit b4f5b78c07e05f085bbcbe57ac46f970f0953c2a
+Merge: 577b401 3818d61
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Mon Nov 21 14:24:00 2022 -0700
+
+    Merge pull request #2 from maxk4/collin0426-patch-1
+    
+    Create AddOwnBags
+
+commit 3818d614eb8212ae38628cf255abf13d307f9ce5
+Author: collin0426 <117128818+collin0426@users.noreply.github.com>
+Date:   Mon Nov 21 14:22:37 2022 -0700
+
+    Create AddOwnBags
+
+commit 577b4010906a0d70a27f1b5b4761bc5ba3d49458
+Merge: e6def7e 7918a6b
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 14:20:02 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit e6def7efa0c642b1af438ee71d13f2d23fb5d67f
+Merge: e15be6f 6581751
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Mon Nov 21 14:19:08 2022 -0700
+
+    Merge remote-tracking branch 'origin' into taylor-addItemPartialPayment
+    
+    # Conflicts:
+    #       com.diy.software/src/views/MainGUILauncher.java
+    #       com.diy.software/src/views/ScanScreenGUI.java
+
+commit 7918a6b3a56db1f55251d8fa0a5b448b3c7b96f2
+Merge: 6581751 bf5a98a
+Author: Josh <joshdavis258@gmail.com>
+Date:   Mon Nov 21 14:18:52 2022 -0700
+
+    Merge branch 'Josh---Low-Ink/Paper'
+
+commit bf5a98ad6081d37ab503242d0cc21a46aadf3361
+Author: Josh <joshdavis258@gmail.com>
+Date:   Mon Nov 21 14:17:24 2022 -0700
+
+    Create LowInkPaperTest.java
+    
+    Started test cases
+
+commit 6581751d503586c8d2e59681ae8d863138a0de31
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Mon Nov 21 13:04:16 2022 -0700
+
+    Adding three new views to the GUI
+
+commit e15be6f33a3085fbc26d2458089c20fb3acb3929
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:54:44 2022 -0700
+
+    Merged with Josh---Low-Ink/Paper
+
+commit 53cd55bf65414428fb7f7fe89bf8827b4dc1a3bd
+Merge: 1a0e8ac 8f70d6b
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:53:54 2022 -0700
+
+    Merge remote-tracking branch 'origin/Josh---Low-Ink/Paper' into taylor-addItemPartialPayment
+
+commit 1a0e8acd0b5c45173ece14f91ef975adec835594
+Merge: 2b7cdec ea03571
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:52:35 2022 -0700
+
+    Merge remote-tracking branch 'origin/Shaheryar-PurchaseBags' into
+    taylor-addItemPartialPayment
+
+commit 2b7cdec94bd1a6556e8faf9d997a64feec9b5e70
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:47:40 2022 -0700
+
+    Merged With hera-entermembershipnumberbytyping
+
+commit 91c60c9b5abdc2fb0d34dc1b1462e60341eac7f6
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:35:03 2022 -0700
+
+    fixed imports
+
+commit e5620ed06168047969a8c1bf95a2afb999fb1c7b
+Merge: 8426fbf e5362be
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:30:54 2022 -0700
+
+    Merge remote-tracking branch 'origin/hera-entermembershipnumberbytyping' into taylor-addItemPartialPayment
+
+commit 8426fbf64ebd0391fc2d2a5c65db38738f25c6c5
+Merge: 0afe7fa acc1224
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:30:27 2022 -0700
+
+    Merge remote-tracking branch 'origin/jason-testPayWithDebitCard' into
+    taylor-addItemPartialPayment
+
+commit 0afe7fa47cb55a1bd8e039eded9a69b0f76f1f54
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:28:28 2022 -0700
+
+    Removed check for bills (only worked for CAD)
+
+commit 89182e3931bdb809e9d74c5a3a54e30d9dce49d4
+Merge: 1a6ccac 62309c3
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:22:01 2022 -0700
+
+    Merge remote-tracking branch 'origin/max-payWithDebitCard' into
+    taylor-addItemPartialPayment
+
+commit 1a6ccac00c1f463b4c686f8ecd07ead828c9dd73
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 15:19:48 2022 -0700
+
+    Changed balance from double to long and fixed issue with return change
+
+commit 30227df8f9eaba52451162bce6a064679d845ac0
+Merge: 4537325 9b86d69
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 12:36:26 2022 -0700
+
+    Merge remote-tracking branch 'origin/jiayuan-PayWithCash' into taylor-addItemPartialPayment
+
+commit 474b0eaa8de8874bdddc0ed7d4243ee94bad446d
+Merge: db1a058 9b86d69
+Author: Jiayuan Man <67851073+M2tch2@users.noreply.github.com>
+Date:   Sun Nov 20 10:35:16 2022 -0700
+
+    Merge pull request #1 from maxk4/jiayuan-PayWithCash
+    
+    CashPayment
+    CashPaymentTest
+
+commit 9b86d69106d3146cdc64be0813ca4f327572d925
+Author: Jiayuan Man <67851073+M2tch2@users.noreply.github.com>
+Date:   Sun Nov 20 10:17:51 2022 -0700
+
+    add unit tests for CashPayment class
+
+commit 6b1efa448b8ff72a1e25b46ae6ea5d8a44d59057
+Author: Jiayuan Man <67851073+M2tch2@users.noreply.github.com>
+Date:   Sun Nov 20 10:16:45 2022 -0700
+
+    add CashPayment class
+    
+    function:
+    - receive banknote and coin payment
+    - calculate and return change
+    missing:
+    - notify attendant maintenance needed
+
+commit ea035710bd82ac78ed93266cd5f7d0e1038ae8a9
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sun Nov 20 01:55:17 2022 -0700
+
+    Updated return to previous menu inside purchaseBagsFrame
+
+commit 4537325270027a5863ae8fe6dd38a433614e7ce5
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 01:21:04 2022 -0700
+
+    Fixed payment update issue
+
+commit 116f8e20c21429d1c5a032719c8b39a8f3b31dd9
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sun Nov 20 01:13:33 2022 -0700
+
+    Edit to purchasebags method inside mainframe.
+
+commit 63078d52116ca5c8151e0b358ac32470eab2e455
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sun Nov 20 00:57:41 2022 -0700
+
+    PurchaseBags class with all methods (pretesting)
+
+commit 4af36c95c8ffa8c72a07f064a81ca7241f98581d
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 00:55:54 2022 -0700
+
+    started finish session implementation
+
+commit 9c6d5f3055da393f60323e32b09da0b5ee4fed72
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sun Nov 20 00:15:40 2022 -0700
+
+    Started linking GUI's to CustomerUI
+
+commit 8545c63ad7aaf27f9f40538f12b80f86376912c2
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 22:53:21 2022 -0700
+
+    More methods for PurchaseBags
+
+commit 6a8e0df1e0642bc3453049c79b3fb72ce61bd88a
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 22:47:57 2022 -0700
+
+    Updated GUI constructors to take a customerui
+
+commit 3361ae2d4c2b3443115582a1dfbed139d80edb6d
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 22:38:36 2022 -0700
+
+    Moved classes in default package to util
+
+commit aec941ef8612f30e80dbe5b89da6605d7f94c75b
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 22:36:16 2022 -0700
+
+    added ui elements to continue session ui
+
+commit 8f70d6b55ea83844b1c301d10c43bc132cdf235d
+Author: Josh <joshdavis258@gmail.com>
+Date:   Sat Nov 19 22:34:10 2022 -0700
+
+    Added LowInkLowPaper class
+
+commit ab5440796d2aa05b78f0eb84212926a3bc6473d3
+Author: Shaheryar Syed <63892413+shaheryar99@users.noreply.github.com>
+Date:   Sat Nov 19 22:32:25 2022 -0700
+
+    Update CustomerUI.java
+
+commit f3942ac8c5d5c98646ea02ee1c0b47f0fa9c8a85
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 22:29:43 2022 -0700
+
+    Purchase Bags main file
+
+commit 3d6437e56546831320e4c4cbc3cf4bd280f9cfff
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 22:27:11 2022 -0700
+
+    Purchase Bags
+
+commit 135f54822fb54d8368526d4e3730d3da7f435b0a
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 22:02:02 2022 -0700
+
+    PurchaseBags Basic file
+
+commit cf63066017398c1fd6b11b081661edd5721c852e
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 21:58:09 2022 -0700
+
+    Purchase bags base file
+
+commit d597869e0beb223691c37f3f66f3c5018e2e6bce
+Author: Shaheryar Syed <Shaheryar Syed@Shaheryar-PC>
+Date:   Sat Nov 19 21:56:46 2022 -0700
+
+    Purchase Bags base file
+
+commit acc12242898e9a32c8f303e24067251e64bb2842
+Author: MatthiasKee <matthias.kee@ucalgary.ca>
+Date:   Sat Nov 19 21:51:04 2022 -0700
+
+    tests for transactionWithCreditCard
+
+commit e5362be4aa4fe332c6f6dc4281842c45286e1dff
+Author: Hera-Naeem <105568645+Hera-Naeem@users.noreply.github.com>
+Date:   Sat Nov 19 17:39:46 2022 -0700
+
+    Add files via upload
+
+commit 62309c33ae27649f40e77ee5ee1e8ccf45127491
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Sat Nov 19 16:27:25 2022 -0700
+
+    message change
+
+commit eb0c9d2c2f253bfc2a4ee508157a4947c2b5f984
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 14:00:28 2022 -0700
+
+    merged branch >> brody into this branch
+
+commit f3eb62bf433be29ffd1c60c48b65776762988920
+Merge: ecd0887 db1a058
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 13:55:55 2022 -0700
+
+    Merge remote-tracking branch 'origin/brody' into taylor-addItemPartialPayment
+
+commit ecd088755e9dbc668a65bb62479b8b6614f8da27
+Author: taylor.wong2 <taylor.wong2@cs.ucalgary.ca>
+Date:   Sat Nov 19 13:49:06 2022 -0700
+
+    Started implementing session continue. Made first draft of prompt
+
+commit db1a058e45be1f16e597d376e11ebe6aa96e439f
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Sat Nov 19 00:14:00 2022 -0700
+
+    Adding rough GUI views and new packages to hold them and their resources
+
+commit f829939b4dfca2acd9e616e8a3f864a8c257eaa7
+Merge: bdc2c85 9e00bc1
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 14:28:40 2022 -0700
+
+    Merge branch 'main' into max-payWithDebitCard
+
+commit 9e00bc19c07c7c5a121fbf449b53f5ad9996b5fc
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 14:27:40 2022 -0700
+
+    fixed another name
+
+commit bdc2c8500072149fa2dd76c98e77e9f4ff71172e
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 13:43:48 2022 -0700
+
+    finished implementing payByDebitCard, and fixingbugs
+
+commit a19284252685c5f4968db94c2691bc32af0f952f
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 12:39:56 2022 -0700
+
+    proper name changes
+
+commit 4b7a64f239c9f7e6b207ef908899bdda9d171429
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 12:15:07 2022 -0700
+
+    fixed classpath
+
+commit 138bfe4420625cf802d5eaea843bf8708e4227ff
+Merge: 8f39447 9a7529e
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 12:04:25 2022 -0700
+
+    Merge branch 'main' of https://github.com/maxk4/seng300-Project2
+
+commit 8f39447bbb8e150b94575abd1a7126fecf111abd
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 12:03:44 2022 -0700
+
+    DS_store for Mac users
+
+commit 9a7529e471afd04f1bef86928f7dce9c5cf804be
+Author: brodyl <75949899+brodyl@users.noreply.github.com>
+Date:   Thu Nov 17 12:02:04 2022 -0700
+
+    Re-uploading deleted draft
+
+commit 3c496b5ee25143cb101600a5ffbd560503e62ba4
+Author: maxk4 <99052906+maxk4@users.noreply.github.com>
+Date:   Thu Nov 17 11:55:16 2022 -0700
+
+    adding 0.3 hardware
