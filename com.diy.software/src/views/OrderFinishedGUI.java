@@ -1,7 +1,5 @@
 package views;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +12,7 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class OrderFinishedGUI extends JFrame {
-
+	private static final long serialVersionUID = 960506723715532997L;
 	private JPanel contentPane;
 
 	/**

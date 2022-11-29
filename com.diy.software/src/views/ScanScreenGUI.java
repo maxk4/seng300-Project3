@@ -1,20 +1,13 @@
 package views;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.diy.hardware.BarcodedProduct;
-import com.diy.hardware.DoItYourselfStationAR;
-import com.diy.hardware.Product;
 
 import util.CustomerUI;
 import util.ProductList;
 
 import java.awt.Color;
-import javax.swing.UIManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -30,10 +23,9 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 
-import java.util.List;
-
 public class ScanScreenGUI extends JFrame {
 
+	private static final long serialVersionUID = 6049492754371953479L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField memberField;

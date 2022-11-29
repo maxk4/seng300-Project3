@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.simulation.Customer;
 import com.diy.hardware.external.CardIssuer;
 import ca.ucalgary.seng300.simulation.SimulationException;
@@ -25,7 +25,7 @@ public class PayByCreditCardTest {
 	AttendantUI attendant;
 	Customer customer;
 	AttendantStation astation;
-	DoItYourselfStationAR station;
+	DoItYourselfStation station;
 	CustomerUI ui;
 	PayWithCardListener pwcl = new PayWithCardListener(ui);
 	CardIssuer cardIssuer;

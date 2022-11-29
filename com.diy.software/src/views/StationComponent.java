@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 import util.CustomerUI;
 
-import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class StationComponent extends JPanel {

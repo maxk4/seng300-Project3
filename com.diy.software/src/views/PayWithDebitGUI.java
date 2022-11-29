@@ -1,12 +1,10 @@
 package views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,13 +12,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
-import com.diy.hardware.DoItYourselfStationAR;
 
 import util.CustomerUI;
 
 import javax.swing.ImageIcon;
 
 public class PayWithDebitGUI extends JFrame {
+	private static final long serialVersionUID = 7114333266530075624L;
 	private JPanel contentPane;
 	
 	/**

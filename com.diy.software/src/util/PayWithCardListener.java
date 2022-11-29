@@ -14,7 +14,6 @@ public class PayWithCardListener implements CardReaderListener {
 	
 	
 	private boolean enabled = false;
-	private CardData data; 
 	public boolean cardInserted = false;
 	private CustomerUI customer;
 	
@@ -59,7 +58,6 @@ public class PayWithCardListener implements CardReaderListener {
 	@Override
 	public void cardDataRead(CardReader reader, CardData data) {
 		if (!enabled) return;
-		this.data = data;
 		transactionWithCreditCard(reader, data, Bank.CARD_ISSUER, customer.getBalance());
 	}
 	
@@ -74,7 +72,7 @@ public class PayWithCardListener implements CardReaderListener {
 	 */
 	public void transactionWithCreditCard(CardReader reader, CardData data, CardIssuer bank, long total) {
 		//if the card is not a credit card and debit card
-		if (!(data.getKind().equals("credit") || data.getKind().equals("debit"))) {
+		if (!(data.getType().equals("credit") || data.getType().equals("debit"))) {
 			throw new InvalidArgumentSimulationException("Card inserted is not of type credit or debit");
 		}
 		

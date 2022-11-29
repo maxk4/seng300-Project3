@@ -1,12 +1,8 @@
 package views;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.diy.hardware.DoItYourselfStationAR;
 
 import util.CustomerUI;
 
@@ -22,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PayWithCashGUI extends JFrame {
-
+	private static final long serialVersionUID = -7710462478741797757L;
 	private JPanel contentPane;
 
 

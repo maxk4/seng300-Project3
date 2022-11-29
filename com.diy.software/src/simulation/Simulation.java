@@ -3,10 +3,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import com.diy.hardware.BarcodedProduct;
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.jimmyselectronics.OverloadException;
@@ -68,23 +66,23 @@ public class Simulation {
 		
 		// Initialize diy stations
 		List<CustomerUI> uis = new ArrayList<CustomerUI>();
-		List<DoItYourselfStationAR> stations = new ArrayList<DoItYourselfStationAR>();
+		List<DoItYourselfStation> stations = new ArrayList<DoItYourselfStation>();
 		for (int i = 0; i < diyStations; i++) {
 			Customer customer = genCustomer();
 			
-			DoItYourselfStationAR station = new DoItYourselfStationAR();
+			DoItYourselfStation station = new DoItYourselfStation();
 			station.plugIn();
 			station.turnOn();
 			CustomerUI ui = new CustomerUISimulator(station, customer, "Station " + (i + 1));
 			
 			ScanItemListener sil = new ScanItemListener(ui);
-			station.scanner.register(sil);
+			station.mainScanner.register(sil);
 			customer.useStation(station);
 			
 			station.cardReader.register(new PayWithCardListener(ui));
 	
 			ExpectedWeightListener ewl = new ExpectedWeightListener(ui);
-			station.scale.register(ewl);
+			station.scanningArea.register(ewl);
 			ui.setWeightListener(ewl);
 			
 			CustomerStationListener dl = new CustomerStationListener(attendant);
@@ -125,8 +123,8 @@ public class Simulation {
 	private static void setup() {
 		int[] banknoteDenominations = {5000,2000,1000,500};
 		long[] coinDenominations = {200, 100, 25, 10, 5};
-		DoItYourselfStationAR.configureBanknoteDenominations(banknoteDenominations);
-		DoItYourselfStationAR.configureCoinDenominations(coinDenominations);
+		DoItYourselfStation.configureBanknoteDenominations(banknoteDenominations);
+		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		PowerGrid.engageUninterruptiblePowerSource();
 		
 		for (int i = 0; i < barcodes.length; i++)

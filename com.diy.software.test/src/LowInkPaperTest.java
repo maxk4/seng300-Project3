@@ -1,20 +1,13 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
-import com.jimmyselectronics.abagnale.IReceiptPrinter;
-import com.jimmyselectronics.abagnale.ReceiptPrinterD;
+import com.jimmyselectronics.abagnale.ReceiptPrinterND;
 
 import util.AttendantStation;
 import util.AttendantUI;
@@ -24,20 +17,20 @@ import util.LowInkLowPaper;
 
 public class LowInkPaperTest {
 	
-	public ReceiptPrinterD printer = new ReceiptPrinterD();
+	public ReceiptPrinterND printer = new ReceiptPrinterND();
 	
 	public static final int MAXIMUM_PAPER = 10;
 	public static final int MAXIMUM_INK = 20;
 
 	LowInkLowPaper listener;
-	DoItYourselfStationAR station;
+	DoItYourselfStation station;
 	CustomerUI customer;
 	
 	java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
 	
 	@Before
 	public void setup() {
-		station = new DoItYourselfStationAR();
+		station = new DoItYourselfStation();
 		station.plugIn();
 		station.turnOn();
 		customer = new CustomerUI(station);

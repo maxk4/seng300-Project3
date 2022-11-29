@@ -5,7 +5,6 @@ import com.jimmyselectronics.AbstractDevice;
 import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.abagnale.IReceiptPrinter;
 import com.jimmyselectronics.abagnale.ReceiptPrinterListener;
-import com.jimmyselectronics.abagnale.ReceiptPrinterD;
 
 public class LowInkLowPaper implements ReceiptPrinterListener {
 	

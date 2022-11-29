@@ -11,7 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.simulation.Customer;
 import com.jimmyselectronics.Item;
 import com.jimmyselectronics.opeechee.Card;
@@ -24,7 +24,7 @@ import util.CustomerUI;
 
 public class CustomerUISimulator extends CustomerUI {
 
-	public CustomerUISimulator(DoItYourselfStationAR station, Customer customer, String title) {
+	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		super(station, title);
 		
 		JDialog customerSim = new JDialog();
@@ -42,10 +42,10 @@ public class CustomerUISimulator extends CustomerUI {
 		for (Item item : customer.shoppingCart) {
 			JButton button = new JButton(String.format("Item %d: Weight: %.2fkg", ++i, item.getWeight()));
 			button.addActionListener(e -> {
-				if (station.scanner.isDisabled()) return;
+				if (station.mainScanner.isDisabled()) return;
 				customer.shoppingCart.add(item);
 				customer.selectNextItem();
-				customer.scanItem();
+				customer.scanItem(false);
 			});
 			cart.add(button);
 		}
@@ -67,10 +67,10 @@ public class CustomerUISimulator extends CustomerUI {
 				remove.remove(removeBtn);
 				customerSim.revalidate();
 				customerSim.repaint();
-				station.scale.remove(item);
+				station.scanningArea.remove(item);
 			});
 			button.addActionListener(e -> {
-				if (station.scale.isDisabled()) return;
+				if (station.scanningArea.isDisabled()) return;
 				customer.shoppingCart.add(item);
 				customer.selectNextItem();
 				customer.placeItemInBaggingArea();

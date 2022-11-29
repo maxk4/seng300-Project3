@@ -4,21 +4,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.Bag;
 import util.CustomerUI;
 
 import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class EnterMemberNumberGUI extends JFrame{
-
+public class EnterMemberNumberGUI extends JFrame {
+	private static final long serialVersionUID = -2878096921110787780L;
 	private JPanel contentPane;
 	private JTextField txtMemberNumber;
 

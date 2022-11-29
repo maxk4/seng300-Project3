@@ -11,19 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.diy.hardware.DoItYourselfStationAR;
-import com.jimmyselectronics.OverloadException;
+import com.diy.hardware.DoItYourselfStation;
 
 import util.AttendantUI;
 
 public class MaintenanceSimulator {
 	
-	private AttendantUI attendant;
-	private List<DoItYourselfStationAR> stations;
+	private List<DoItYourselfStation> stations;
 	private JFrame frame;
 
-	public MaintenanceSimulator(AttendantUI attendant, List<DoItYourselfStationAR> stations) {
-		this.attendant = attendant;
+	public MaintenanceSimulator(AttendantUI attendant, List<DoItYourselfStation> stations) {
 		this.stations = stations;
 		
 		frame = new JFrame();
@@ -47,7 +44,7 @@ public class MaintenanceSimulator {
 		ink.add(inkAmmountField);
 		ink.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 16));
 		for (int i = 0; i < stations.size(); i++) {
-			DoItYourselfStationAR station = stations.get(i);
+			DoItYourselfStation station = stations.get(i);
 			JButton inkBtn = new JButton("Station " + (i + 1));
 			inkBtn.addActionListener(e -> {
 				try {
@@ -71,7 +68,7 @@ public class MaintenanceSimulator {
 		paper.add(paperLabel);
 		paper.add(paperAmmountField);
 		for (int i = 0; i < stations.size(); i++) {
-			DoItYourselfStationAR station = stations.get(i);
+			DoItYourselfStation station = stations.get(i);
 			JButton paperBtn = new JButton("Station " + (i + 1));
 			paperBtn.addActionListener(e -> {
 				try {

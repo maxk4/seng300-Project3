@@ -1,12 +1,8 @@
 package views;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.diy.hardware.DoItYourselfStationAR;
 
 import util.CustomerUI;
 
@@ -22,6 +18,7 @@ import javax.swing.ImageIcon;
 
 public class PayWithCreditGUI extends JFrame {
 
+	private static final long serialVersionUID = -6094043016720414433L;
 	private JPanel contentPane;
 
 
@@ -47,7 +44,7 @@ public class PayWithCreditGUI extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Select Card:");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<?> comboBox = new JComboBox<Object>();
 		
 		JButton btnNewButton = new JButton("Pay by Chip");
 		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 19));

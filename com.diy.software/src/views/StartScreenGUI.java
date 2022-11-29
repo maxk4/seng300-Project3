@@ -1,12 +1,8 @@
 package views;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.diy.hardware.DoItYourselfStationAR;
 
 import util.CustomerUI;
 
@@ -17,10 +13,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class StartScreenGUI extends JFrame {
 
+	private static final long serialVersionUID = 6812935065908490923L;
 	private JPanel contentPane;
 
 	/**

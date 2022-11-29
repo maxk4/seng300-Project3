@@ -8,10 +8,7 @@ import util.Bag;
 import util.CustomerUI;
 
 import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -19,6 +16,7 @@ import java.awt.event.ActionEvent;
 
 public class PurchaseBagsGUI extends JFrame{
 
+	private static final long serialVersionUID = 6889161614035275829L;
 	private JPanel contentPane;
 	private JTextField txtNumberOfBags;
 

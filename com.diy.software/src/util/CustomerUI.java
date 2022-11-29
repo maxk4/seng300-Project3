@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import com.diy.hardware.BarcodedProduct;
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
 import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
@@ -35,7 +35,7 @@ public class CustomerUI {
 	
 	private List<CustomerStationListener> stationListeners = new ArrayList<CustomerStationListener>();
 	private List<NoBaggingRequestListener> nbrListeners = new ArrayList<NoBaggingRequestListener>();
-	private DoItYourselfStationAR station;
+	private DoItYourselfStation station;
 	
 	private CashPayment cashPayment;
 	
@@ -51,12 +51,12 @@ public class CustomerUI {
 	private WeightDiscrepancyGUI weightDiscrepancyGUI;
 	private OrderFinishedGUI orderFinishedGUI;
 	
-	public CustomerUI(DoItYourselfStationAR station) {
+	public CustomerUI(DoItYourselfStation station) {
 		this.station = station;
 		beginSession();
 	}
 	
-	public CustomerUI(DoItYourselfStationAR station, String title) {
+	public CustomerUI(DoItYourselfStation station, String title) {
 		this.station = station;
 		
 		beginSession();
@@ -208,7 +208,7 @@ public class CustomerUI {
 	public void alertWeightDiscrepancy() {
 		if (inProgress) {
 			// Show weight discrepancy gui
-			station.scanner.disable();
+			station.mainScanner.disable();
 			for (CustomerStationListener listener : stationListeners) {
 				if (placingBag) listener.nofityAddBag(this);
 				else listener.notifyWeightDiscrepancyDetected(this);
@@ -224,7 +224,7 @@ public class CustomerUI {
 	 */
 	public void resolveWeightDiscrepancy() {
 		if (inProgress) {
-			station.scanner.enable();
+			station.mainScanner.enable();
 			for (CustomerStationListener listener : stationListeners)
 				if (!placingBag) listener.notifyWeightDiscrepancyResolved(this);
 			weightDiscrepancyGUI.setVisible(false);
@@ -290,7 +290,7 @@ public class CustomerUI {
 	 * @param enabled boolean true if the scanner should be enabled false otherwise
 	 */
 	public void startScanning() {
-		station.scanner.enable();
+		station.mainScanner.enable();
 
 		startScreenGUI.setVisible(false);
 		scanScreenGUI.setVisible(true);

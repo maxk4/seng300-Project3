@@ -12,13 +12,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.external.CardIssuer;
 
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.Card.CardData;
 import com.jimmyselectronics.opeechee.CardReader;
-import com.jimmyselectronics.opeechee.CardReaderListener;
 
 import ca.powerutility.PowerGrid;
 import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
@@ -33,7 +32,7 @@ public class PayByDebitCardTest {
 	Card creditCard;
 	Card invalidCard;
 	CustomerUI customer;
-	DoItYourselfStationAR station;
+	DoItYourselfStation station;
 	PayWithCardListener payWithCard;
 	CardReader reader;
 	CardIssuer bank;
@@ -54,7 +53,7 @@ public class PayByDebitCardTest {
 		invalidCard = new Card("invalid", "1234567890123456", "John Smith", "222", "0000", true, true);
 		
 		expectedWeightListener = new ExpectedWeightListener(customer);
-		station = new DoItYourselfStationAR();
+		station = new DoItYourselfStation();
 		
 		station.plugIn();
 		station.turnOn();

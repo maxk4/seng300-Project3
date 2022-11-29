@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.unitedbankingservices.DisabledException;
 import com.unitedbankingservices.OutOfCashException;
 import com.unitedbankingservices.TooMuchCashException;
@@ -20,11 +20,11 @@ public class CashPayment implements BanknoteValidatorObserver, CoinValidatorObse
 	
 	private CustomerUI customer;
 	private AttendantUI attendant;
-	private DoItYourselfStationAR station;
+	private DoItYourselfStation station;
 	private boolean needMaintenance;
 	private int validBanknoteCount, validCoinCount;
 	
-	public CashPayment(CustomerUI customer, AttendantUI attendant, DoItYourselfStationAR station) {
+	public CashPayment(CustomerUI customer, AttendantUI attendant, DoItYourselfStation station) {
 		this.customer = customer;
 		this.attendant = attendant;
 		this.station = station;

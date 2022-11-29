@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
  
 import com.diy.hardware.BarcodedProduct;
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
@@ -33,7 +33,7 @@ public class AddItemByScanningTests {
    AttendantUI attendant;
    Customer customer;
    AttendantStation astation;
-   DoItYourselfStationAR station;
+   DoItYourselfStation station;
    CustomerUI ui;
    ScanItemListener sil = new ScanItemListener(ui);
    Barcode bc1, bc2, bc3;
@@ -70,19 +70,19 @@ public class AddItemByScanningTests {
        AttendantStationListener listener = new AttendantStationListener(attendant);
        aStation.registerListener(listener);
       
-       station = new DoItYourselfStationAR();
+       station = new DoItYourselfStation();
       
        station.plugIn();
        station.turnOn();
-       station.scanner.enable();
+       station.mainScanner.enable();
        ui = new CustomerUI(station);
        ui.startScanning();
       
        sil = new ScanItemListener(ui);
-       station.scanner.register(sil);
+       station.mainScanner.register(sil);
   
        ExpectedWeightListener ewl = new ExpectedWeightListener(ui);
-       station.scale.register(ewl);
+       station.scanningArea.register(ewl);
        ui.setWeightListener(ewl);
           
        CustomerStationListener dl = new CustomerStationListener(attendant);
@@ -99,11 +99,11 @@ public class AddItemByScanningTests {
    public void testScanItemScannerDisabled() {
 
        // Setup Station
-	   station.scanner.disable();
+	   station.mainScanner.disable();
        customer.shoppingCart.add(item1);
        customer.selectNextItem();
        
-       customer.scanItem();
+       customer.scanItem(false);
        customer.placeItemInBaggingArea();
        
        assertFalse(ui.checkProductList(prod1));
@@ -121,7 +121,7 @@ public class AddItemByScanningTests {
        
        // Scan first Item
        while(true) {
-           customer.scanItem();
+           customer.scanItem(false);
            if (sil.getSuccessfulScan() == 1)
         	   break;
        }
@@ -137,11 +137,11 @@ public class AddItemByScanningTests {
    public void testScanItemNoBarcode() {
 
        // Setup Station
-       station.scanner.enable();
+       station.mainScanner.enable();
        customer.shoppingCart.add(item3);
        customer.selectNextItem();
        
-       customer.scanItem();
+       customer.scanItem(false);
        customer.placeItemInBaggingArea();
        
        assertEquals(ui.productCount(), 0);

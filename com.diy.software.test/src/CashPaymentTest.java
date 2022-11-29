@@ -6,14 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.DoItYourselfStation;
 import com.unitedbankingservices.DisabledException;
 import com.unitedbankingservices.OutOfCashException;
 import com.unitedbankingservices.Sink;
 import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
-import com.unitedbankingservices.banknote.BanknoteDispenserObserver;
-import com.unitedbankingservices.banknote.BanknoteValidatorObserver;
 import com.unitedbankingservices.coin.Coin;
 
 import ca.powerutility.PowerGrid;
@@ -26,7 +24,7 @@ public class CashPaymentTest {
 	
 	private CustomerUI customer;
 	private AttendantUI attendant;
-	private DoItYourselfStationAR checkoutStation;
+	private DoItYourselfStation checkoutStation;
 	private AttendantStation attendantStation;
 	private CashPayment cashPayment;
 	
@@ -36,11 +34,11 @@ public class CashPaymentTest {
 		// configure denominations
 		int[] banknoteDenominations = {5000,2000,1000,500};
 		long[] coinDenominations = {200, 100, 25, 10, 5};
-		DoItYourselfStationAR.configureBanknoteDenominations(banknoteDenominations);
-		DoItYourselfStationAR.configureCoinDenominations(coinDenominations);
+		DoItYourselfStation.configureBanknoteDenominations(banknoteDenominations);
+		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		
 		// setup checkout station
-		checkoutStation = new DoItYourselfStationAR();
+		checkoutStation = new DoItYourselfStation();
 		PowerGrid.engageUninterruptiblePowerSource();
 		PowerGrid.instance().forcePowerRestore();
 		checkoutStation.plugIn();
