@@ -1,10 +1,10 @@
-package views;
+package ui.views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.CustomerUI;
+import com.diy.hardware.DoItYourselfStation;
+
+import ui.CustomerUI;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -16,24 +16,21 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
-public class PayWithCreditGUI extends JFrame {
+public class PayWithCreditGUI extends CustomerView {
 
 	private static final long serialVersionUID = -6094043016720414433L;
-	private JPanel contentPane;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public PayWithCreditGUI(CustomerUI customer) {
-		setTitle("Credit Payment");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 451, 266);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(65, 139, 212));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+	public PayWithCreditGUI(CustomerUI customer, DoItYourselfStation station) {
+		super(customer);
+		
+		this.title = "Credit Payment";
+		
+		setBackground(new Color(65, 139, 212));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("Order Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
@@ -53,10 +50,14 @@ public class PayWithCreditGUI extends JFrame {
 		btnPayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
 		JButton btnNewButton_1 = new JButton("Cancel Payment");
+		btnNewButton_1.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+			station.cardReader.disable();
+		});
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setIcon(new ImageIcon(PayWithCreditGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -97,6 +98,6 @@ public class PayWithCreditGUI extends JFrame {
 					.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(5))
 		);
-		contentPane.setLayout(gl_contentPane);
+		setLayout(gl_contentPane);
 	}
 }

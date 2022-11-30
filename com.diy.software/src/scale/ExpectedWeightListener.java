@@ -1,4 +1,4 @@
-package util;
+package scale;
 import com.jimmyselectronics.AbstractDevice;
 import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.virgilio.ElectronicScale;
@@ -12,16 +12,11 @@ import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 public class ExpectedWeightListener implements ElectronicScaleListener {
 	
 	private double expectedWeight, sensitivity = 0, lastWeight;
-	private CustomerUI customer;
+	private ScaleController controller;
 	
-	/**
-	 * Create a new ExpectedWeightListener
-	 * @param customer CustomerUI to attach the listener to
-	 */
-	public ExpectedWeightListener(CustomerUI customer) {
-		this.customer = customer;
+	public ExpectedWeightListener(ScaleController controller) {
+		this.controller = controller;
 	}
-	
 
 	@Override
 	public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {}
@@ -38,8 +33,8 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	@Override
 	public void weightChanged(ElectronicScale scale, double weightInGrams) {
 		if (Math.abs(weightInGrams - expectedWeight) > sensitivity) 
-			customer.alertWeightDiscrepancy();
-		else customer.resolveWeightDiscrepancy();
+			controller.notifyWeightDiscrepancyDetected();
+		else controller.notifyWeightDiscrepancyResolved();
 		lastWeight = weightInGrams;
 	}
 
@@ -57,10 +52,9 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	public void setExpectedWeight(double weightInGrams) {
 		expectedWeight = weightInGrams;
 		if (Math.abs(lastWeight - expectedWeight) > sensitivity) 
-			customer.alertWeightDiscrepancy();
+			controller.notifyWeightDiscrepancyDetected();
 		else
-			customer.resolveWeightDiscrepancy();
-		
+			controller.notifyWeightDiscrepancyResolved();
 	}
 	
 	/**
@@ -86,6 +80,6 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	 */
 	public void approveWeightDiscrepancy() {
 		expectedWeight = lastWeight;
-		customer.resolveWeightDiscrepancy();
+		controller.notifyWeightDiscrepancyResolved();
 	}
 }

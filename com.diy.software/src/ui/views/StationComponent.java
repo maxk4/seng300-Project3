@@ -1,4 +1,4 @@
-package views;
+package ui.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,8 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import util.CustomerUI;
-
 
 @SuppressWarnings("serial")
 public class StationComponent extends JPanel {
@@ -25,8 +23,6 @@ public class StationComponent extends JPanel {
 			LOW_PAPER = "Low Paper",
 			ADD_OWN_BAG = "Added Own Bag",
 			OUT_OF_CHANGE = "Out of Change";
-	
-	public final CustomerUI customer;
 	
 	public static interface Action {
 		public void approve();
@@ -39,9 +35,8 @@ public class StationComponent extends JPanel {
 	private JLabel msgField;
 	private JLabel alertField;
 	
-	public StationComponent(CustomerUI customer, String descriptor) {
+	public StationComponent(String descriptor) {
 		super();
-		this.customer = customer;
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
 		this.actions = new HashMap<String, Action>();

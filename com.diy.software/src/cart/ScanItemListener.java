@@ -1,4 +1,4 @@
-package util;
+package cart;
 
 
 import com.diy.hardware.BarcodedProduct;
@@ -18,12 +18,14 @@ import com.jimmyselectronics.necchi.BarcodeScannerListener;
  */
 public class ScanItemListener implements BarcodeScannerListener {
 	
-	private CustomerUI customer;
+	private CartController controller;
+	
 	private boolean enabled = false;
 	private int successfulScan;
 	
-	public ScanItemListener(CustomerUI customer) {
-		this.customer = customer;
+	public ScanItemListener(BarcodeScanner scanner, CartController controller) {
+		this.controller = controller;
+		scanner.register(this);
 	}
 
 	@Override
@@ -52,11 +54,9 @@ public class ScanItemListener implements BarcodeScannerListener {
 		if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode)) return;
 		BarcodedProduct product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 		
-		
-		// Update the CustomerUI to include the scanned item
-		customer.addBarcodedProductToList(product);
-		customer.notifyExpectedWeight(product.getExpectedWeight());
+		controller.productList.add(product, product.getDescription(), product.getPrice());
 		successfulScan++;
+		controller.itemAdded(product.getPrice(), product.getExpectedWeight());
 	}
 	
 	public int getSuccessfulScan() {

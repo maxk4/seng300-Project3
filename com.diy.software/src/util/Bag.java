@@ -10,12 +10,13 @@ public class Bag extends BarcodedProduct {
 	public static final Barcode BAGBARCODE = new Barcode(new Numeral[] { Numeral.zero, Numeral.zero, Numeral.zero, Numeral.zero, Numeral.one });
 	public static final long PRICE = 1;
 	public static final double WEIGHT = 0.01;
+	public static final String DESCRIPTION = "Store Bag";
 	
 	static {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(BAGBARCODE, new Bag());
 	}
 	
 	public Bag() {
-		super(BAGBARCODE, "Store Bag", PRICE, WEIGHT);
+		super(BAGBARCODE, DESCRIPTION, PRICE, WEIGHT);
 	}
 }

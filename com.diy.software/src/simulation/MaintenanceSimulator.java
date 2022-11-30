@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import com.diy.hardware.DoItYourselfStation;
 
-import util.AttendantUI;
+import ui.AttendantUI;
 
 public class MaintenanceSimulator {
 	

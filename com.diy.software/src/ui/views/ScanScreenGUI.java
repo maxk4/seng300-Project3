@@ -1,10 +1,10 @@
-package views;
+package ui.views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.CustomerUI;
+import com.diy.hardware.DoItYourselfStation;
+
+import ui.CustomerUI;
 import util.ProductList;
 
 import java.awt.Color;
@@ -16,17 +16,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import java.awt.Font;
 
-public class ScanScreenGUI extends JFrame {
+public class ScanScreenGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6049492754371953479L;
-	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField memberField;
 	private JTextArea scannedPricesArea;
@@ -35,16 +31,11 @@ public class ScanScreenGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ScanScreenGUI(CustomerUI customer) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ScanScreenGUI.class.getResource("/resources/icons8-pc-on-desk-100.png")));
-		setTitle("-- DoItYourselfStation --");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 707, 794);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(14, 144, 215));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+	public ScanScreenGUI(CustomerUI controller, DoItYourselfStation station) {
+		super(controller);
+		title = "-- DoItYourselfStation --";
+		setBackground(new Color(14, 144, 215));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("$");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -61,43 +52,39 @@ public class ScanScreenGUI extends JFrame {
 		
 		JButton btnNewButton = new JButton("Debit");
 		btnNewButton.addActionListener(e -> {
-			customer.payWithDebit();
+			controller.setView(CustomerUI.PAY_WITH_DEBIT);
+			station.cardReader.enable();
 		});
 		btnNewButton.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-debit-card-100.png")));
 		
 		JButton btnNewButton_1 = new JButton("Complete/Print Receipt");
 		btnNewButton_1.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-receipt-100.png")));
 		btnNewButton_1.addActionListener(e -> {
-			try {
-				customer.endSession();
-			} catch (IllegalStateException err) {
-				// Alert customer that they have a balance remaining
-			}
+			controller.endSession();
 		});
 		
 		JButton btnNewButton_2 = new JButton("Credit");
 		btnNewButton_2.addActionListener(e -> {
-			customer.payWithCredit();
+			controller.setView(CustomerUI.PAY_WITH_CREDIT);
+			station.cardReader.enable();
 		});
 		btnNewButton_2.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
 		
 		JButton btnNewButton_3 = new JButton("Cash");
 		btnNewButton_3.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-cash-100.png")));
 		btnNewButton_3.addActionListener(e -> {
-			customer.payWithCash();
+			controller.setView(CustomerUI.PAY_WITH_CASH);
+			station.coinSlot.enable();
+			station.banknoteInput.enable();
+			station.banknoteOutput.enable();
 		});
 		
 		JButton btnNewButton_5 = new JButton("Attendant");
 		
 		JButton btnNewButton_6 = new JButton("Enter Member #");
-		btnNewButton_6.addActionListener(e -> {
-			customer.enterMemNum();
-		});
+		btnNewButton_6.addActionListener(e -> controller.setView(CustomerUI.ENTER_MEMBERSHIP));
 		
 		JButton btnNewButton_7 = new JButton("Use Personal Bags");
-		btnNewButton_7.addActionListener(e -> {
-			customer.addBag();
-		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -105,12 +92,8 @@ public class ScanScreenGUI extends JFrame {
 		lblNewLabel_1.setFont(new Font("Telugu MN", Font.BOLD, 23));
 		
 		JButton btnNewButton_6_1 = new JButton("Buy Bags");
-		btnNewButton_6_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				customer.purchageBags();
-			}
-		});
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		btnNewButton_6_1.addActionListener(e -> controller.setView(CustomerUI.PURCHASE_BAGS));
+		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -194,31 +177,16 @@ public class ScanScreenGUI extends JFrame {
 		scannedItemsArea.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		scannedItemsArea.setEditable(false);
 		scrollPane.setViewportView(scannedItemsArea);
-		contentPane.setLayout(gl_contentPane);
+		setLayout(gl_contentPane);
 	}
 	
-	public void update(long balance, ProductList products) {
-		StringBuilder productSB = new StringBuilder();
-		StringBuilder priceSB = new StringBuilder();
-		products.forEach((prod, desc, price) -> {
-			productSB.append(desc);
-			productSB.append("\n");
-			priceSB.append(String.format("$%.2f", price / 100d));
-			priceSB.append("\n");
-		});
-		scannedItemsArea.setText(priceSB.toString());
-		scannedPricesArea.setText(productSB.toString());
+	public void update(long balance, String productString, String priceString) {
+		scannedItemsArea.setText(priceString);
+		scannedPricesArea.setText(productString);
 		textField.setText(String.format("$%.2f", balance / 100d));
 	}
 
 	public void updateMember(Integer number) {
-		if (number == 8) 
-			memberField.setText("Invalid #");
-		if (number == 0) 
-			memberField.setText("Not a Member");
-		if (number == 1) 
-			memberField.setText("A Member # already in use");
-		if (number != 8 && number != 0 && number != 1)
 		memberField.setText(number + "");
 	}
 }

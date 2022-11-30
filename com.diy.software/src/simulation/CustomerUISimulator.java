@@ -20,12 +20,9 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
-import util.CustomerUI;
-
-public class CustomerUISimulator extends CustomerUI {
+public class CustomerUISimulator{
 
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
-		super(station, title);
 		
 		JDialog customerSim = new JDialog();
 		customerSim.setLocationRelativeTo(null);
@@ -67,10 +64,10 @@ public class CustomerUISimulator extends CustomerUI {
 				remove.remove(removeBtn);
 				customerSim.revalidate();
 				customerSim.repaint();
-				station.scanningArea.remove(item);
+				station.baggingArea.remove(item);
 			});
 			button.addActionListener(e -> {
-				if (station.scanningArea.isDisabled()) return;
+				if (station.baggingArea.isDisabled()) return;
 				customer.shoppingCart.add(item);
 				customer.selectNextItem();
 				customer.placeItemInBaggingArea();
@@ -94,6 +91,7 @@ public class CustomerUISimulator extends CustomerUI {
 				try {
 					customer.selectCard(card.kind);
 					customer.insertCard("0000".intern());
+					
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

@@ -1,10 +1,12 @@
 package simulation;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.AttendantStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.jimmyselectronics.OverloadException;
@@ -14,18 +16,9 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import ca.powerutility.PowerGrid;
-import util.AttendantStation;
-import util.AttendantStationListener;
-import util.AttendantUI;
+import main.CustomerStationWrapper;
+import ui.AttendantUI;
 import util.Bank;
-import util.CashPayment;
-import util.CustomerStationListener;
-import util.CustomerUI;
-import util.ExpectedWeightListener;
-import util.LowInkLowPaper;
-import util.NoBaggingRequestListener;
-import util.PayWithCardListener;
-import util.ScanItemListener;
 
 public class Simulation {
 	
@@ -60,50 +53,21 @@ public class Simulation {
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
 		AttendantUI attendant = new AttendantUI(aStation, diyStations);
-		AttendantStationListener aStationListener = new AttendantStationListener(attendant);
-		aStation.registerListener(aStationListener);
-		NoBaggingRequestListener nbrListener = new NoBaggingRequestListener(attendant);
+		
+		for (int i = 0; i < diyStations; i++) {
+			DoItYourselfStation station = new DoItYourselfStation();
+			aStation.add(station);
+		}
 		
 		// Initialize diy stations
-		List<CustomerUI> uis = new ArrayList<CustomerUI>();
-		List<DoItYourselfStation> stations = new ArrayList<DoItYourselfStation>();
-		for (int i = 0; i < diyStations; i++) {
+		for (DoItYourselfStation station : aStation.attendedStations()) {
 			Customer customer = genCustomer();
-			
-			DoItYourselfStation station = new DoItYourselfStation();
+			customer.useStation(station);
 			station.plugIn();
 			station.turnOn();
-			CustomerUI ui = new CustomerUISimulator(station, customer, "Station " + (i + 1));
 			
-			ScanItemListener sil = new ScanItemListener(ui);
-			station.mainScanner.register(sil);
-			customer.useStation(station);
-			
-			station.cardReader.register(new PayWithCardListener(ui));
-	
-			ExpectedWeightListener ewl = new ExpectedWeightListener(ui);
-			station.scanningArea.register(ewl);
-			ui.setWeightListener(ewl);
-			
-			CustomerStationListener dl = new CustomerStationListener(attendant);
-			ui.registerDiscrepancyListener(dl);
-			ui.registerNoBaggingRequestListener(nbrListener);
-			
-			station.printer.register(new LowInkLowPaper(ui, attendant));
-			try {
-				station.printer.addInk(10);
-				station.printer.addPaper(10);
-			} catch (OverloadException e) {
-				e.printStackTrace();
-			}
-			
-			ui.setCashPaymentController(new CashPayment(ui, attendant, station));
-			for (int j = 0; j < members.size(); j++) {
-				ui.addMemberNumber(members.get(j));
-			}
-			uis.add(ui);
-			stations.add(station);
-			
+			CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
+			new CustomerUISimulator(station, customer, "Customer Simulator");
 			try {
 				station.printer.addInk(100);
 				station.printer.addPaper(100);
@@ -111,11 +75,11 @@ public class Simulation {
 				e.printStackTrace();
 			}
 		}
+//		
+//		// Register diy stations with the attendant station
+//		for (CustomerUI cStation : uis) aStation.add(cStation);
 		
-		// Register diy stations with the attendant station
-		for (CustomerUI cStation : uis) aStation.registerStation(cStation);
-		
-		MaintenanceSimulator ms = new MaintenanceSimulator(attendant, stations);
+		MaintenanceSimulator ms = new MaintenanceSimulator(attendant, aStation.attendedStations());
 		
 		
 	}

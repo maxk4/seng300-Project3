@@ -1,10 +1,10 @@
-package views;
+package ui.views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.CustomerUI;
+import com.diy.hardware.DoItYourselfStation;
+
+import ui.CustomerUI;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -14,30 +14,31 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
-public class StartScreenGUI extends JFrame {
+public class StartScreenGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6812935065908490923L;
-	private JPanel contentPane;
 
 	/**
 	 * Create the frame.
 	 */
-	public StartScreenGUI(CustomerUI customer) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public StartScreenGUI(CustomerUI customer, DoItYourselfStation station) {
+		super(customer);
 		setBounds(100, 100, 355, 302);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(50, 126, 192));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+		setBackground(new Color(50, 126, 192));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JButton btnNewButton_4 = new JButton("Start Scanning");
 		btnNewButton_4.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-barcode-100.png")));
-		btnNewButton_4.addActionListener(e -> customer.startScanning());
+		btnNewButton_4.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+			controller.beginSession();
+			station.mainScanner.enable();
+			station.handheldScanner.enable();
+		});
 		
 		JLabel lblNewLabel = new JLabel("DIYourselfStation");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 23));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -56,7 +57,7 @@ public class StartScreenGUI extends JFrame {
 					.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		contentPane.setLayout(gl_contentPane);
+		setLayout(gl_contentPane);
 	}
 
 }

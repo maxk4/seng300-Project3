@@ -1,28 +1,38 @@
-package util;
+package printing;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
+import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.AbstractDevice;
 import com.jimmyselectronics.AbstractDeviceListener;
+import com.jimmyselectronics.EmptyException;
+import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.IReceiptPrinter;
 import com.jimmyselectronics.abagnale.ReceiptPrinterListener;
 
-public class LowInkLowPaper implements ReceiptPrinterListener {
+public class PrinterController implements ReceiptPrinterListener {
+	
+	private List<PrinterListener> listeners;
+	private DoItYourselfStation station;
+	
 	
 	boolean lowPaper;
 	boolean lowInk;
 	boolean noPaper;
 	boolean noInk;
-	private AttendantUI attendant;
-	private CustomerUI customer;
 	
 	//Constructor
-	public LowInkLowPaper(CustomerUI customer, AttendantUI attendant) {
+	public PrinterController(DoItYourselfStation station) {
 		this.lowPaper = false;
 		this.lowInk = false;
 		this.noPaper = false;
 		this.noInk = false;
-		this.customer = customer;
-		this.attendant = attendant;
+		this.station = station;
+		this.listeners = new ArrayList<PrinterListener>();
+		station.printer.register(this);
 	}
 
 	@Override
@@ -63,12 +73,12 @@ public class LowInkLowPaper implements ReceiptPrinterListener {
 
 	@Override
 	public void paperAdded(IReceiptPrinter printer) {
-		attendant.notifyLowPaperResolved(customer);
+		for (PrinterListener listener : listeners) listener.notifyPaperRefilled(station);
 	}
 
 	@Override
 	public void inkAdded(IReceiptPrinter printer) {
-		attendant.notifyLowInkResolved(customer);
+		for (PrinterListener listener : listeners) listener.notifyInkRefilled(station);
 	}
 	
 	public boolean getLowInk() {
@@ -97,12 +107,23 @@ public class LowInkLowPaper implements ReceiptPrinterListener {
 	}
 	
 	public void notifyLowInk() {
-		System.out.println("Less than 10% ink remaining.");
-		attendant.notifyLowInkDetected(customer);
+		for (PrinterListener listener : listeners) listener.notifyLowInk(station);
 	}
 	
 	public void notifyLowPaper() {
-		System.out.println("Less than 10% paper remaining.");
-		attendant.notifyLowPaperDetected(customer);
+		for (PrinterListener listener : listeners) listener.notifyLowPaper(station);
+	}
+	
+	public void print(String receipt) {
+		for (char c : receipt.toCharArray()) {
+			try {
+				station.printer.print(c);
+			} catch (EmptyException e) {
+				// Notify attendant
+			} catch (OverloadException e) {
+				e.printStackTrace();
+			}
+		}
+		station.printer.cutPaper();
 	}
 }

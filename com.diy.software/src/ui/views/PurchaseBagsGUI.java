@@ -1,11 +1,8 @@
-package views;
+package ui.views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.Bag;
-import util.CustomerUI;
+import ui.CustomerUI;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -14,25 +11,21 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PurchaseBagsGUI extends JFrame{
-
-	private static final long serialVersionUID = 6889161614035275829L;
-	private JPanel contentPane;
+public class PurchaseBagsGUI extends CustomerView {
+	
+	private static final long serialVersionUID = -511473493557072211L;
 	private JTextField txtNumberOfBags;
+	public final JButton enterButton;
 
 
 	/**
 	 * Create the 
 	 */
 	public PurchaseBagsGUI(CustomerUI customer) {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super(customer);
 		setBounds(100, 100, 342, 388);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(50, 126, 192));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+		setBackground(new Color(50, 126, 192));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JButton btnNewButton_1 = new JButton("1");
 		btnNewButton_1.setBounds(11, 152, 75, 64);
@@ -155,20 +148,14 @@ public class PurchaseBagsGUI extends JFrame{
 		});
 		btnNewButton_decimal.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
-		JButton btnNewButton_Enter = new JButton("Enter");
-		btnNewButton_Enter.setBounds(254, 81, 75, 205);
-		btnNewButton_Enter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = txtNumberOfBags.getText();
-				int bags = (int) Double.parseDouble(currValue);
-				
-				for (int i = 0; i < bags; i++) {
-					customer.addBarcodedProductToList(new Bag());
-				}
-				customer.startScanning();
-			}
+		enterButton = new JButton("Enter");
+		enterButton.setBounds(254, 81, 75, 205);
+		enterButton.addActionListener(e -> {
+			String currValue = txtNumberOfBags.getText();
+			int bags = (int) Double.parseDouble(currValue);
+			controller.purchaseBags(bags);
 		});
-		btnNewButton_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		enterButton.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton btnNewButton_Del = new JButton("Del");
 		btnNewButton_Del.setBounds(254, 11, 75, 64);
@@ -180,7 +167,6 @@ public class PurchaseBagsGUI extends JFrame{
 			}
 		});
 		btnNewButton_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		contentPane.setLayout(null);
 		
 		txtNumberOfBags = new JTextField();
 		txtNumberOfBags.setBounds(11, 292, 318, 57);
@@ -188,20 +174,20 @@ public class PurchaseBagsGUI extends JFrame{
 		txtNumberOfBags.setText("");
 		txtNumberOfBags.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		txtNumberOfBags.setColumns(10);
-		contentPane.add(txtNumberOfBags);
-		contentPane.add(btnNewButton_4);
-		contentPane.add(btnNewButton_5);
-		contentPane.add(btnNewButton_6);
-		contentPane.add(btnNewButton_7);
-		contentPane.add(btnNewButton_8);
-		contentPane.add(btnNewButton_9);
-		contentPane.add(btnNewButton_0);
-		contentPane.add(btnNewButton_1);
-		contentPane.add(btnNewButton_2);
-		contentPane.add(btnNewButton_decimal);
-		contentPane.add(btnNewButton_3);
-		contentPane.add(btnNewButton_Enter);
-		contentPane.add(btnNewButton_Del);
+		add(txtNumberOfBags);
+		add(btnNewButton_4);
+		add(btnNewButton_5);
+		add(btnNewButton_6);
+		add(btnNewButton_7);
+		add(btnNewButton_8);
+		add(btnNewButton_9);
+		add(btnNewButton_0);
+		add(btnNewButton_1);
+		add(btnNewButton_2);
+		add(btnNewButton_decimal);
+		add(btnNewButton_3);
+		add(enterButton);
+		add(btnNewButton_Del);
 	}
 
 }

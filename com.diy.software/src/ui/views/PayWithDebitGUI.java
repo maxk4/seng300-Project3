@@ -1,38 +1,32 @@
-package views;
+package ui.views;
 
 import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import com.diy.hardware.DoItYourselfStation;
 
-import util.CustomerUI;
+import ui.CustomerUI;
 
 import javax.swing.ImageIcon;
 
-public class PayWithDebitGUI extends JFrame {
+public class PayWithDebitGUI extends CustomerView {
 	private static final long serialVersionUID = 7114333266530075624L;
-	private JPanel contentPane;
-	
 	/**
 	 * Create the frame.
 	 */
-	public PayWithDebitGUI(CustomerUI customer) {
-		setTitle("Debit Payment");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public PayWithDebitGUI(CustomerUI customer, DoItYourselfStation station) {
+		super(customer);
+		title = "Debit Payment";
 		setBounds(100, 100, 453, 238);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(65, 139, 212));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+		setBackground(new Color(65, 139, 212));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("Order Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
@@ -47,10 +41,14 @@ public class PayWithDebitGUI extends JFrame {
 		btnPayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
 		JButton btnNewButton_1 = new JButton("Cancel Payment");
+		btnNewButton_1.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+			station.cardReader.disable();
+		});
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(PayWithDebitGUI.class.getResource("/resources/icons8-debit-card-100.png")));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -89,6 +87,6 @@ public class PayWithDebitGUI extends JFrame {
 					.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(6))
 		);
-		contentPane.setLayout(gl_contentPane);
+		setLayout(gl_contentPane);
 	}
 }

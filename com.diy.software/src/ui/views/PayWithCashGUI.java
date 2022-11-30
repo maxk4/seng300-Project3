@@ -1,10 +1,8 @@
-package views;
+package ui.views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.CustomerUI;
+import ui.CustomerUI;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -17,22 +15,18 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PayWithCashGUI extends JFrame {
+public class PayWithCashGUI extends CustomerView {
 	private static final long serialVersionUID = -7710462478741797757L;
-	private JPanel contentPane;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public PayWithCashGUI(CustomerUI customer) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super(customer);
 		setBounds(100, 100, 656, 393);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(65, 139, 212));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+		setBackground(new Color(65, 139, 212));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblNewLabel_1 = new JLabel("Order Total: $");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
@@ -84,7 +78,7 @@ public class PayWithCashGUI extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-cash-100.png")));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -151,6 +145,6 @@ public class PayWithCashGUI extends JFrame {
 						.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
 					.addGap(60))
 		);
-		contentPane.setLayout(gl_contentPane);
+		setLayout(gl_contentPane);
 	}
 }

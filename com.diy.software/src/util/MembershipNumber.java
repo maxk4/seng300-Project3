@@ -10,45 +10,40 @@ input will be stored in a HashMap, where:
 
 public class MembershipNumber {
 	
-	public static ArrayList<Integer> MEMBER_NUMBERS;
-	private Integer currentMember;
+	public static final List<Integer> MEMBER_NUMBERS = new ArrayList<Integer>();
+	public static final List<Integer> LOGGED_IN = new ArrayList<Integer>();
 	
-	
-	public MembershipNumber() {
-		MEMBER_NUMBERS = new ArrayList<Integer>();
-		currentMember = null;
-	}
-    
-    public synchronized Integer checkMemNum(Integer num) {
-    	String LengthString = num.toString();
+    public static boolean checkMemNum(int num) {
+    	String LengthString = "" + num;
     	int NumberLength = LengthString.length();
         if (NumberLength != 8) {
         	System.out.println("The number you entered is invalid");
-        	return 8;}
+        	return false;
+        }
         if (!(MEMBER_NUMBERS.contains(num))) {
         	System.out.println("The number you entered is not a member");
-        	return 0;}
-        if (currentMember != null) {
-        	System.out.println("A member # is already in use : " + currentMember);
-        	return 1;}
-        else { 
-        	System.out.println("The number you entered is valid");
-            currentMember = num;
-           	System.out.println("Current Member #: " + currentMember);
-          	return currentMember;
+        	return false;
         }
+        if (LOGGED_IN.contains(num)) {
+        	System.out.println("A member # is already in use : " + num);
+        	return false;
+        }
+        System.out.println("The number you entered is valid");
+        LOGGED_IN.add(num);
+       	System.out.println("Current Member #: " + num);
+        return true;
     }
     
-    public void addMem(Integer num) {
+    public void addMem(int num) {
     	MEMBER_NUMBERS.add(num);
     }
     
-    public void removeMem(Integer num){
+    public void removeMem(int num){
     	MEMBER_NUMBERS.remove(num);
     }
     
-    public Integer getCurrentMember() {
-    	return currentMember;
+    public boolean isLoggedIn(int num) {
+    	return LOGGED_IN.contains(num);
     }
     
 }
