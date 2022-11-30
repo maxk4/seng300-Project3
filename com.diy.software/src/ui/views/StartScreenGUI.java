@@ -27,34 +27,34 @@ public class StartScreenGUI extends CustomerView {
 		setBackground(new Color(50, 126, 192));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JButton btnNewButton_4 = new JButton("Start Scanning");
-		btnNewButton_4.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-barcode-100.png")));
-		btnNewButton_4.addActionListener(e -> {
+		JButton button_StartScanning = new JButton("Start Scanning");
+		button_StartScanning.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-barcode-100.png")));
+		button_StartScanning.addActionListener(e -> {
 			controller.beginSession();
 			controller.setView(CustomerUI.SCAN);
 			station.mainScanner.enable();
 			station.handheldScanner.enable();
 		});
 		
-		JLabel lblNewLabel = new JLabel("DIYourselfStation");
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 23));
+		JLabel label_DIYStation_Text = new JLabel("DIYourselfStation");
+		label_DIYStation_Text.setFont(new Font("Lucida Grande", Font.BOLD, 23));
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
-						.addComponent(lblNewLabel))
+						.addComponent(button_StartScanning, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+						.addComponent(label_DIYStation_Text))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblNewLabel)
+					.addComponent(label_DIYStation_Text)
 					.addGap(42)
-					.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+					.addComponent(button_StartScanning, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		setLayout(gl_contentPane);
