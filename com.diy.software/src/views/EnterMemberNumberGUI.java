@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import util.CustomerUI;
+import util.MembershipDatabase;
+import util.MembershipListener;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -12,19 +14,22 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class EnterMemberNumberGUI extends JFrame {
 	private static final long serialVersionUID = -2878096921110787780L;
 	private JPanel contentPane;
 	private JTextField txtMemberNumber;
 
+	private MembershipListener membership_listener = new MembershipListener();
+
 	/**
-	 * Create the 
+	 * Create the Membership GUI, for customer to type, scan, swipe the membership cards
 	 */
 	public EnterMemberNumberGUI(CustomerUI customer) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 342, 388);
+		setBounds(100, 100, 380, 460);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(50, 126, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -148,23 +153,82 @@ public class EnterMemberNumberGUI extends JFrame {
 			}
 		});
 		btnNewButton_decimal.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		
+
+		//Updated in 3rd Iteration @author Simrat Benipal (start)
+		//Added in 3rd Iteration @author Simrat Benipal
+		JButton btnNewButton_Cancel = new JButton("Cancel");
+		btnNewButton_Cancel.setBounds(254, 81, 100, 60);
+		btnNewButton_Cancel.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			txtMemberNumber.setText("");
+			customer.startScanning();
+		}
+		});
+		btnNewButton_Cancel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		//Added in 3rd Iteration ends
+
 		JButton btnNewButton_Enter = new JButton("Enter");
-		btnNewButton_Enter.setBounds(254, 81, 75, 205);
+		btnNewButton_Enter.setBounds(254, 155, 100, 120);
 		btnNewButton_Enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String currValue = txtMemberNumber.getText();
+				if(Objects.equals(currValue, ""))
+				{
+					//Try again
+					currValue = "-1";
+				}
 				Integer memberNumber = Integer.valueOf(currValue);
-				memberNumber = customer.checkMemberNumber(memberNumber);
-				customer.useMemberNumber(memberNumber);
+				//Signal the Listener
+				membership_listener.cardTyped(memberNumber);
+				if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
+				{
+					String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
+					customer.useMemberNumber("Cx: " + customerName);
+
+				}
+				else {
+					//Member Do not exist in the database
+					customer.useMemberNumber("Invalid Membership Number");
+				}
 				txtMemberNumber.setText("");
 				customer.startScanning();
 			}
 		});
 		btnNewButton_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		
-		JButton btnNewButton_Del = new JButton("Del");
-		btnNewButton_Del.setBounds(254, 11, 75, 64);
+
+		//Add Membership Number by Scanning
+		JButton btnNewButton_Scan = new JButton("Scan Card");
+		btnNewButton_Scan.setBounds(11, 354, 156, 64);
+		btnNewButton_Scan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				//Signal the listener, that a card is scanned
+				membership_listener.cardScanned(null);
+				txtMemberNumber.setText("");
+				customer.startScanning();
+			}
+		});
+		btnNewButton_Scan.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+
+		//Add membership number by Swiping
+		JButton btnNewButton_Swipe = new JButton("Swipe Card");
+		btnNewButton_Swipe.setBounds(173, 354, 156, 64);
+		btnNewButton_Swipe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				//Signal the listener, that a card has been swiped
+				membership_listener.cardSwiped(null);
+				txtMemberNumber.setText("");
+				customer.startScanning();
+			}
+		});
+		btnNewButton_Swipe.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+
+
+		//Added Iteration 3 Code @Simrat (ends)
+
+		JButton btnNewButton_Del = new JButton("Delete");
+		btnNewButton_Del.setBounds(254, 11, 100, 64);
 		btnNewButton_Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String currValue = txtMemberNumber.getText();
@@ -176,7 +240,7 @@ public class EnterMemberNumberGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtMemberNumber = new JTextField();
-		txtMemberNumber.setBounds(11, 292, 318, 57);
+		txtMemberNumber.setBounds(11, 292, 342, 57);
 		txtMemberNumber.setEditable(false);
 		txtMemberNumber.setText("");
 		txtMemberNumber.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -195,5 +259,8 @@ public class EnterMemberNumberGUI extends JFrame {
 		contentPane.add(btnNewButton_3);
 		contentPane.add(btnNewButton_Enter);
 		contentPane.add(btnNewButton_Del);
+		contentPane.add(btnNewButton_Cancel);
+		contentPane.add(btnNewButton_Scan);
+		contentPane.add(btnNewButton_Swipe);
 	}
 }

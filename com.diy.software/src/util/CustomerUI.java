@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JFrame;
 
@@ -31,7 +32,14 @@ public class CustomerUI {
 	
 	private ExpectedWeightListener weightListener;
 	private ProductList productList;
-	private MembershipNumber membershipNum;
+
+	//Removed in Iteration 3 @Simrat (Starts)
+	//private MembershipNumber membershipNum;
+	//Removed in Iteration 3 @Simrat (Ends)
+
+	//Added in Iteration 3 @Simrat (Starts)
+	private String currentMember = null;
+	//Added in Iteration 3 @Simrat (Ends)
 	
 	private List<CustomerStationListener> stationListeners = new ArrayList<CustomerStationListener>();
 	private List<NoBaggingRequestListener> nbrListeners = new ArrayList<NoBaggingRequestListener>();
@@ -458,7 +466,9 @@ public class CustomerUI {
 		
 		balance = 0;
 		productList = new ProductList();
-		membershipNum = new MembershipNumber();
+		//Removed in Iteration 3 @Simrat (Starts)
+		//membershipNum = new MembershipNumber();
+		//Removed in Iteration 3 @Simrat (ends)
 		scanScreenGUI.update(0, productList);
 		
 		station.coinSlot.disable();
@@ -484,9 +494,11 @@ public class CustomerUI {
 	
 	/*
 	 *  Open enter membership number gui
+	 * Updated in Iteration 3 @Simrat (Starts)
 	 */
 	public void enterMemNum() {
-		if (membershipNum.getCurrentMember() == null) {
+		//if (currentMember == null)
+		{
 			startScreenGUI.setVisible(false);
 			scanScreenGUI.setVisible(false);
 			payWithCashGUI.setVisible(false);
@@ -496,22 +508,48 @@ public class CustomerUI {
 			orderFinishedGUI.setVisible(false);
 			memberNumGUI.setVisible(true);
 		}
+		//else
+		//{
+		//	System.out.println("Member already logged in");
+		//}
+	//Updated in Iteration 3 @Simrat (Ends)
 	}
+	//Removed in Iteration 3 @Simrat (Starts)
+	/*
 	public Integer checkMemberNumber(Integer number) {
 		return membershipNum.checkMemNum(number);
 	}
-	
-	public void useMemberNumber(Integer number) {
-		scanScreenGUI.updateMember(number);
+	 */
+	//Removed in Iteration 3 @Simrat (Ends)
+
+	/**
+	 * Updates the Member/Customer Name on the GUI
+	 * @param customerName Name from the membership database, (if the given member exists)
+	 *                      otherwise it says "Invalid Membership Number"
+	 */
+	public void useMemberNumber(String customerName) {
+		//update the current member name
+		System.out.println("membership number entered: " + customerName);
+		if(Objects.equals(customerName, "Invalid Membership Number"))
+		{
+			currentMember = null;
+		}
+		else
+		{
+			currentMember = customerName;
+		}
+		scanScreenGUI.updateMember(customerName);
 	}
-	
-	public void addMemberNumber(Integer number) {
-		membershipNum.addMem(number);
+
+	//Updated in Iteration @Simrat (Starts)
+	public void addMemberNumber(Integer number, String CxName) {
+		//membershipNum.addMem(number);
+		MembershipDatabase.MEMBER_DATABASE.put(number,CxName);
 	}
-	
-	public Integer getCurrMem() {
-		return membershipNum.getCurrentMember();
+	public String getCurrMem() {
+		return currentMember;
 	}
+	//Updated in Iteration @Simrat (Ends)
 	public void addBag() {
 		placingBag = true;
 	}

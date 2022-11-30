@@ -14,18 +14,7 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import ca.powerutility.PowerGrid;
-import util.AttendantStation;
-import util.AttendantStationListener;
-import util.AttendantUI;
-import util.Bank;
-import util.CashPayment;
-import util.CustomerStationListener;
-import util.CustomerUI;
-import util.ExpectedWeightListener;
-import util.LowInkLowPaper;
-import util.NoBaggingRequestListener;
-import util.PayWithCardListener;
-import util.ScanItemListener;
+import util.*;
 
 public class Simulation {
 	
@@ -43,8 +32,9 @@ public class Simulation {
 	};
 	
 	public static List<Card> cards = new ArrayList<Card>();
-	public static List<Integer> members = new ArrayList<>();
-	
+	//Removed in Iteration 3 (start) @Simrat
+	//public static List<Integer> members = new ArrayList<>();
+	//Removed in iteration 3 (ends) @Simrat
 	
 	public static void main(String[] args) {
 		
@@ -98,9 +88,11 @@ public class Simulation {
 			}
 			
 			ui.setCashPaymentController(new CashPayment(ui, attendant, station));
-			for (int j = 0; j < members.size(); j++) {
-				ui.addMemberNumber(members.get(j));
-			}
+			//Removed in iteration 3 @Simrat (starts)
+			//for (int j = 0; j < members.size(); j++) {
+			//	ui.addMemberNumber(members.get(j));
+			//}
+			//Removed in iteration 3 @Simrat (ends)
 			uis.add(ui);
 			stations.add(station);
 			
@@ -138,9 +130,29 @@ public class Simulation {
 			cards.add(card);
 		}
 		
-		members.add(12345678);
-		members.add(23456789);
-		members.add(34567890);
+		//Updated code in Iteration 3 @Simrat (Start)
+		//members.add(12345678);
+		//members.add(23456789);
+		//members.add(34567890);
+		//Setting up the Membership Database
+		MembershipDatabase.MEMBER_DATABASE.put(123456789,"John Doe Customer");
+	    MembershipDatabase.MEMBER_DATABASE.put(1234567891,"John Doe");
+	    MembershipDatabase.MEMBER_DATABASE.put(1234567892,"John Doe 2");
+		//Data added in MEMBER_DATABASE
+
+		//Create 2 membership card
+		Card membership_card1 = new Card("Membership","99999999", "John Member-Card", "000", "000", false, false);
+		Card membership_card2 = new Card("Membership","88888888", "John OG-Card", "000", "000", false, false);
+
+		//Add these to customer's wallet
+		//adding into cards Array which will be added into wallet in genCustomer() method
+		cards.add(membership_card1);
+		cards.add(membership_card2);
+
+		///Add the membership cards into the membership database
+		MembershipDatabase.MEMBER_DATABASE.put(99999999,"John Member-Card");
+		MembershipDatabase.MEMBER_DATABASE.put(88888888,"John OG-Card");
+		//Updated code in Iteration 3 Ends @Simrat (Ends)
 	}
 
 	private static Customer genCustomer() {

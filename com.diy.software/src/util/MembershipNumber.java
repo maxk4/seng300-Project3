@@ -6,6 +6,10 @@ import java.util.*;
 input will be stored in a HashMap, where:
 - key: customer's name
 - value: membership number
+
+
+DO NOT USE THIS CLASS
+
  */
 
 public class MembershipNumber {
@@ -18,7 +22,7 @@ public class MembershipNumber {
 		MEMBER_NUMBERS = new ArrayList<Integer>();
 		currentMember = null;
 	}
-    
+    /*
     public synchronized Integer checkMemNum(Integer num) {
     	String LengthString = num.toString();
     	int NumberLength = LengthString.length();
@@ -50,5 +54,7 @@ public class MembershipNumber {
     public Integer getCurrentMember() {
     	return currentMember;
     }
-    
+
+
+     */
 }

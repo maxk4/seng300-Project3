@@ -211,14 +211,19 @@ public class ScanScreenGUI extends JFrame {
 		textField.setText(String.format("$%.2f", balance / 100d));
 	}
 
-	public void updateMember(Integer number) {
-		if (number == 8) 
+	//Updated in Iteration 3 @Simrat (Starts)
+	public void updateMember(String customerName) {
+		/*
+		if (number == 8)
 			memberField.setText("Invalid #");
 		if (number == 0) 
 			memberField.setText("Not a Member");
 		if (number == 1) 
 			memberField.setText("A Member # already in use");
 		if (number != 8 && number != 0 && number != 1)
-		memberField.setText(number + "");
+
+		 */
+		memberField.setText( customerName + "");
 	}
+	//Updated in Iteration 3 @Simrat (Ends)
 }
