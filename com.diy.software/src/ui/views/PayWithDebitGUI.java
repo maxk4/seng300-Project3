@@ -46,6 +46,9 @@ public class PayWithDebitGUI extends CustomerView {
 			controller.setView(CustomerUI.SCAN);
 			station.cardReader.disable();
 		});
+		button_CancelPayment.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+		});
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(PayWithDebitGUI.class.getResource("/resources/icons8-debit-card-100.png")));

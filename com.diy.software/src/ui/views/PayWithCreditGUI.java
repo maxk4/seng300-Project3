@@ -52,6 +52,9 @@ public class PayWithCreditGUI extends CustomerView {
 
 		JButton button_CancelPayment = new JButton("Cancel Payment");
 		button_CancelPayment.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		button_CancelPayment.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+		});
 		
 		JLabel labe_CreditCard_Icon = new JLabel("");
 		labe_CreditCard_Icon.setIcon(new ImageIcon(PayWithCreditGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));

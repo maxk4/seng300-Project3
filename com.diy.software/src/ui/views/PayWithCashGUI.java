@@ -2,6 +2,8 @@ package ui.views;
 
 import javax.swing.border.EmptyBorder;
 
+import com.diy.hardware.DoItYourselfStation;
+
 import ui.CustomerUI;
 
 import java.awt.Color;
@@ -22,7 +24,7 @@ public class PayWithCashGUI extends CustomerView {
 	/**
 	 * Create the frame.
 	 */
-	public PayWithCashGUI(CustomerUI customer) {
+	public PayWithCashGUI(CustomerUI customer, DoItYourselfStation station) {
 		super(customer);
 		setBounds(100, 100, 656, 393);
 		setBackground(new Color(65, 139, 212));
@@ -81,6 +83,12 @@ public class PayWithCashGUI extends CustomerView {
 		JButton button_CancelPayment = new JButton("Cancel Cash Payment");
 		button_CancelPayment.setBackground(new Color(94, 193, 255));
 		button_CancelPayment.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		button_CancelPayment.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+			station.coinSlot.disable();
+			station.banknoteInput.disable();
+			station.banknoteOutput.disable();
+		});
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()

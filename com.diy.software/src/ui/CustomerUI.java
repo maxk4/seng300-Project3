@@ -45,7 +45,7 @@ public class CustomerUI {
 		views = new CustomerView[] {
 				new StartScreenGUI(this, station),
 				new ScanScreenGUI(this, station),
-				new PayWithCashGUI(this),
+				new PayWithCashGUI(this, station),
 				new PayWithCreditGUI(this, station),
 				new PayWithDebitGUI(this, station),
 				new PurchaseBagsGUI(this),
@@ -68,9 +68,7 @@ public class CustomerUI {
 	
 	public void setView(int view) {
 		mainFrame.setVisible(false);
-		mainFrame.getContentPane().removeAll();
 		mainFrame.setContentPane(views[view]);
-		mainFrame.validate();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		mainFrame.pack();
