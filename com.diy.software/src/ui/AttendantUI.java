@@ -13,17 +13,24 @@ public class AttendantUI {
 	private AttendantGUI gui;
 	private List<DoItYourselfStation> stations;
 	private List<AttendantUIListener> listeners;
+	private AttendantStation station;
 	
 	/**
 	 * Make a new AttendantUI attached to the touch screen of the provided AttendantStation
 	 * @param station AttendantStation who's touch screen the new AttendantUI will be attached to
 	 */
 	public AttendantUI(AttendantStation station, int maxStations) {
+		this.station = station;
+		
 		listeners = new ArrayList<AttendantUIListener>();
 		stations = new ArrayList<DoItYourselfStation>(maxStations);
 		
-		gui = new AttendantGUI(this);
-		station.screen.getFrame().setContentPane(gui);
+		gui = new AttendantGUI(this, station.screen.getFrame());
+	}
+	
+	public void addStation(DoItYourselfStation customerStation) {
+		station.add(customerStation);
+		gui.addStation(customerStation);
 	}
 	
 	public void approveWeight(DoItYourselfStation station) {

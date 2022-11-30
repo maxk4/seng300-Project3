@@ -2,6 +2,7 @@ package ui.views;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.diy.hardware.DoItYourselfStation;
@@ -20,13 +21,16 @@ public class AttendantGUI extends AttendantView {
 	private Map<DoItYourselfStation, StationComponent> componentMap = new HashMap<DoItYourselfStation, StationComponent>();
 	private JPanel stationPanel;
 	private AttendantUI attendant;
+	
+	private JFrame parent;
 
 	/**
 	 * Create the frame.
 	 */
-	public AttendantGUI(AttendantUI attendant) {
+	public AttendantGUI(AttendantUI attendant, JFrame frame) {
 		super(attendant);
 		this.attendant = attendant;
+		this.parent = frame;
 		stationComponents = new ArrayList<StationComponent>();
 		title = "Attendant GUI";
 		setBounds(100, 100, 593, 298);
@@ -38,16 +42,17 @@ public class AttendantGUI extends AttendantView {
 		
 		add(stationPanel);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		
-		
-		setVisible(true);
+		frame.setContentPane(this);
+		frame.pack();
+		frame.setVisible(true);
 	}
 	
 	public void update() {
 		stationPanel.removeAll();
 		for (StationComponent sc : stationComponents) stationPanel.add(sc);
-		revalidate();
-		repaint();
+		parent.revalidate();
+		parent.repaint();
+		parent.pack();
 	}
 	
 	public void addStation(DoItYourselfStation station) {
