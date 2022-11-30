@@ -38,6 +38,10 @@ public class ScaleController {
 	public void updateExpectedWeight(double weightInGrams) {
 		baggingAreaListener.updateExpectedWeight(weightInGrams);
 	}
+
+	public void removeLastItemWeight() {
+		baggingAreaListener.removeLastItemWeight();
+	}
 	
 	public void setExpectedWeight(double weightInGrams) {
 		baggingAreaListener.setExpectedWeight(weightInGrams);

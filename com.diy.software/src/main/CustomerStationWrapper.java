@@ -102,10 +102,13 @@ public class CustomerStationWrapper {
 				
 			}
 
+			// Do Not Place Item in Bagging Area Use Case
 			@Override
 			public void approveNoBag(DoItYourselfStation station) {
-				// TODO Auto-generated method stub
-				
+			// Reduces the expected weight in the Bagging Area by the expected weight of the item
+				if (station == diySstation) {
+					scale.removeLastItemWeight();
+				}
 			}
 		});
 		
