@@ -26,7 +26,7 @@ public class PayWithDebitGUI extends JFrame {
 	 */
 	public PayWithDebitGUI(CustomerUI customer) {
 		setTitle("Debit Payment");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 453, 238);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(65, 139, 212));
@@ -34,19 +34,20 @@ public class PayWithDebitGUI extends JFrame {
 
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("Order Total: $");
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
+		JLabel label_OrderTotal_Text = new JLabel("Order Total: $");
+		label_OrderTotal_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel lblNewLabel_1 = new JLabel("0.00");
-		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
+		JLabel label_OrderTotal_Number = new JLabel("0.00");
+		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JButton btnNewButton = new JButton("Pay by Chip");
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		JButton button_PayByChip = new JButton("Pay by Chip");
+		button_PayByChip.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
-		JButton btnPayByTap = new JButton("Pay by Tap");
-		btnPayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		JButton button_PayByTap = new JButton("Pay by Tap");
+		button_PayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
-		JButton btnNewButton_1 = new JButton("Cancel Payment");
+		JButton button_CancelPayment = new JButton("Cancel Payment");
+		button_CancelPayment.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(PayWithDebitGUI.class.getResource("/resources/icons8-debit-card-100.png")));
@@ -59,14 +60,14 @@ public class PayWithDebitGUI extends JFrame {
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+									.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnPayByTap, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-								.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)))
+									.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+								.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel)
+							.addComponent(label_OrderTotal_Text)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel_1)
+							.addComponent(label_OrderTotal_Number)
 							.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
 							.addComponent(lblNewLabel_2)))
 					.addContainerGap())
@@ -78,15 +79,15 @@ public class PayWithDebitGUI extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewLabel)
-								.addComponent(lblNewLabel_1)))
+								.addComponent(label_OrderTotal_Text)
+								.addComponent(label_OrderTotal_Number)))
 						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnPayByTap, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
+						.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(6))
 		);
 		contentPane.setLayout(gl_contentPane);

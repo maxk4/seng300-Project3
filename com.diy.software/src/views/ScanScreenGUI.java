@@ -27,8 +27,8 @@ public class ScanScreenGUI extends JFrame {
 
 	private static final long serialVersionUID = 6049492754371953479L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField memberField;
+	private JTextField textField_OrderTotal_Number;
+	private JTextField textField_MemberNumber;
 	private JTextArea scannedPricesArea;
 	private JTextArea scannedItemsArea;
 
@@ -46,28 +46,28 @@ public class ScanScreenGUI extends JFrame {
 
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("$");
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		JLabel label_DollarSignForTotal_Text = new JLabel("$");
+		label_DollarSignForTotal_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		textField.setColumns(10);
-		textField.setEditable(false);
+		textField_OrderTotal_Number = new JTextField();
+		textField_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		textField_OrderTotal_Number.setColumns(10);
+		textField_OrderTotal_Number.setEditable(false);
 		
-		memberField = new JTextField();
-		memberField.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		memberField.setColumns(10);
-		memberField.setEditable(false);
+		textField_MemberNumber = new JTextField();
+		textField_MemberNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		textField_MemberNumber.setColumns(10);
+		textField_MemberNumber.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Debit");
-		btnNewButton.addActionListener(e -> {
+		JButton button_PayWithDebit = new JButton("Debit");
+		button_PayWithDebit.addActionListener(e -> {
 			customer.payWithDebit();
 		});
-		btnNewButton.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-debit-card-100.png")));
+		button_PayWithDebit.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-debit-card-100.png")));
 		
-		JButton btnNewButton_1 = new JButton("Complete/Print Receipt");
-		btnNewButton_1.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-receipt-100.png")));
-		btnNewButton_1.addActionListener(e -> {
+		JButton button_CompleteAndPrintReceipt = new JButton("Complete/Print Receipt");
+		button_CompleteAndPrintReceipt.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-receipt-100.png")));
+		button_CompleteAndPrintReceipt.addActionListener(e -> {
 			try {
 				customer.endSession();
 			} catch (IllegalStateException err) {
@@ -75,37 +75,37 @@ public class ScanScreenGUI extends JFrame {
 			}
 		});
 		
-		JButton btnNewButton_2 = new JButton("Credit");
-		btnNewButton_2.addActionListener(e -> {
+		JButton button_PayWithCredit = new JButton("Credit");
+		button_PayWithCredit.addActionListener(e -> {
 			customer.payWithCredit();
 		});
-		btnNewButton_2.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
+		button_PayWithCredit.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
 		
-		JButton btnNewButton_3 = new JButton("Cash");
-		btnNewButton_3.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-cash-100.png")));
-		btnNewButton_3.addActionListener(e -> {
+		JButton button_PayWithCash = new JButton("Cash");
+		button_PayWithCash.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-cash-100.png")));
+		button_PayWithCash.addActionListener(e -> {
 			customer.payWithCash();
 		});
 		
-		JButton btnNewButton_5 = new JButton("Attendant");
+		JButton button_Attendant = new JButton("Attendant");
 		
-		JButton btnNewButton_6 = new JButton("Enter Member #");
-		btnNewButton_6.addActionListener(e -> {
+		JButton button_EnterMemberNum = new JButton("Enter Member #");
+		button_EnterMemberNum.addActionListener(e -> {
 			customer.enterMemNum();
 		});
 		
-		JButton btnNewButton_7 = new JButton("Use Personal Bags");
-		btnNewButton_7.addActionListener(e -> {
+		JButton button_UsePersonalBags = new JButton("Use Personal Bags");
+		button_UsePersonalBags.addActionListener(e -> {
 			customer.addBag();
 		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JLabel lblNewLabel_1 = new JLabel("PAY");
-		lblNewLabel_1.setFont(new Font("Telugu MN", Font.BOLD, 23));
+		JLabel label_Pay_Text = new JLabel("PAY");
+		label_Pay_Text.setFont(new Font("Telugu MN", Font.BOLD, 23));
 		
-		JButton btnNewButton_6_1 = new JButton("Buy Bags");
-		btnNewButton_6_1.addActionListener(new ActionListener() {
+		JButton button_BuyBags = new JButton("Buy Bags");
+		button_BuyBags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				customer.purchageBags();
 			}
@@ -118,36 +118,36 @@ public class ScanScreenGUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel)
+							.addComponent(label_DollarSignForTotal_Text)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(textField_OrderTotal_Number, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 271, Short.MAX_VALUE)
+								.addComponent(button_CompleteAndPrintReceipt, GroupLayout.PREFERRED_SIZE, 271, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(100)
-									.addComponent(btnNewButton_5)
+									.addComponent(button_Attendant)
 									.addContainerGap())))
 						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addGap(58)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnNewButton_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-								.addComponent(btnNewButton_3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 167, Short.MAX_VALUE)
-								.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
+								.addComponent(button_PayWithCredit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+								.addComponent(button_PayWithCash, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 167, Short.MAX_VALUE)
+								.addComponent(button_PayWithDebit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
 							.addGap(52))
 						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addGap(112)
-							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addComponent(label_Pay_Text, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 							.addGap(112))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton_6, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(memberField, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton_7, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(btnNewButton_6_1, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+								.addComponent(button_EnterMemberNum, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+								.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+								.addComponent(button_UsePersonalBags, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+								.addComponent(button_BuyBags, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
 							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -156,31 +156,31 @@ public class ScanScreenGUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(btnNewButton_5)
+							.addComponent(button_Attendant)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_6)
-							.addComponent(memberField)
+							.addComponent(button_EnterMemberNum)
+							.addComponent(textField_MemberNumber)
 							.addGap(18)
-							.addComponent(btnNewButton_6_1)
+							.addComponent(button_BuyBags)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_7)
+							.addComponent(button_UsePersonalBags)
 							.addGap(102)
-							.addComponent(lblNewLabel_1)
+							.addComponent(label_Pay_Text)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+							.addComponent(button_PayWithCash, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+							.addComponent(button_PayWithCredit, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+							.addComponent(button_PayWithDebit, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 							.addGap(30)
-							.addComponent(btnNewButton_1))
+							.addComponent(button_CompleteAndPrintReceipt))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(label_DollarSignForTotal_Text)
+						.addComponent(textField_OrderTotal_Number, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(63))
 		);
 		
@@ -208,17 +208,17 @@ public class ScanScreenGUI extends JFrame {
 		});
 		scannedItemsArea.setText(priceSB.toString());
 		scannedPricesArea.setText(productSB.toString());
-		textField.setText(String.format("$%.2f", balance / 100d));
+		textField_OrderTotal_Number.setText(String.format("$%.2f", balance / 100d));
 	}
 
 	public void updateMember(Integer number) {
 		if (number == 8) 
-			memberField.setText("Invalid #");
+			textField_MemberNumber.setText("Invalid #");
 		if (number == 0) 
-			memberField.setText("Not a Member");
+			textField_MemberNumber.setText("Not a Member");
 		if (number == 1) 
-			memberField.setText("A Member # already in use");
+			textField_MemberNumber.setText("A Member # already in use");
 		if (number != 8 && number != 0 && number != 1)
-		memberField.setText(number + "");
+		textField_MemberNumber.setText(number + "");
 	}
 }
