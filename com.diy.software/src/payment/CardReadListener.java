@@ -53,7 +53,7 @@ public class CardReadListener implements CardReaderListener {
 		if (!enabled) return;
 		this.data = data;
 		try {
-			manager.placeHold(data.getNumber(), manager.currentBalance());
+			manager.placeHold(data.getNumber(), manager.currentBalance(), data.getType());
 		} catch (HoldException e) {
 			e.printStackTrace();
 		}

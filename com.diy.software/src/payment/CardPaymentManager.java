@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.external.CardIssuer;
+
 
 import util.Bank;
+import util.GiftCardIssuer;
 
 public class CardPaymentManager extends PaymentManager {
 	
@@ -21,11 +24,14 @@ public class CardPaymentManager extends PaymentManager {
 		String cardNumber;
 		long id;
 		double amount;
+		// the instution that issued the card
+		CardIssuer issuer;
 		
-		public HoldData(String cardNumber, long id, double amount) {
+		public HoldData(String cardNumber, long id, double amount, CardIssuer issuer) {
 			this.cardNumber = cardNumber;
 			this.id = id;
 			this.amount = amount;
+			this.issuer = issuer;
 		}
 	}
 	
@@ -35,7 +41,7 @@ public class CardPaymentManager extends PaymentManager {
 		
 		while (returned < amount && !holds.isEmpty()) {
 			HoldData hold = holds.poll();
-			Bank.CARD_ISSUER.releaseHold(hold.cardNumber, hold.id);
+			hold.issuer.releaseHold(hold.cardNumber, hold.id);
 			funds -= hold.amount;
 			returned += hold.amount;
 		}
@@ -50,7 +56,7 @@ public class CardPaymentManager extends PaymentManager {
 			HoldData hold = holds.poll();
 			double payment = Math.min(hold.amount, rem);
 			try {
-				for (int i = 0; i < 5 && !Bank.CARD_ISSUER.postTransaction(hold.cardNumber, hold.id, payment); i++) Thread.sleep(20000);
+				for (int i = 0; i < 5 && !hold.issuer.postTransaction(hold.cardNumber, hold.id, payment); i++) Thread.sleep(20000);
 				rem -= payment;
 				funds -= payment;
 				break;
@@ -60,17 +66,26 @@ public class CardPaymentManager extends PaymentManager {
 		}
 		while (!holds.isEmpty()) {
 			HoldData hold = holds.poll();
-			Bank.CARD_ISSUER.releaseHold(hold.cardNumber, hold.id);
+			hold.issuer.releaseHold(hold.cardNumber, hold.id);
 			funds -= hold.amount * 100;
 		}
 		return (long) ((amount - rem) * 100);
 	}
 	
-	public void placeHold(String cardNumber, long amount) throws HoldException {
+	public void placeHold(String cardNumber, long amount, String cardType) throws HoldException {
 		System.out.println(cardNumber + " $" + amount / 100d);
-		long hold = Bank.CARD_ISSUER.authorizeHold(cardNumber, amount / 100d);
-		if (hold < 0) throw new HoldException();
-		holds.add(new HoldData(cardNumber, hold, amount / 100d));
+		// for gift cards
+        if (cardType.equals("Gift Card")) {
+			long hold = GiftCardIssuer.CARD_ISSUER.authorizeHold(cardNumber, amount / 100d);
+		    if (hold < 0) throw new HoldException();
+			holds.add(new HoldData(cardNumber, hold, amount / 100d, GiftCardIssuer.CARD_ISSUER));
+
+		// for credit cards, and debit cards
+		} else {
+			long hold = Bank.CARD_ISSUER.authorizeHold(cardNumber, amount / 100d);
+		    if (hold < 0) throw new HoldException(); 
+			holds.add(new HoldData(cardNumber, hold, amount / 100d, Bank.CARD_ISSUER));
+		}
 		funds += amount;
 		controller.holdSuccessful();
 	}
