@@ -54,6 +54,14 @@ public class PaymentController {
 		return res;
 	}
 	
+	public void notifyCashPayment() {
+		for (PaymentListener listener : listeners) listener.cashInserted();
+	}
+	
+	public long availableCash() {
+		return cashManager.availableFunds();
+	}
+	
 	/**
 	 * Register an PaymentListener to this
 	 * @param listener PaymentListener to add

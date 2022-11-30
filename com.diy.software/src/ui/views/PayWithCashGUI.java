@@ -20,7 +20,8 @@ import java.awt.event.ActionEvent;
 public class PayWithCashGUI extends CustomerView {
 	private static final long serialVersionUID = -7710462478741797757L;
 
-
+	private final JLabel label_OrderTotal_Number, label_MoneyInserted_Number;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -34,13 +35,13 @@ public class PayWithCashGUI extends CustomerView {
 		label_OrderTotal_Text.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
 		label_OrderTotal_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_OrderTotal_Number = new JLabel("0.00");
+		label_OrderTotal_Number = new JLabel("0.00");
 		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
 		JLabel label_MoneyInserted_Text = new JLabel("Inserted: $");
 		label_MoneyInserted_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_MoneyInserted_Number = new JLabel("0.00");
+		label_MoneyInserted_Number = new JLabel("0.00");
 		label_MoneyInserted_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
 		JLabel label_Cash_Icon = new JLabel("");
@@ -128,5 +129,10 @@ public class PayWithCashGUI extends CustomerView {
 					.addGap(60))
 		);
 		setLayout(gl_contentPane);
+	}
+	
+	public void update(long paid, long balance) {
+		label_OrderTotal_Number.setText(String.format("%.2f", balance / 100d));
+		label_MoneyInserted_Number.setText(String.format("%.2f", paid / 100d));
 	}
 }

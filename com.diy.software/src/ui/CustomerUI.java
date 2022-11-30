@@ -102,6 +102,10 @@ public class CustomerUI {
 	public void beginSession() {
 		for (CustomerUIListener listener : listeners) listener.beginSession();
 	}
+	
+	public void updateCashGUI(long paid, long balance) {
+		((PayWithCashGUI) views[PAY_WITH_CASH]).update(paid, balance);
+	}
 
 	public void updateProductList(long balance, String productString, String priceString) {
 		((ScanScreenGUI) views[SCAN]).update(balance, productString, priceString);

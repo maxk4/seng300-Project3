@@ -38,12 +38,14 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	public void validBanknoteDetected(BanknoteValidator validator, Currency currency, long value) {
 		validBanknoteCount++;
 		funds += value;
+		controller.notifyCashPayment();
 	}
 	
 	@Override
 	public void validCoinDetected(CoinValidator validator, long value) {
 		validCoinCount++;
 		funds += value;
+		controller.notifyCashPayment();
 	}
 	
 	public int getValidBanknoteCount() {

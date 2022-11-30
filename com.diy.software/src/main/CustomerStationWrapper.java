@@ -34,14 +34,22 @@ public class CustomerStationWrapper {
 			@Override
 			public void cardPaymentSucceeded() {
 				customer.setView(CustomerUI.SCAN);
-				customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
+				updateProductList();
+			}
+
+			@Override
+			public void cashInserted() {
+				updateCashGUI();
+				updateProductList();
 			}
 		});
 		
-		cart.register((p, w) -> {
-			payment.addCost(p);
-			customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
-			scale.updateExpectedWeight(w);
+		cart.register((prod, price, weight) -> {
+			payment.addCost(price);
+			updateProductList();
+			updateCashGUI();
+			if (!(prod instanceof Bag))
+				scale.updateExpectedWeight(weight);
 		});
 		
 		customer.register(new CustomerUIListener() {
@@ -50,9 +58,9 @@ public class CustomerStationWrapper {
 				for (int i = 0; i < amount; i++) {
 					//add bag
 					Bag bag = new Bag();
-					cart.productList.add(bag, Bag.DESCRIPTION, Bag.PRICE);
-					payment.addCost(Bag.PRICE);
+					cart.addItem(bag, Bag.DESCRIPTION, Bag.PRICE, Bag.WEIGHT);
 				}
+				updateProductList();
 			}
 
 			@Override
@@ -65,8 +73,7 @@ public class CustomerStationWrapper {
 				String receipt = cart.getReceipt();
 				print.print(receipt);
 				cart.clear();
-				customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
-				
+				updateProductList();
 			}
 
 			@Override
@@ -120,5 +127,13 @@ public class CustomerStationWrapper {
 			}
 			
 		});
+	}
+	
+	private void updateProductList() {
+		customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
+	}
+	
+	private void updateCashGUI() {
+		customer.updateCashGUI(payment.availableCash(), payment.getBalance());
 	}
 }

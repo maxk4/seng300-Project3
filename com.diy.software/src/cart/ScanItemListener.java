@@ -54,9 +54,8 @@ public class ScanItemListener implements BarcodeScannerListener {
 		if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode)) return;
 		BarcodedProduct product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 		
-		controller.productList.add(product, product.getDescription(), product.getPrice());
 		successfulScan++;
-		controller.itemAdded(product.getPrice(), product.getExpectedWeight());
+		controller.addItem(product, product.getDescription(), product.getPrice(), product.getExpectedWeight());
 	}
 	
 	public int getSuccessfulScan() {

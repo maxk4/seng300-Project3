@@ -150,13 +150,17 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.setBounds(254, 81, 75, 205);
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		button_Enter.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+			controller.purchaseBags(Integer.parseInt(textField_NumberOfBags.getText()));
+		});
 		
 		JButton button_Del = new JButton("Del");
 		button_Del.setBounds(254, 11, 75, 64);
 		button_Del.addActionListener(e -> {
-			String currValue = textField_NumberOfBags.getText();
-			int bags = (int) Double.parseDouble(currValue);
-			controller.purchaseBags(bags);
+			String curValue = textField_NumberOfBags.getText();
+			if (curValue.length() > 0)
+				textField_NumberOfBags.setText(curValue.substring(0, curValue.length() - 1));
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		

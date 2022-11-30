@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 
 public class CartController {
@@ -17,10 +18,6 @@ public class CartController {
 		listeners = new ArrayList<ItemAddedListener>();
 		handheldScannerListener = new ScanItemListener(station.handheldScanner, this);
 		mainScannerListener = new ScanItemListener(station.mainScanner, this);
-	}
-	
-	void itemAdded(long price, double weightInGrams) {
-		for (ItemAddedListener listener : listeners) listener.notifyItemAdded(price, weightInGrams);
 	}
 	
 	/**
@@ -80,5 +77,10 @@ public class CartController {
 			productSB.append("\n");
 		});
 		return productSB.toString();
+	}
+	
+	public void addItem(Product product, String description, long price, double weightInGrams) {
+		productList.add(product, description, price);
+		for (ItemAddedListener listener : listeners) listener.notifyItemAdded(product, price, weightInGrams);
 	}
 }
