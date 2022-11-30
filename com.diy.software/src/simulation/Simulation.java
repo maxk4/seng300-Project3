@@ -19,6 +19,7 @@ import ca.powerutility.PowerGrid;
 import main.CustomerStationWrapper;
 import ui.AttendantUI;
 import util.Bank;
+import util.MembershipNumber;
 
 public class Simulation {
 	
@@ -36,7 +37,6 @@ public class Simulation {
 	};
 	
 	public static List<Card> cards = new ArrayList<Card>();
-	public static List<Integer> members = new ArrayList<>();
 	
 	
 	public static void main(String[] args) {
@@ -104,9 +104,9 @@ public class Simulation {
 			cards.add(card);
 		}
 		
-		members.add(12345678);
-		members.add(23456789);
-		members.add(34567890);
+		MembershipNumber.MEMBER_NUMBERS.add(12345678);
+		MembershipNumber.MEMBER_NUMBERS.add(23456789);
+		MembershipNumber.MEMBER_NUMBERS.add(34567890);
 	}
 
 	private static Customer genCustomer() {

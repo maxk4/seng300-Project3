@@ -154,8 +154,8 @@ public class EnterMemberNumberGUI extends CustomerView {
 			int memberNumber = Integer.valueOf(currValue);
 			if (MembershipNumber.checkMemNum(memberNumber)) {
 				controller.setMember(memberNumber);
-				controller.setView(CustomerUI.SCAN);
 			}
+			controller.setView(CustomerUI.SCAN);
 		});
 		btnNewButton_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
@@ -169,7 +169,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		setLayout(null);
+		//setLayout(null);
 		
 		txtMemberNumber = new JTextField();
 		txtMemberNumber.setBounds(11, 292, 318, 57);
