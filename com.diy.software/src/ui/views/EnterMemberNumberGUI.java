@@ -8,13 +8,9 @@ import util.MembershipNumber;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.GridLayout;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.event.ActionEvent;
 
 public class EnterMemberNumberGUI extends CustomerView {

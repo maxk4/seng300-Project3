@@ -3,17 +3,25 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.views.AttendantGUI;
+import ui.views.AttendantView;
 
 public class AttendantUI {
+	
+	public static final int LOGIN = 0, MAIN = 1;
 	
 	private AttendantGUI gui;
 	private List<DoItYourselfStation> stations;
 	private List<AttendantUIListener> listeners;
 	private AttendantStation station;
+	private JFrame mainFrame;
+	
+	private AttendantView[] views = {null, gui};
 	
 	/**
 	 * Make a new AttendantUI attached to the touch screen of the provided AttendantStation
@@ -24,8 +32,19 @@ public class AttendantUI {
 		
 		listeners = new ArrayList<AttendantUIListener>();
 		stations = new ArrayList<DoItYourselfStation>(maxStations);
+	
+		mainFrame = station.screen.getFrame();
+		gui = new AttendantGUI(this, mainFrame);
 		
-		gui = new AttendantGUI(this, station.screen.getFrame());
+		setView(MAIN);
+		mainFrame.setVisible(true);
+	}
+	
+	public void setView(int view) {
+		mainFrame.setContentPane(views[view]);
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		mainFrame.pack();
 	}
 	
 	public void addStation(DoItYourselfStation customerStation) {

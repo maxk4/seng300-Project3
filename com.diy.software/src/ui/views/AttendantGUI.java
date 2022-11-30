@@ -42,9 +42,6 @@ public class AttendantGUI extends AttendantView {
 		
 		add(stationPanel);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		frame.setContentPane(this);
-		frame.pack();
-		frame.setVisible(true);
 	}
 	
 	public void update() {
