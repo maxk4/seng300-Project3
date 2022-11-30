@@ -35,6 +35,10 @@ public class Simulation {
 	//Removed in Iteration 3 (start) @Simrat
 	//public static List<Integer> members = new ArrayList<>();
 	//Removed in iteration 3 (ends) @Simrat
+
+	//Added in Iteration 3 @Simrat (Start)
+	public static BarcodedItem membership_card_barcode;
+	//Added in Iteration 3 @Simrat (end)
 	
 	public static void main(String[] args) {
 		
@@ -152,6 +156,10 @@ public class Simulation {
 		///Add the membership cards into the membership database
 		MembershipDatabase.MEMBER_DATABASE.put(99999999,"John Member-Card");
 		MembershipDatabase.MEMBER_DATABASE.put(88888888,"John OG-Card");
+
+		//Create a barcodedItem, so that it can be scanned by barcodeScanner
+		membership_card_barcode = new BarcodedItem(new Barcode(new Numeral[] {Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine}), 0.1 );
+
 		//Updated code in Iteration 3 Ends @Simrat (Ends)
 	}
 

@@ -527,7 +527,7 @@ public class CustomerUI {
 	 * @param customerName Name from the membership database, (if the given member exists)
 	 *                      otherwise it says "Invalid Membership Number"
 	 */
-	public void useMemberNumber(String customerName) {
+	public void useMemberName(String customerName) {
 		//update the current member name
 		System.out.println("membership number entered: " + customerName);
 		if(Objects.equals(customerName, "Invalid Membership Number"))
@@ -541,6 +541,14 @@ public class CustomerUI {
 		scanScreenGUI.updateMember(customerName);
 	}
 
+	/**
+	 * @author Simrat
+	 * @return the current used station by this customer
+	 */
+	public DoItYourselfStation getStation()
+	{
+		return station;
+	}
 	//Updated in Iteration @Simrat (Starts)
 	public void addMemberNumber(Integer number, String CxName) {
 		//membershipNum.addMem(number);

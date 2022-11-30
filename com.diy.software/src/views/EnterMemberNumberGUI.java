@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.jimmyselectronics.opeechee.Card;
+import simulation.CustomerUISimulator;
+import simulation.Simulation;
 import util.CustomerUI;
 import util.MembershipDatabase;
 import util.MembershipListener;
@@ -14,6 +17,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.Objects;
 
 public class EnterMemberNumberGUI extends JFrame {
@@ -183,12 +187,12 @@ public class EnterMemberNumberGUI extends JFrame {
 				if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
 				{
 					String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
-					customer.useMemberNumber("Cx: " + customerName);
+					customer.useMemberName("Cx: " + customerName);
 
 				}
 				else {
 					//Member Do not exist in the database
-					customer.useMemberNumber("Invalid Membership Number");
+					customer.useMemberName("Invalid Membership Number");
 				}
 				txtMemberNumber.setText("");
 				customer.startScanning();
@@ -201,7 +205,16 @@ public class EnterMemberNumberGUI extends JFrame {
 		btnNewButton_Scan.setBounds(11, 354, 156, 64);
 		btnNewButton_Scan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				if(customer.getStation().mainScanner.scan(Simulation.membership_card_barcode))
+				{
+					//scan successfully
+					System.out.println("Scan successfull");
+				}
+				else
+				{
+					//scan Failed
+					System.out.println("Scan fail");
+				}
 				//Signal the listener, that a card is scanned
 				membership_listener.cardScanned(null);
 				txtMemberNumber.setText("");
@@ -215,7 +228,14 @@ public class EnterMemberNumberGUI extends JFrame {
 		btnNewButton_Swipe.setBounds(173, 354, 156, 64);
 		btnNewButton_Swipe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//get the card from the customer wallet
 
+				try {
+					String customerName = customer.getStation().cardReader.swipe(new Card("Membership","99999999", "John Member-Card", "000", "000", false, false)).getCardholder();
+					customer.useMemberName("Cx: " + customerName);
+				} catch (IOException ex) { //scan failed
+					customer.useMemberName("Invalid Membership Number");
+				}
 				//Signal the listener, that a card has been swiped
 				membership_listener.cardSwiped(null);
 				txtMemberNumber.setText("");

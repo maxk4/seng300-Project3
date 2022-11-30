@@ -123,6 +123,7 @@ public class PayWithCardListener implements CardReaderListener {
 	@Override
 	public void cardSwiped(CardReader reader) {
 		//transactionWithCreditCard(reader, data, Bank.CARD_ISSUER, customer.getBalance());
+		System.out.println("Card reader listener: card swiped");
 		
 	}
 }
