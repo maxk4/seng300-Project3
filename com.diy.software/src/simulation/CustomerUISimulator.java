@@ -72,6 +72,7 @@ public class CustomerUISimulator{
 				customer.selectNextItem();
 				customer.placeItemInBaggingArea();
 				remove.add(removeBtn);
+				customerSim.validate();
 				customerSim.revalidate();
 				customerSim.repaint();
 			});

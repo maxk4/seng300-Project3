@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JRootPane;
 
 import com.diy.hardware.DoItYourselfStation;
 
@@ -52,6 +53,7 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this)
 		};
+		mainFrame.setAlwaysOnTop(true);
 		setView(START);
 		station.screen.setVisible(true);
 	}
@@ -65,11 +67,14 @@ public class CustomerUI {
 	}
 	
 	public void setView(int view) {
+		mainFrame.setVisible(false);
 		mainFrame.getContentPane().removeAll();
-		mainFrame.getContentPane().add(views[view]);
+		mainFrame.setContentPane(views[view]);
+		mainFrame.validate();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		mainFrame.pack();
+		mainFrame.setVisible(true);
 	}
 	
 	public boolean register(CustomerUIListener listener) {

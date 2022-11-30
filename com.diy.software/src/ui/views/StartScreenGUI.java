@@ -30,8 +30,8 @@ public class StartScreenGUI extends CustomerView {
 		JButton btnNewButton_4 = new JButton("Start Scanning");
 		btnNewButton_4.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-barcode-100.png")));
 		btnNewButton_4.addActionListener(e -> {
-			controller.setView(CustomerUI.SCAN);
 			controller.beginSession();
+			controller.setView(CustomerUI.SCAN);
 			station.mainScanner.enable();
 			station.handheldScanner.enable();
 		});

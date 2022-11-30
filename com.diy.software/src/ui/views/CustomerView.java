@@ -11,6 +11,7 @@ public abstract class CustomerView extends JPanel {
 	
 	
 	protected CustomerView(CustomerUI controller) {
+		super();
 		this.controller = controller;
 	}
 	
