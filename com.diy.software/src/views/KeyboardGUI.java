@@ -1,3 +1,9 @@
+/**
+ * Keyboard Class to allow users to input on a touch screen
+ * 
+ * @author Brody Wells
+ */
+
 package views;
 
 import java.awt.EventQueue;
@@ -46,7 +52,9 @@ public class KeyboardGUI extends JFrame {
 //	}
 
 	/**
-	 * Create the frame.
+	 * Create the keyboard frame.
+	 * 
+	 * @param customer		A CustomerUI object
 	 */
 	public KeyboardGUI(CustomerUI customer) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
