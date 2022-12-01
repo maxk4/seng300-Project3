@@ -78,9 +78,15 @@ public class ScanItemListener implements BarcodeScannerListener {
 		return successfulScan;
 	}
 
+	//Added in Iteration 3 @Simrat (Starts)
+
+	/**
+	 * @author Simrat
+	 * @return String of barcode currently scanned
+	 */
 	public static String getBarcodeScanned_String()
 	{
 		return barcodeScanned;
 	}
-
+	//Added in Iteration 3 @Simrat (ENDS)
 }

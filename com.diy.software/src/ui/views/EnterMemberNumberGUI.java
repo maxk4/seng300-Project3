@@ -40,8 +40,50 @@ public class EnterMemberNumberGUI extends CustomerView {
 	public EnterMemberNumberGUI(CustomerUI customer) {
 		super(customer);
 		setBackground(new Color(94, 193, 255));
-		
-		
+
+		//Labels used
+		JLabel label_MemberCards_Text = new JLabel("Current Membership Cards in Customer Wallet:");
+		label_MemberCards_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+
+		JLabel label_Barcode_Text = new JLabel("Current Barcodes in Customer Wallet:");
+		label_Barcode_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+
+		JLabel label_separator1 = new JLabel("=====================================");
+		label_separator1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
+		JLabel label_separator2 = new JLabel("=====================================");
+		label_separator2.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		JLabel label_separator3 = new JLabel("=====================================");
+		label_separator3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
+
+		//Setting the combo boxes for membership cards, membership barcodes (start)
+		//get the card from the customer wallet
+		ArrayList<String> memCardsList = new ArrayList<>();
+		for (Card card : Simulation.currentCustomer.wallet.cards) {
+			if(card.kind.equals("Membership"))
+			{
+				memCardsList.add(card.cardholder + " , " + card.number);
+			}
+			//Loaded the list with the membership cards
+		}
+		//Display the cards in a GUI
+		comboBox_MemberCardsInWallet = new JComboBox<>(memCardsList.toArray());
+		comboBox_MemberCardsInWallet.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+
+		//Barcodes for membership cards
+		ArrayList<String> barcodes = new ArrayList<>();
+		for (BarcodedItem memberBarcodes : Simulation.barcodesMember)
+		{
+			barcodes.add(memberBarcodes.getBarcode().toString());
+		}
+		comboBox_MemberCard_Barcodes = new JComboBox<>(barcodes.toArray());
+		comboBox_MemberCard_Barcodes.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		//Setting the combo boxes for membership cards, membership barcodes (Ends)
+
+		//Text Field
+		textField_MemberNumber = new JTextField();
+		textField_MemberNumber.setColumns(10);
+
+		//Creating the keypad buttons (Starts)
 		JButton button_0 = new JButton("0");
 		button_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,27 +193,50 @@ public class EnterMemberNumberGUI extends CustomerView {
 			}
 		});
 		button_Decimal.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		//Creating the keypad buttons (Ends)
 		
+		//Enter Button (starts)
+		/*
+		 * Enter button, once pressed, gets the value from the text field, converts that to integer value, checks if that exists in membership database and display on the scan GUI (main GUI)
+		 */
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.addActionListener(e -> {
 			String currValue = textField_MemberNumber.getText();
-			if(Objects.equals(currValue, ""))
+			boolean dataGood = true;
+			if(Objects.equals(currValue, "")) //nothing added on GUI
 			{
 				//Try again
-				currValue = "-1";
-			}
-			Integer memberNumber = Integer.valueOf(currValue);
-			//Signal the Listener
-			//membership_listener.cardTyped(memberNumber);
-			if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
+				customer.useMemberName("Enter a valid value");
+				dataGood = false;
+			}//else if some alphabet is entered, reject
+			else
 			{
-				String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
-				customer.useMemberName("Cx: " + customerName);
-
+				//there is something entered in the text field, check if that is digit or alphabet
+				//if alphabet is found, display error message and exit.
+				char [] chars = currValue.toCharArray();
+				for (char c : chars)
+				{
+					if(!Character.isDigit(c))
+					{
+						dataGood = false;
+						customer.useMemberName("No alphabets are allowed");
+						break;
+					}
+				}
 			}
-			else {
-				//Member Do not exist in the database
-				customer.useMemberName("Invalid Membership Number");
+			//if the data is good only then we proceed otherwise do nothing, reset the text field
+			if(dataGood)
+			{
+				//that means data is good (not contains any alphabets, so we can test
+				Integer memberNumber = Integer.valueOf(currValue);
+				if (MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber)) {
+					String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
+					customer.useMemberName("Cx: " + customerName);
+
+				} else {
+					//Member Do not exist in the database
+					customer.useMemberName("Invalid Membership Number");
+				}
 			}
 			textField_MemberNumber.setText("");
 			//customer.startScanning();
@@ -179,7 +244,9 @@ public class EnterMemberNumberGUI extends CustomerView {
 
 		});
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		
+		//Enter Button (ends)
+
+		//Delete Button (starts)
 		JButton button_Del = new JButton("Delete");
 		button_Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,9 +261,14 @@ public class EnterMemberNumberGUI extends CustomerView {
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		//Delete Button (Ends)
 
 		//Updated in 3rd Iteration @author Simrat Benipal (start)
 		//Added in 3rd Iteration @author Simrat Benipal
+		//Cancel Button (starts)
+		/*
+		 * Cancel button, once pressed, cancels the operation and returns to main scan GUI
+		 */
 		JButton btnNewButton_Cancel = new JButton("Cancel");
 		//btnNewButton_Cancel.setBounds(254, 81, 100, 60);
 		btnNewButton_Cancel.addActionListener(new ActionListener() {
@@ -209,55 +281,19 @@ public class EnterMemberNumberGUI extends CustomerView {
 		});
 		btnNewButton_Cancel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		//Added in 3rd Iteration ends
+		//Cancel Button (ends)
 
-		
-		textField_MemberNumber = new JTextField();
-		textField_MemberNumber.setColumns(10);
-		
-		JLabel label_MemberCards_Text = new JLabel("Current Membership Cards in Customer Wallet:");
-		label_MemberCards_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-
-		JLabel label_Barcode_Text = new JLabel("Current Barcodes in Customer Wallet:");
-		label_Barcode_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-
-		JLabel label_separator1 = new JLabel("=====================================");
-		label_separator1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		JLabel label_separator2 = new JLabel("=====================================");
-		label_separator2.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		JLabel label_separator3 = new JLabel("=====================================");
-		label_separator3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-
-		
-
-		//get the card from the customer wallet
-		ArrayList<String> memCardsList = new ArrayList<>();
-		for (Card card : Simulation.currentCustomer.wallet.cards) {
-			if(card.kind.equals("Membership"))
-			{
-				memCardsList.add(card.cardholder + " , " + card.number);
-			}
-			//Loaded the list with the membership cards
-		}
-		//Display the cards in a GUI
-		comboBox_MemberCardsInWallet = new JComboBox<>(memCardsList.toArray());
-		comboBox_MemberCardsInWallet.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-
-		//Barcodes for membership cards
-		ArrayList<String> barcodes = new ArrayList<>();
-		for (BarcodedItem memberBarcodes : Simulation.barcodesMember)
-		{
-			barcodes.add(memberBarcodes.getBarcode().toString());
-		}
-		comboBox_MemberCard_Barcodes = new JComboBox<>(barcodes.toArray());
-		comboBox_MemberCard_Barcodes.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		
+		//Scan Card Button (starts)
+		/*
+		 * Scan Card button, once pressed, gets the value from the combo box field, gets the barcode from the barcode list from Simulation class, scans that using the barcode scanner using the scan() method, then checks if that exists in database and display the result on scan GUI
+		 */
 		JButton button_ScanCard = new JButton("Scan Card");
 		button_ScanCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();
 				BarcodedItem selectedMemberBarcode = null;
 				System.out.println("(EnterMemberNumber GUI) selected barcode " + selectedBarcodeString);
-				//Find this barcode in the list
+				//Find this barcode in the list given in Simulation Class (as static list)
 				for (BarcodedItem memberBarcodes : Simulation.barcodesMember)
 				{
 					if(memberBarcodes.getBarcode().toString().equals(selectedBarcodeString))
@@ -289,14 +325,22 @@ public class EnterMemberNumberGUI extends CustomerView {
 					System.out.println("(EnterMemberNumberGUI) Scan fail");
 					customer.useMemberName("Scan Failure, Try Again");
 				}
-				//Signal the listener, that a card is scanned
-				//membership_listener.cardScanned(null);
 				textField_MemberNumber.setText("");
 				//customer.startScanning();
 				controller.setView(CustomerUI.SCAN);
 			}});
 		button_ScanCard.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		
+		//Scan Card Button (ends)
+
+		//Swipe Card Button (starts)
+		/*
+		 * Swipe Card button, once pressed, gets the value from the combo box field, gets the cards from the customer wallet from Simulation class, swipes that card into card reader and display the card-holder name onto the scan GUI.
+		 *
+		 * We are getting the name of customer from the database after swiping the card at the card-reader
+		 * Card reader swipes the card, if the kind of card is "Membership" then we get the data without putting any hold
+		 * in CardReaderListener,
+		 * Swipe method in Card Reader returns the card data, and we get the card-holder name from it
+		 */
 		JButton button_SwipeCard = new JButton("Swipe Card");
 		button_SwipeCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -320,7 +364,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 							break;
 						}
 					}
-					//Card selected, swipe the card at the card Reader to get the card holder name
+					//Card selected, swipe the card at the card Reader to get the card-holder name
 					try {
 						String customerName = customer.getStation().cardReader.swipe(memberShipCard).getCardholder();
 						customer.useMemberName("Cx: " + customerName);
@@ -338,6 +382,9 @@ public class EnterMemberNumberGUI extends CustomerView {
 			}
 		});
 		button_SwipeCard.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		//Swipe Card Button (Ends)
+
+		//Setting the Layout of the GUI Interface, adding buttons and labels onto GUI
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -377,9 +424,9 @@ public class EnterMemberNumberGUI extends CustomerView {
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 							.addComponent(label_MemberCards_Text, Alignment.LEADING)
 								.addComponent(label_Barcode_Text, Alignment.LEADING)
-								.addComponent(label_separator1)
-								.addComponent(label_separator2)
-								.addComponent(label_separator3)
+								.addComponent(label_separator1 , Alignment.LEADING)
+								.addComponent(label_separator2 , Alignment.LEADING)
+								.addComponent(label_separator3 , Alignment.LEADING)
 							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 								.addGap(6)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
