@@ -1,7 +1,11 @@
 package ui.views;
 
 
+import com.jimmyselectronics.opeechee.Card;
+import simulation.Simulation;
 import ui.CustomerUI;
+import util.MembershipDatabase;
+import util.MembershipListener;
 import util.MembershipNumber;
 
 import java.awt.Color;
@@ -11,6 +15,9 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -20,9 +27,12 @@ import javax.swing.JComboBox;
 public class EnterMemberNumberGUI extends CustomerView {
 	private static final long serialVersionUID = -2878096921110787780L;
 	private JTextField textField_MemberNumber;
+	private MembershipListener membership_listener = new MembershipListener();
+	JComboBox comboBox_MemberCardsInWallet = new JComboBox();
+	//Creating a combo box for Customer to select the membership card
 
 	/**
-	 * Create the 
+	 * Create the Membership GUI, for customer to type, scan, swipe the membership cards
 	 */
 	public EnterMemberNumberGUI(CustomerUI customer) {
 		super(customer);
@@ -142,35 +152,147 @@ public class EnterMemberNumberGUI extends CustomerView {
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.addActionListener(e -> {
 			String currValue = textField_MemberNumber.getText();
-			int memberNumber = Integer.valueOf(currValue);
-			if (MembershipNumber.checkMemNum(memberNumber)) {
-				controller.setMember(memberNumber);
+			if(Objects.equals(currValue, ""))
+			{
+				//Try again
+				currValue = "-1";
 			}
+			Integer memberNumber = Integer.valueOf(currValue);
+			//Signal the Listener
+			membership_listener.cardTyped(memberNumber);
+			if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
+			{
+				String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
+				customer.useMemberName("Cx: " + customerName);
+
+			}
+			else {
+				//Member Do not exist in the database
+				customer.useMemberName("Invalid Membership Number");
+			}
+			textField_MemberNumber.setText("");
+			//customer.startScanning();
 			controller.setView(CustomerUI.SCAN);
+
 		});
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
-		JButton button_Del = new JButton("Del");
+		JButton button_Del = new JButton("Delete");
 		button_Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String currValue = textField_MemberNumber.getText();
+				if(Objects.equals(currValue, ""))
+				{
+					//Try again
+					currValue = " ";
+				}
 				currValue = currValue.substring(0, currValue.length() - 1);
 				textField_MemberNumber.setText(currValue);
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+
+		//Updated in 3rd Iteration @author Simrat Benipal (start)
+		//Added in 3rd Iteration @author Simrat Benipal
+		JButton btnNewButton_Cancel = new JButton("Cancel");
+		//btnNewButton_Cancel.setBounds(254, 81, 100, 60);
+		btnNewButton_Cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_MemberNumber.setText("");
+				//	customer.startScanning();
+				controller.setView(CustomerUI.SCAN);
+			}
+		});
+		btnNewButton_Cancel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		//Added in 3rd Iteration ends
+
 		
 		textField_MemberNumber = new JTextField();
 		textField_MemberNumber.setColumns(10);
 		
-		JLabel label_MemberCards_Text = new JLabel("Current Membership Cards in Cust Wallet:");
+		JLabel label_MemberCards_Text = new JLabel("Current Membership Cards in Customer Wallet:");
+		label_MemberCards_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		
-		JComboBox comboBox_MemberCardsInWallet = new JComboBox();
+
+		//get the card from the customer wallet
+		ArrayList<String> memCardsList = new ArrayList<>();
+		for (Card card : Simulation.currentCustomer.wallet.cards) {
+			if(card.kind.equals("Membership"))
+			{
+				memCardsList.add(card.cardholder + " , " + card.number);
+			}
+			//Loaded the list with the membership cards
+		}
+		//Display the cards in a GUI
+		comboBox_MemberCardsInWallet = new JComboBox<>(memCardsList.toArray());
+		comboBox_MemberCardsInWallet.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		
 		JButton button_ScanCard = new JButton("Scan Card");
+		button_ScanCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (customer.getStation().mainScanner.scan(Simulation.membership_card_barcode)) {
+					//scan successfully
+
+					System.out.println("Scan successfully");
+
+				} else {
+					//scan Failed
+					System.out.println("Scan fail");
+				}
+				//Signal the listener, that a card is scanned
+				//membership_listener.cardScanned(null);
+				textField_MemberNumber.setText("");
+				//customer.startScanning();
+				controller.setView(CustomerUI.SCAN);
+			}});
 		button_ScanCard.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_SwipeCard = new JButton("Swipe Card");
+		button_SwipeCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				//Make customer select the card
+				String selectedCard = (String) comboBox_MemberCardsInWallet.getSelectedItem();
+				System.out.println("Card selected " + selectedCard);
+				//John Member-Card , 99999999
+				//Split this to get card number
+				String[] selectedCardSplit = selectedCard.split(" , ");
+				String selectedCardNumber  = selectedCardSplit[1];
+				//System.out.println("Card selected Numberrr" + selectedCardNumber);
+				Integer memberNumber = Integer.valueOf(selectedCardNumber);
+				if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
+				{
+					//from the wallet, get the card
+					Card memberShipCard = null;
+					for (Card card : Simulation.currentCustomer.wallet.cards) {
+						if (card.number.equals(selectedCardNumber)) {
+							memberShipCard = card;
+							break;
+						}
+						//Loaded the list with the membership cards
+					}
+					System.out.println(memberShipCard.cardholder);
+					//Card selected, swipe the card at the card Reader to get the card holder name
+					try {
+						customer.getStation().cardReader.register(membership_listener);
+						String customerName = customer.getStation().cardReader.swipe(memberShipCard).getCardholder();
+						customer.useMemberName("Cx: " + customerName);
+					} catch (IOException ex) { //scan failed
+						customer.useMemberName("Swipe Failure, Try Again");
+					}
+				}
+				else {
+					//Member Do not exist in the database
+					customer.useMemberName("Invalid Membership Number");
+				}
+
+				//Signal the listener, that a card has been swiped
+				membership_listener.cardSwiped(null);
+				textField_MemberNumber.setText("");
+				//customer.startScanning();
+				controller.setView(CustomerUI.SCAN);
+			}
+		});
 		button_SwipeCard.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -214,9 +336,13 @@ public class EnterMemberNumberGUI extends CustomerView {
 								.addGap(6)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+										.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE))
+										.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnNewButton_Cancel, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED))
 									.addComponent(comboBox_MemberCardsInWallet, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
 					.addContainerGap(62, Short.MAX_VALUE))
 		);
@@ -229,7 +355,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 							.addComponent(button_9, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addComponent(button_8, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addComponent(button_7, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-						.addComponent(button_Del, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+						.addComponent(button_Del, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
@@ -249,7 +375,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 						.addComponent(button_Enter, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-					.addGap(43)
+					.addGap(30)
 					.addComponent(label_MemberCards_Text)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(comboBox_MemberCardsInWallet, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -257,7 +383,10 @@ public class EnterMemberNumberGUI extends CustomerView {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-					.addGap(112))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(btnNewButton_Cancel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+					.addGap(30))
 		);
 		setLayout(groupLayout);
 	}
