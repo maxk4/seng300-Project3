@@ -2,11 +2,11 @@ package ui.views;
 
 
 import com.jimmyselectronics.opeechee.Card;
+import com.jimmyselectronics.opeechee.CardReaderListener;
 import simulation.Simulation;
 import ui.CustomerUI;
 import util.MembershipDatabase;
-import util.MembershipListener;
-import util.MembershipNumber;
+import membership.MembershipListener;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
 public class EnterMemberNumberGUI extends CustomerView {
 	private static final long serialVersionUID = -2878096921110787780L;
 	private JTextField textField_MemberNumber;
-	private MembershipListener membership_listener = new MembershipListener();
+	//private MembershipListener membership_listener = new MembershipListener();
 	JComboBox comboBox_MemberCardsInWallet = new JComboBox();
 	//Creating a combo box for Customer to select the membership card
 
@@ -159,7 +159,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 			}
 			Integer memberNumber = Integer.valueOf(currValue);
 			//Signal the Listener
-			membership_listener.cardTyped(memberNumber);
+			//membership_listener.cardTyped(memberNumber);
 			if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
 			{
 				String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
@@ -253,7 +253,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 
 				//Make customer select the card
 				String selectedCard = (String) comboBox_MemberCardsInWallet.getSelectedItem();
-				System.out.println("Card selected " + selectedCard);
+				System.out.println("(EnterMemberNumberGUI) Card selected " + selectedCard);
 				//John Member-Card , 99999999
 				//Split this to get card number
 				String[] selectedCardSplit = selectedCard.split(" , ");
@@ -269,12 +269,9 @@ public class EnterMemberNumberGUI extends CustomerView {
 							memberShipCard = card;
 							break;
 						}
-						//Loaded the list with the membership cards
 					}
-					System.out.println(memberShipCard.cardholder);
 					//Card selected, swipe the card at the card Reader to get the card holder name
 					try {
-						customer.getStation().cardReader.register(membership_listener);
 						String customerName = customer.getStation().cardReader.swipe(memberShipCard).getCardholder();
 						customer.useMemberName("Cx: " + customerName);
 					} catch (IOException ex) { //scan failed
@@ -285,9 +282,6 @@ public class EnterMemberNumberGUI extends CustomerView {
 					//Member Do not exist in the database
 					customer.useMemberName("Invalid Membership Number");
 				}
-
-				//Signal the listener, that a card has been swiped
-				membership_listener.cardSwiped(null);
 				textField_MemberNumber.setText("");
 				//customer.startScanning();
 				controller.setView(CustomerUI.SCAN);

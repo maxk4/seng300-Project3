@@ -143,7 +143,7 @@ public class CustomerUI {
 	 */
 	public void useMemberName(String customerName) {
 		//update the current member name
-		System.out.println("membership number entered: " + customerName);
+		System.out.println("(CustomerUI) Membership number entered: " + customerName);
 		if(Objects.equals(customerName, "Invalid Membership Number"))
 		{
 			currentMember = null;

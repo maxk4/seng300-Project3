@@ -1,4 +1,4 @@
-package util;
+package membership;
 /*
 	Created in Iteration 3
 	@author Simrat
@@ -38,7 +38,9 @@ public class MembershipListener implements CardReaderListener, BarcodeScannerLis
 	public void cardTapped(CardReader reader) {	}
 
 	@Override
-	public void cardDataRead(CardReader reader, Card.CardData data) { }
+	public void cardDataRead(CardReader reader, Card.CardData data) {
+		System.out.println("membership listener carddataread");
+	}
 
 	/**
 	 * An event announcing that the indicated barcode has been successfully scanned.
@@ -58,7 +60,7 @@ public class MembershipListener implements CardReaderListener, BarcodeScannerLis
 	 */
 	@Override
 	public void cardSwiped(CardReader reader) {
-		System.out.println("Listener: Membership Card swiped");
+		System.out.println("Listener: Membership Card swipedpped");
 	}
 	/**
 	 * Announces that a card has scanned on the indicated card reader.
