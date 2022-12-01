@@ -11,7 +11,7 @@ import com.jimmyselectronics.virgilio.ElectronicScaleListener;
  */
 public class ExpectedWeightListener implements ElectronicScaleListener {
 	
-	private double expectedWeight, sensitivity = 0, lastWeight;
+	private double expectedWeight, sensitivity = 0, lastWeight, lastItemWeight;
 	private ScaleController controller;
 	
 	public ExpectedWeightListener(ScaleController controller) {
@@ -49,6 +49,7 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	 * If doing so will resolve a weight discrepancy the CustomerUI will be alerted such
 	 * @param weightInGrams double weight to set the expected weight to in grams
 	 */
+	// 5. System: Unblocks the station. Use Case Do Not Place Item in Bagging Area
 	public void setExpectedWeight(double weightInGrams) {
 		expectedWeight = weightInGrams;
 		if (Math.abs(lastWeight - expectedWeight) > sensitivity) 
@@ -64,6 +65,13 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	 */
 	public void updateExpectedWeight(double inc) {
 		setExpectedWeight(expectedWeight + inc);
+		lastItemWeight = inc;
+	}
+
+	public void removeLastItemWeight() {
+		setExpectedWeight(expectedWeight - lastItemWeight);
+		// item weights should only be removed once, if it isn't this means someone is stealing
+		lastItemWeight = 0;
 	}
 	
 	/**
