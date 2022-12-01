@@ -20,8 +20,8 @@ public class AttendantUI {
 	private List<AttendantUIListener> listeners;
 	private AttendantStation station;
 	private JFrame mainFrame;
-	
-	private AttendantView[] views = {null, gui};
+
+	private final AttendantView[] views;
 	
 	/**
 	 * Make a new AttendantUI attached to the touch screen of the provided AttendantStation
@@ -35,6 +35,7 @@ public class AttendantUI {
 	
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
+		views = new AttendantView[]{null, gui};
 		
 		setView(MAIN);
 		mainFrame.setVisible(true);
