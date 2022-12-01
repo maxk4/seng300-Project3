@@ -6,10 +6,6 @@
 
 package ui.views;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ui.CustomerUI;
@@ -22,9 +18,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.event.ActionEvent;
 
 public class KeyboardGUI extends CustomerView {
@@ -33,22 +26,6 @@ public class KeyboardGUI extends CustomerView {
 	private JTextField textField_Input;
 	private boolean isShifted = false;
 
-
-//	/**
-//	 * Main class for testing purposes
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					KeyboardGUI frame = new KeyboardGUI();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the keyboard frame.
