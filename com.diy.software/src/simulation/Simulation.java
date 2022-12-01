@@ -38,9 +38,8 @@ public class Simulation {
 	};
 	
 	public static List<Card> cards = new ArrayList<Card>();
-	//Added in Iteration 3 @Simrat (Start)
-	public static BarcodedItem membership_card_barcode;
 	public static Customer currentCustomer;
+	public static ArrayList<BarcodedItem> barcodesMember = new ArrayList<>();
 	//Added in Iteration 3 @Simrat (end)
 	
 	public static void main(String[] args) {
@@ -136,8 +135,14 @@ public class Simulation {
 		MembershipDatabase.MEMBER_DATABASE.put(88888888,"John OG-Card");
 
 		//Create a barcodedItem, so that it can be scanned by barcodeScanner
-		membership_card_barcode = new BarcodedItem(new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine}), 0.1);
+		//Added in Iteration 3 @Simrat (Start)
+		BarcodedItem membership_card_barcode1 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine}), 0.1);
+		BarcodedItem membership_card_barcode2 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight}), 0.1);
+		BarcodedItem membership_card_barcode3 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.four, Numeral.four, Numeral.four}), 0.1);
 
+		barcodesMember.add(membership_card_barcode1);
+		barcodesMember.add(membership_card_barcode2);
+		barcodesMember.add(membership_card_barcode3);
 		//MembershipNumber.MEMBER_NUMBERS.add(12345678);
 		//MembershipNumber.MEMBER_NUMBERS.add(23456789);
 		//MembershipNumber.MEMBER_NUMBERS.add(34567890);

@@ -1,6 +1,8 @@
 package ui.views;
 
 
+import cart.ScanItemListener;
+import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.CardReaderListener;
 import simulation.Simulation;
@@ -29,6 +31,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 	private JTextField textField_MemberNumber;
 	//private MembershipListener membership_listener = new MembershipListener();
 	JComboBox comboBox_MemberCardsInWallet = new JComboBox();
+	JComboBox comboBox_MemberCard_Barcodes = new JComboBox();
 	//Creating a combo box for Customer to select the membership card
 
 	/**
@@ -200,6 +203,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 			public void actionPerformed(ActionEvent e) {
 				textField_MemberNumber.setText("");
 				//	customer.startScanning();
+				customer.useMemberName("Operation Canceled");
 				controller.setView(CustomerUI.SCAN);
 			}
 		});
@@ -212,6 +216,17 @@ public class EnterMemberNumberGUI extends CustomerView {
 		
 		JLabel label_MemberCards_Text = new JLabel("Current Membership Cards in Customer Wallet:");
 		label_MemberCards_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+
+		JLabel label_Barcode_Text = new JLabel("Current Barcodes in Customer Wallet:");
+		label_Barcode_Text.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+
+		JLabel label_separator1 = new JLabel("=====================================");
+		label_separator1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
+		JLabel label_separator2 = new JLabel("=====================================");
+		label_separator2.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		JLabel label_separator3 = new JLabel("=====================================");
+		label_separator3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
+
 		
 
 		//get the card from the customer wallet
@@ -226,18 +241,53 @@ public class EnterMemberNumberGUI extends CustomerView {
 		//Display the cards in a GUI
 		comboBox_MemberCardsInWallet = new JComboBox<>(memCardsList.toArray());
 		comboBox_MemberCardsInWallet.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+
+		//Barcodes for membership cards
+		ArrayList<String> barcodes = new ArrayList<>();
+		for (BarcodedItem memberBarcodes : Simulation.barcodesMember)
+		{
+			barcodes.add(memberBarcodes.getBarcode().toString());
+		}
+		comboBox_MemberCard_Barcodes = new JComboBox<>(barcodes.toArray());
+		comboBox_MemberCard_Barcodes.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		
 		JButton button_ScanCard = new JButton("Scan Card");
 		button_ScanCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (customer.getStation().mainScanner.scan(Simulation.membership_card_barcode)) {
+				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();
+				BarcodedItem selectedMemberBarcode = null;
+				System.out.println("(EnterMemberNumber GUI) selected barcode " + selectedBarcodeString);
+				//Find this barcode in the list
+				for (BarcodedItem memberBarcodes : Simulation.barcodesMember)
+				{
+					if(memberBarcodes.getBarcode().toString().equals(selectedBarcodeString))
+					{
+						selectedMemberBarcode = memberBarcodes;
+						break;
+					}
+				}
+				//Scan the selected member barcode with the scanner of the diy system
+				if (customer.getStation().mainScanner.scan(selectedMemberBarcode)) {
 					//scan successfully
+					System.out.println("(EnterMemberNumberGUI) Scan successfully");
 
-					System.out.println("Scan successfully");
+					//get the barcode scanned from the scannerListener
+					String cardNumber = ScanItemListener.getBarcodeScanned_String();
+					Integer memberNumber = Integer.valueOf(cardNumber);
+					if(MembershipDatabase.MEMBER_DATABASE.containsKey(memberNumber))
+					{
+						String customerName = MembershipDatabase.MEMBER_DATABASE.get(memberNumber);
+						customer.useMemberName("Cx: " + customerName);
+					}
+					else {
+						//Member Do not exist in the database
+						customer.useMemberName("Invalid Membership Number");
+					}
 
 				} else {
 					//scan Failed
-					System.out.println("Scan fail");
+					System.out.println("(EnterMemberNumberGUI) Scan fail");
+					customer.useMemberName("Scan Failure, Try Again");
 				}
 				//Signal the listener, that a card is scanned
 				//membership_listener.cardScanned(null);
@@ -326,17 +376,24 @@ public class EnterMemberNumberGUI extends CustomerView {
 									.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 							.addComponent(label_MemberCards_Text, Alignment.LEADING)
+								.addComponent(label_Barcode_Text, Alignment.LEADING)
+								.addComponent(label_separator1)
+								.addComponent(label_separator2)
+								.addComponent(label_separator3)
 							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 								.addGap(6)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 									.addGroup(groupLayout.createSequentialGroup()
 										.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
+										.addPreferredGap(ComponentPlacement.RELATED))
+										.addGroup(groupLayout.createSequentialGroup()
 										.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
 										.addGroup(groupLayout.createSequentialGroup()
 												.addPreferredGap(ComponentPlacement.RELATED)
 												.addComponent(btnNewButton_Cancel, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
 												.addPreferredGap(ComponentPlacement.RELATED))
+									.addComponent(comboBox_MemberCard_Barcodes, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
 									.addComponent(comboBox_MemberCardsInWallet, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
 					.addContainerGap(62, Short.MAX_VALUE))
 		);
@@ -370,16 +427,26 @@ public class EnterMemberNumberGUI extends CustomerView {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addGap(30)
+					.addComponent(label_separator1)
 					.addComponent(label_MemberCards_Text)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(comboBox_MemberCardsInWallet, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addGap(10)
+						.addComponent(label_separator2)
+						.addComponent(label_Barcode_Text)
+					.addComponent(comboBox_MemberCard_Barcodes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
+
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_SwipeCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+						//.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_ScanCard, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
 					.addGap(10)
+						.addComponent(label_separator3)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addComponent(btnNewButton_Cancel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+
 					.addGap(30))
 		);
 		setLayout(groupLayout);
