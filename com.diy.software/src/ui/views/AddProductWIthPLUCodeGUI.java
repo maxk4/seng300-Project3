@@ -5,6 +5,7 @@ import ui.CustomerUI;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -136,6 +137,7 @@ public class AddProductWIthPLUCodeGUI extends CustomerView {
 		button_Decimal.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_Enter = new JButton("Enter");
+		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		button_Enter.addActionListener(e -> {
 			controller.setView(CustomerUI.SCAN);
 			//Cindy, You'll need to change this to your own code
