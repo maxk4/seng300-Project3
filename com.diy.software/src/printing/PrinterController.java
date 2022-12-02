@@ -12,6 +12,7 @@ import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.IReceiptPrinter;
 import com.jimmyselectronics.abagnale.ReceiptPrinterListener;
+import simulation.Simulation;
 
 public class PrinterController implements ReceiptPrinterListener {
 	
@@ -32,6 +33,11 @@ public class PrinterController implements ReceiptPrinterListener {
 		this.noInk = false;
 		this.station = station;
 		this.listeners = new ArrayList<PrinterListener>();
+
+		//Added In Iteration 3 @Simrat (Starts)
+		listeners.add(new PrintListener());
+		//Added In Iteration 3 @Simrat (Ends)
+
 		station.printer.register(this);
 	}
 
@@ -50,12 +56,14 @@ public class PrinterController implements ReceiptPrinterListener {
 	@Override
 	public void outOfPaper(IReceiptPrinter printer) {
 		abortPrinting();
+		notifyLowPaper();
 		noPaper = true;
 	}
 
 	@Override
 	public void outOfInk(IReceiptPrinter printer) {
 		abortPrinting();
+		notifyLowInk();
 		noInk = true;
 	}
 
@@ -74,11 +82,15 @@ public class PrinterController implements ReceiptPrinterListener {
 	@Override
 	public void paperAdded(IReceiptPrinter printer) {
 		for (PrinterListener listener : listeners) listener.notifyPaperRefilled(station);
+		System.out.println("(Printer Controller) Paper Added");
+		lowPaper = false;
 	}
 
 	@Override
 	public void inkAdded(IReceiptPrinter printer) {
 		for (PrinterListener listener : listeners) listener.notifyInkRefilled(station);
+		System.out.println("(Printer Controller) Ink Added");
+		lowInk = false;
 	}
 	
 	public boolean getLowInk() {
@@ -108,10 +120,12 @@ public class PrinterController implements ReceiptPrinterListener {
 	
 	public void notifyLowInk() {
 		for (PrinterListener listener : listeners) listener.notifyLowInk(station);
+		System.out.println("(Printer Controller) we got low Ink, damm it again");
 	}
 	
 	public void notifyLowPaper() {
 		for (PrinterListener listener : listeners) listener.notifyLowPaper(station);
+		System.out.println("(Printer Controller) we got low Paper, damm it again");
 	}
 	
 	public void print(String receipt) {
@@ -119,7 +133,10 @@ public class PrinterController implements ReceiptPrinterListener {
 			try {
 				station.printer.print(c);
 			} catch (EmptyException e) {
-				// Notify attendant
+				// Notify attendant and stop printing, otherwise it will try to print every character and will show dialog box
+				//Added in Iteration 3 @Simrat (Starts)
+				break;
+				//Added in Iteration 3 @Simrat (ends)
 			} catch (OverloadException e) {
 				e.printStackTrace();
 			}
