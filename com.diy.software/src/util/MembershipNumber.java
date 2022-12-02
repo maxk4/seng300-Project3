@@ -6,10 +6,13 @@ import java.util.*;
 input will be stored in a HashMap, where:
 - key: customer's name
 - value: membership number
+
+NOT USED IN ITERATION #3 @Simrat
  */
 
 public class MembershipNumber {
 	
+	/*
 	public static final List<Integer> MEMBER_NUMBERS = new ArrayList<Integer>();
 	public static final List<Integer> LOGGED_IN = new ArrayList<Integer>();
 	
@@ -45,5 +48,7 @@ public class MembershipNumber {
     public boolean isLoggedIn(int num) {
     	return LOGGED_IN.contains(num);
     }
-    
+
+
+	 */
 }
