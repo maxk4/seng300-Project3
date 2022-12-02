@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JFrame;
-import javax.swing.JRootPane;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 import ui.views.EnterMemberNumberGUI;
 import ui.views.OrderFinishedGUI;
@@ -17,6 +17,7 @@ import ui.views.PayWithDebitGUI;
 import ui.views.PayWithGiftCardGUI;
 import ui.views.PurchaseBagsGUI;
 import ui.views.ScanScreenGUI;
+import ui.views.SearchCatalogueGUI;
 import ui.views.StartScreenGUI;
 import ui.views.CustomerView;
 import ui.views.WeightDiscrepancyGUI;
@@ -35,7 +36,8 @@ public class CustomerUI {
 		ENTER_MEMBERSHIP = 6,
 		WEIGHT_DISCREPANCY = 7,
 		END = 8,
-		PAY_WITH_GIFT = 9;
+		PAY_WITH_GIFT = 9,
+		CATALOGUE = 10;
 	
 	private CustomerView[] views;
 	
@@ -61,7 +63,8 @@ public class CustomerUI {
 				new EnterMemberNumberGUI(this),
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
-				new PayWithGiftCardGUI(this, station)
+				new PayWithGiftCardGUI(this, station),
+				new SearchCatalogueGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -158,4 +161,9 @@ public class CustomerUI {
 		((ScanScreenGUI) views[SCAN]).updateMember(customerName);
 	}
 	//Updated in Iteration @Simrat (Ends)
+	
+	public void selectItem(Product product, String description) {
+		if (product.isPerUnit())
+			for (CustomerUIListener listener : listeners) listener.selectItem(product, description);
+	}
 }

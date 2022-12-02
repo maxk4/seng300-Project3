@@ -121,6 +121,10 @@ public class ScanScreenGUI extends CustomerView {
 		lbl_Remaining_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_SearchProductCatalogue = new JButton("Search Product Catalogue");
+		button_SearchProductCatalogue.addActionListener(e -> {
+			controller.setView(CustomerUI.CATALOGUE);
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
