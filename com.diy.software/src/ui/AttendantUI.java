@@ -9,6 +9,7 @@ import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.views.AttendantGUI;
+import ui.views.AttendantLoginGUI;
 import ui.views.AttendantView;
 
 public class AttendantUI {
@@ -35,9 +36,9 @@ public class AttendantUI {
 	
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
-		views = new AttendantView[]{null, gui};
+		views = new AttendantView[]{new AttendantLoginGUI(this), gui};
 		
-		setView(MAIN);
+		setView(LOGIN);
 		mainFrame.setVisible(true);
 	}
 	

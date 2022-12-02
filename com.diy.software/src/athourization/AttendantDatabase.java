@@ -9,7 +9,7 @@ import util.Octet;
 
 public class AttendantDatabase {
 	
-	private static final Map<Integer, Octet> ATTENDANT_DATABASE = new HashMap<Integer, Octet>();
+	private static final Map<String, Octet> ATTENDANT_DATABASE = new HashMap<String, Octet>();
 	private static final MessageDigest SHA256;
 	static {
 		MessageDigest md = null;
@@ -23,22 +23,22 @@ public class AttendantDatabase {
 	
 	/**
 	 * Check if the password matches the one in the database
-	 * @param id int id of the attendant
+	 * @param username String username of the attendant
 	 * @param password String password to check
 	 * @return boolean true if match false otherwise
 	 */
-	public static boolean validate(int id, String password) {
-		if (!ATTENDANT_DATABASE.containsKey(id)) return false;
-		return ATTENDANT_DATABASE.get(id).equals(hash(password));
+	public static boolean validate(String username, String password) {
+		if (!ATTENDANT_DATABASE.containsKey(username)) return false;
+		return ATTENDANT_DATABASE.get(username).equals(hash(password));
 	}
 	
 	/**
 	 * Add an attendant to the database
-	 * @param id int id of the attendant
+	 * @param username String username of the attendant
 	 * @param password String their password
 	 */
-	public static void add(int id, String password) {
-		ATTENDANT_DATABASE.put(id, hash(password));
+	public static void add(String username, String password) {
+		ATTENDANT_DATABASE.put(username, hash(password));
 	}
 	
 	/**
@@ -54,15 +54,15 @@ public class AttendantDatabase {
 	
 	/**
 	 * Update the password of the attendant
-	 * @param id int id of the attendant
+	 * @param username String username of the attendant
 	 * @param oldPassword String old password
 	 * @param newPassword String new password
 	 * @return boolean true if successful false otherwise
 	 */
-	public static boolean changePassword(int id, String oldPassword, String newPassword) {
-		if (!ATTENDANT_DATABASE.containsKey(id)) return false;
-		if (!validate(id, oldPassword)) return false;
-		ATTENDANT_DATABASE.put(id, hash(newPassword));
+	public static boolean changePassword(String username, String oldPassword, String newPassword) {
+		if (!ATTENDANT_DATABASE.containsKey(username)) return false;
+		if (!validate(username, oldPassword)) return false;
+		ATTENDANT_DATABASE.put(username, hash(newPassword));
 		return true;
 	}
 }

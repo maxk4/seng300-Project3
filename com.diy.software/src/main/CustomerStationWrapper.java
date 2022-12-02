@@ -115,15 +115,18 @@ public class CustomerStationWrapper {
 		scale.register(new ScaleListener() {
 			@Override
 			public void notifyWeightDiscrepancyDetected() {
-				if (inProgress)
+				if (inProgress) {
 					customer.setView(CustomerUI.WEIGHT_DISCREPANCY);
+					attendant.notifyWeightDiscrepancyDetected(diySstation);
+				}
 			}
 
 			@Override
 			public void notifyWeightDiscrepancyResolved() {
-				if (inProgress)
+				if (inProgress) {
 					customer.setView(CustomerUI.SCAN);
-				else {
+					attendant.notifyWeightDiscrepancyResolved(diySstation);
+				} else {
 					customer.setView(CustomerUI.START);
 					inProgress = true;
 				}
