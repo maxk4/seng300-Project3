@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.PLUCodedProduct;
-import com.diy.hardware.Product;
 import com.diy.hardware.external.ProductDatabases;
 
 import ui.CustomerUI;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class SearchCatalogueGUI extends CustomerView {
