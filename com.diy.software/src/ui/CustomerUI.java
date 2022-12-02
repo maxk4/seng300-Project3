@@ -19,6 +19,7 @@ import ui.views.PurchaseBagsGUI;
 import ui.views.ScanScreenGUI;
 import ui.views.SearchCatalogueGUI;
 import ui.views.StartScreenGUI;
+import ui.views.AddProductWIthPLUCodeGUI;
 import ui.views.CustomerView;
 import ui.views.WeightDiscrepancyGUI;
 import util.MembershipDatabase;
@@ -37,7 +38,8 @@ public class CustomerUI {
 		WEIGHT_DISCREPANCY = 7,
 		END = 8,
 		PAY_WITH_GIFT = 9,
-		CATALOGUE = 10;
+		CATALOGUE = 10,
+		PLU = 11;
 	
 	private CustomerView[] views;
 	
@@ -64,7 +66,8 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this)
+				new SearchCatalogueGUI(this),
+				new AddProductWIthPLUCodeGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);

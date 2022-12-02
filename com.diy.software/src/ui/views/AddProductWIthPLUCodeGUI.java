@@ -158,6 +158,10 @@ public class AddProductWIthPLUCodeGUI extends CustomerView {
 		
 		JButton button_Cancel = new JButton("Cancel");
 		button_Cancel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		button_Cancel.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
