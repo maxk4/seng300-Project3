@@ -29,7 +29,7 @@ public class AttendantUI {
 	 */
 	public AttendantUI(AttendantStation station, int maxStations) {
 		this.station = station;
-		
+
 		listeners = new ArrayList<AttendantUIListener>();
 		stations = new ArrayList<DoItYourselfStation>(maxStations);
 	
@@ -38,6 +38,10 @@ public class AttendantUI {
 		views = new AttendantView[]{null, gui};
 		
 		setView(MAIN);
+		//Added in Iteration 3 @Simrat (Starts)
+		mainFrame.setLocation(800,100);
+		mainFrame.setTitle("Attendant Station");
+		//Added in Iteration 3 @Simrat (Starts)
 		mainFrame.setVisible(true);
 	}
 	
