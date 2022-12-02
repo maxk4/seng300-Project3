@@ -43,6 +43,10 @@ public class PaymentController {
 		return balance;
 	}
 	
+	public long getRemainingBalance() {
+		return balance - getAvailableFunds();
+	}
+	
 	public void holdSuccessful() {
 		for (PaymentListener listener : listeners) listener.cardPaymentSucceeded();
 	}

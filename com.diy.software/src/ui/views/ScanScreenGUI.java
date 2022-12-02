@@ -75,6 +75,13 @@ public class ScanScreenGUI extends CustomerView {
 			station.banknoteOutput.enable();
 		});
 		
+		JButton button_PayWithGiftCard = new JButton("Gift Card");
+		button_PayWithGiftCard.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
+		button_PayWithGiftCard.addActionListener(e -> {
+			controller.setView(CustomerUI.PAY_WITH_GIFT);
+			station.cardReader.enable();
+		});
+		
 		JButton button_Attendant = new JButton("Attendant");
 		JButton button_EnterMemberNum = new JButton("Enter Member #");
 		button_EnterMemberNum.addActionListener(e -> {
@@ -146,7 +153,8 @@ public class ScanScreenGUI extends CustomerView {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addComponent(button_PayWithCredit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
 								.addComponent(button_PayWithCash, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE)
-								.addComponent(button_PayWithDebit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+								.addComponent(button_PayWithDebit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+								.addComponent(button_PayWithGiftCard, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE))
 							.addGap(52))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(112)
@@ -189,6 +197,8 @@ public class ScanScreenGUI extends CustomerView {
 							.addComponent(button_PayWithCredit, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_PayWithDebit, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_PayWithGiftCard, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 							.addGap(30)
 							.addComponent(button_CompleteAndPrintReceipt))
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -222,10 +232,12 @@ public class ScanScreenGUI extends CustomerView {
 		setLayout(gl_contentPane);
 	}
 	
-	public void update(long balance, String productString, String priceString) {
+	public void update(long total, long paid, String productString, String priceString) {
 		scannedItemsArea.setText(priceString);
 		scannedPricesArea.setText(productString);
-		textField_OrderTotal_Number.setText(String.format("$%.2f", balance / 100d));
+		textField_OrderTotal_Number.setText(String.format("$%.2f", total / 100d));
+		textField_Paid.setText(String.format("$%.2f", paid / 100d));
+		textField_Remaining.setText(String.format("$%.2f", (total - paid) / 100d));
 	}
 
 	public void updateMember(String customerName) {

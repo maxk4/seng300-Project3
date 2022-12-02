@@ -136,7 +136,7 @@ public class CustomerStationWrapper {
 	}
 	
 	private void updateProductList() {
-		customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
+		customer.updateProductList(payment.getBalance(), payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
 	}
 	
 	private void updateCashGUI() {
