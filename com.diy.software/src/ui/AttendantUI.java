@@ -30,7 +30,7 @@ public class AttendantUI {
 	 */
 	public AttendantUI(AttendantStation station, int maxStations) {
 		this.station = station;
-		
+
 		listeners = new ArrayList<AttendantUIListener>();
 		stations = new ArrayList<DoItYourselfStation>(maxStations);
 	
@@ -39,6 +39,7 @@ public class AttendantUI {
 		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this), gui};
 		
 		setView(LOGIN);
+		
 		mainFrame.setVisible(true);
 	}
 	

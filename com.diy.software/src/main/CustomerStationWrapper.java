@@ -1,6 +1,7 @@
 package main;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 import cart.CartController;
 import payment.PaymentController;
@@ -79,6 +80,11 @@ public class CustomerStationWrapper {
 			@Override
 			public void beginSession() {
 				inProgress = true;
+			}
+
+			@Override
+			public void selectItem(Product product, String description) {
+				// Notify ScanningArea scale to look for weight
 			}
 			
 		});

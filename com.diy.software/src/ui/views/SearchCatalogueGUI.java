@@ -8,16 +8,28 @@ package ui.views;
 
 import javax.swing.border.EmptyBorder;
 
+import com.diy.hardware.BarcodedProduct;
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.Product;
+import com.diy.hardware.external.ProductDatabases;
+
 import ui.CustomerUI;
+import util.ActionDocument;
 
 import java.awt.Color;
+
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
@@ -28,6 +40,8 @@ public class SearchCatalogueGUI extends CustomerView {
 	private static final long serialVersionUID = 6242487627854166656L;
 	private JTextField textField_Input;
 	private boolean isShifted = false;
+	private JPanel product_panel;
+	private List<ProductButton> productButtons = new ArrayList<ProductButton>();
 
 
 	/**
@@ -50,6 +64,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Q.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Q.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_W = new JButton("w");
 		button_W.addActionListener(new ActionListener() {
@@ -60,6 +75,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_W.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_W.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_E = new JButton("e");
 		button_E.addActionListener(new ActionListener() {
@@ -70,6 +86,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_E.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_E.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_R = new JButton("r");
 		button_R.addActionListener(new ActionListener() {
@@ -80,6 +97,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_R.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_R.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_T = new JButton("t");
 		button_T.addActionListener(new ActionListener() {
@@ -90,6 +108,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_T.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_T.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Y = new JButton("y");
 		button_Y.addActionListener(new ActionListener() {
@@ -100,6 +119,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Y.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Y.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_U = new JButton("u");
 		button_U.addActionListener(new ActionListener() {
@@ -110,6 +130,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_U.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_U.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_I = new JButton("i");
 		button_I.addActionListener(new ActionListener() {
@@ -120,6 +141,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_I.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_I.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_O = new JButton("o");
 		button_O.addActionListener(new ActionListener() {
@@ -130,6 +152,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_O.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_O.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_P = new JButton("p");
 		button_P.addActionListener(new ActionListener() {
@@ -140,6 +163,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_P.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_P.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_A = new JButton("a");
 		button_A.addActionListener(new ActionListener() {
@@ -150,6 +174,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_A.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_A.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_S = new JButton("s");
 		button_S.addActionListener(new ActionListener() {
@@ -160,6 +185,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_S.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_S.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_D = new JButton("d");
 		button_D.addActionListener(new ActionListener() {
@@ -170,6 +196,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_D.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_D.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_F = new JButton("f");
 		button_F.addActionListener(new ActionListener() {
@@ -180,6 +207,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_F.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_F.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_G = new JButton("g");
 		button_G.addActionListener(new ActionListener() {
@@ -190,6 +218,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_G.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_G.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_H = new JButton("h");
 		button_H.addActionListener(new ActionListener() {
@@ -200,6 +229,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_H.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_H.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_J = new JButton("j");
 		button_J.addActionListener(new ActionListener() {
@@ -210,6 +240,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_J.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_J.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_K = new JButton("k");
 		button_K.addActionListener(new ActionListener() {
@@ -220,6 +251,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_K.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_K.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_L = new JButton("l");
 		button_L.addActionListener(new ActionListener() {
@@ -230,6 +262,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_L.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_L.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Z = new JButton("z");
 		button_Z.addActionListener(new ActionListener() {
@@ -240,6 +273,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Z.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Z.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_X = new JButton("x");
 		button_X.addActionListener(new ActionListener() {
@@ -250,6 +284,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_X.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_X.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_C = new JButton("c");
 		button_C.addActionListener(new ActionListener() {
@@ -260,6 +295,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_C.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_C.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_V = new JButton("v");
 		button_V.addActionListener(new ActionListener() {
@@ -270,6 +306,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_V.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_V.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_B = new JButton("b");
 		button_B.addActionListener(new ActionListener() {
@@ -280,6 +317,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_B.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_B.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_N = new JButton("n");
 		button_N.addActionListener(new ActionListener() {
@@ -290,6 +328,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_N.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_N.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_M = new JButton("m");
 		button_M.addActionListener(new ActionListener() {
@@ -300,6 +339,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_M.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_M.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Comma = new JButton(",");
 		button_Comma.addActionListener(new ActionListener() {
@@ -310,6 +350,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Comma.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Comma.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Period = new JButton(".");
 		button_Period.addActionListener(new ActionListener() {
@@ -320,6 +361,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Period.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Period.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_BackSlash = new JButton("/");
 		button_BackSlash.addActionListener(new ActionListener() {
@@ -330,6 +372,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_BackSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_BackSlash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_SemiColon = new JButton(";");
 		button_SemiColon.addActionListener(new ActionListener() {
@@ -340,6 +383,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_SemiColon.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_SemiColon.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Apostrophe = new JButton("'");
 		button_Apostrophe.addActionListener(new ActionListener() {
@@ -350,6 +394,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Apostrophe.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Apostrophe.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_LeftBracket = new JButton("[");
 		button_LeftBracket.addActionListener(new ActionListener() {
@@ -360,6 +405,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_LeftBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_LeftBracket.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_RightBracket = new JButton("]");
 		button_RightBracket.addActionListener(new ActionListener() {
@@ -370,6 +416,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_RightBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_RightBracket.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_ForwardSlash = new JButton("\\");
 		button_ForwardSlash.addActionListener(new ActionListener() {
@@ -380,6 +427,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_ForwardSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_ForwardSlash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_1 = new JButton("1");
 		button_1.addActionListener(new ActionListener() {
@@ -390,6 +438,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_1.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_1.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_2 = new JButton("2");
 		button_2.addActionListener(new ActionListener() {
@@ -400,6 +449,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_2.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_2.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_3 = new JButton("3");
 		button_3.addActionListener(new ActionListener() {
@@ -410,6 +460,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_3.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_4 = new JButton("4");
 		button_4.addActionListener(new ActionListener() {
@@ -420,6 +471,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_4.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_4.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_5 = new JButton("5");
 		button_5.addActionListener(new ActionListener() {
@@ -430,6 +482,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_5.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_6 = new JButton("6");
 		button_6.addActionListener(new ActionListener() {
@@ -440,6 +493,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_6.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_6.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_7 = new JButton("7");
 		button_7.addActionListener(new ActionListener() {
@@ -450,6 +504,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_7.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_7.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_8 = new JButton("8");
 		button_8.addActionListener(new ActionListener() {
@@ -460,6 +515,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_8.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_8.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_9 = new JButton("9");
 		button_9.addActionListener(new ActionListener() {
@@ -470,6 +526,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_9.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_9.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_0 = new JButton("0");
 		button_0.addActionListener(new ActionListener() {
@@ -480,6 +537,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_0.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_0.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Dash = new JButton("-");
 		button_Dash.addActionListener(new ActionListener() {
@@ -490,6 +548,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Dash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Dash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Equals = new JButton("=");
 		button_Equals.addActionListener(new ActionListener() {
@@ -500,6 +559,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Equals.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Equals.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Del = new JButton("Del");
 		button_Del.addActionListener(new ActionListener() {
@@ -512,9 +572,11 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Del.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Shift = new JButton("Shift");
 		button_Shift.addActionListener(new ActionListener() {
@@ -620,6 +682,7 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Shift.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Shift.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Space = new JButton("Space");
 		button_Space.addActionListener(new ActionListener() {
@@ -630,10 +693,14 @@ public class SearchCatalogueGUI extends CustomerView {
 			}
 		});
 		button_Space.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Space.setMargin(new Insets(0, 0, 0, 0));
 		
 		textField_Input = new JTextField();
 		textField_Input.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		textField_Input.setColumns(10);
+		textField_Input.setDocument(new ActionDocument(() -> {
+			updateList();
+		}));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -831,73 +898,38 @@ public class SearchCatalogueGUI extends CustomerView {
 					.addGap(24))
 		);
 		
-		JPanel panel = new JPanel();
-		scrollPane.setViewportView(panel);
-
+		product_panel = new JPanel();
+		scrollPane.setViewportView(product_panel);
 		
-		JButton button_Apple = new JButton("Apple");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-apple-100.png")));
-		
-		JButton button_Banana = new JButton("Banana");
-		button_Banana.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-banana-100.png")));
-		
-		JButton button_Blueberry = new JButton("Blueberry");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-blueberry-100.png")));
-		
-		JButton button_Broccoli = new JButton("Broccoli");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-broccoli-100.png")));
-		
-		JButton button_Cabbage = new JButton("Cabbage");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-cabbage-100.png")));
-		
-		JButton button_Carrot = new JButton("Carrot");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-carrot-100.png")));
-		
-		JButton button_Cherry = new JButton("Cherry");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-cherry-100.png")));
-		
-		JButton button_Corn = new JButton("Corn");
-		button_Apple.setIcon(new ImageIcon(SearchCatalogueGUI.class.getResource("/resources/products/icons8-corn-100.png")));
+		product_panel.setLayout(new BoxLayout(product_panel, BoxLayout.PAGE_AXIS));
 		
 		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_Apple, GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
-						.addComponent(button_Banana, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Blueberry, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Broccoli, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Cabbage, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Carrot, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Cherry, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_Corn, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(button_Apple, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Banana, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Blueberry, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Broccoli, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Cabbage, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Carrot, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Cherry, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Corn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(63, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
+		
+		for (BarcodedProduct p : ProductDatabases.BARCODED_PRODUCT_DATABASE.values()) {
+			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			if (!productButtons.contains(pb)) productButtons.add(pb);
+		}
+		
+		for (PLUCodedProduct p : ProductDatabases.PLU_PRODUCT_DATABASE.values()) {
+			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			if (!productButtons.contains(pb)) productButtons.add(pb);
+		}
+		productButtons.sort((a, b) -> {
+			return a.name.compareTo(b.name);
+		});
+		updateList();
 		setLayout(gl_contentPane);
+	}
+	
+	public void updateList() {
+		product_panel.removeAll();
+		for (ProductButton pb : productButtons) {
+			if (pb.name.toLowerCase().contains(textField_Input.getText().toLowerCase()))
+				product_panel.add(pb);
+			else if (textField_Input.getText().length() == 0)
+				product_panel.add(pb);
+		}
+		product_panel.revalidate();
+		product_panel.repaint();
 	}
 }

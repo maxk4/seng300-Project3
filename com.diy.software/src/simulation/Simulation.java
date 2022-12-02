@@ -34,12 +34,23 @@ public class Simulation {
 		new Barcode(new Numeral[] {Numeral.seven}),
 		new Barcode(new Numeral[] {Numeral.eight}),
 		new Barcode(new Numeral[] {Numeral.nine}),
-		new Barcode(new Numeral[] {Numeral.one, Numeral.two})
+		new Barcode(new Numeral[] {Numeral.one, Numeral.zero}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.one}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.two}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.three}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.four}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.five}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.six}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.seven}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.eight}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.nine}),
+		new Barcode(new Numeral[] {Numeral.two, Numeral.zero})
 	};
 	
 	public static List<Card> cards = new ArrayList<Card>();
 	public static Customer currentCustomer;
 	public static ArrayList<BarcodedItem> barcodesMember = new ArrayList<>();
+	public static AttendantUI attendant;
 	//Added in Iteration 3 @Simrat (end)
 	
 	public static void main(String[] args) {
@@ -58,7 +69,8 @@ public class Simulation {
 		aStation.screen.getFrame().setLocation(1000, 0);
 		aStation.plugIn();
 		aStation.turnOn();
-		AttendantUI attendant = new AttendantUI(aStation, diyStations);
+		attendant = new AttendantUI(aStation, diyStations);
+		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
 			attendant.addStation(station);
@@ -76,8 +88,9 @@ public class Simulation {
 			CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
 			new CustomerUISimulator(station, customer, "Customer Simulator");
 			try {
-				station.printer.addInk(100);
-				station.printer.addPaper(100);
+				station.printer.addInk(10);
+				station.printer.addPaper(10);
+
 			} catch (OverloadException e) {
 				e.printStackTrace();
 			}
@@ -98,8 +111,16 @@ public class Simulation {
 		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		PowerGrid.engageUninterruptiblePowerSource();
 		
-		for (int i = 0; i < barcodes.length; i++)
+		for (int i = 0; i < barcodes.length; i++) {
 			ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcodes[i], new BarcodedProduct(barcodes[i], "Product " + (i + 1), (i + 1) * 100, 2.3));
+		}
+		
+		Barcode blueberryBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.one});
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(blueberryBarcode, new BarcodedProduct(blueberryBarcode, "Blueberry", 13 * 100, 2.3));
+
+		
+		Barcode appleBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.two});
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 13 * 100, 2.3));
 		
 		for (int i = 0; i < 10; i++) {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
