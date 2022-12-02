@@ -121,6 +121,9 @@ public class ScanScreenGUI extends CustomerView {
 		lbl_Remaining_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_AddPLUCodeButton = new JButton("Add Item by PLU Code");
+		button_AddPLUCodeButton.addActionListener(e -> {
+			controller.setView(CustomerUI.PLU);
+		});
 		
 		JButton button_SearchProductCatalogue = new JButton("Search Product Catalogue");
 		button_SearchProductCatalogue.addActionListener(e -> {
