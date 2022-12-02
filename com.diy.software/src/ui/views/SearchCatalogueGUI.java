@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.PLUCodedProduct;
-import com.diy.hardware.Product;
 import com.diy.hardware.external.ProductDatabases;
 
 import ui.CustomerUI;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class SearchCatalogueGUI extends CustomerView {
@@ -704,10 +702,16 @@ public class SearchCatalogueGUI extends CustomerView {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
+		JButton button_CancelSearch = new JButton("Cancel Search");
+		button_CancelSearch.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_CancelSearch.addActionListener(e -> {
+			textField_Input.setText("");
+			controller.setView(CustomerUI.SCAN);
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -826,75 +830,80 @@ public class SearchCatalogueGUI extends CustomerView {
 							.addComponent(textField_Input, 626, 626, 626)
 							.addContainerGap(15, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 623, GroupLayout.PREFERRED_SIZE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+							.addGap(18))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(button_CancelSearch, GroupLayout.PREFERRED_SIZE, 623, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(18, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(button_CancelSearch, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
-					.addGap(23)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textField_Input, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_3, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_4, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_5, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_6, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_7, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_8, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_9, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_0, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_Dash, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_Equals, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
+						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_3, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_4, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_5, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_6, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_7, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_8, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_9, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_0, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_Dash, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_Equals, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+						.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
 					.addGap(8)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_E, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_R, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_T, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_Y, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_U, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_I, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_O, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_P, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_LeftBracket, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_RightBracket, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_ForwardSlash, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_W, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-						.addComponent(button_Q, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+						.addComponent(button_E, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_R, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_T, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_Y, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_U, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_I, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_O, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_P, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_LeftBracket, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_RightBracket, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_ForwardSlash, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_W, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_Q, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_A, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_S, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_D, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_F, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_G, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_H, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_J, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_K, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_L, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_SemiColon, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_Apostrophe, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_Enter, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+						.addComponent(button_A, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_S, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_D, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_F, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_G, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_H, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_J, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_K, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_L, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_SemiColon, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_Apostrophe, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(button_Enter, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_Z, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_X, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_C, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_V, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_B, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_N, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_M, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_Comma, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_Period, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_BackSlash, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-						.addComponent(button_Shift, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+						.addComponent(button_Z, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_X, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_C, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_V, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_B, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_N, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_M, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_Comma, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_Period, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_BackSlash, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+						.addComponent(button_Shift, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+					.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
 					.addGap(24))
 		);
 		
