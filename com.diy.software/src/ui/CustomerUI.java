@@ -14,6 +14,7 @@ import ui.views.OrderFinishedGUI;
 import ui.views.PayWithCashGUI;
 import ui.views.PayWithCreditGUI;
 import ui.views.PayWithDebitGUI;
+import ui.views.PayWithGiftCardGUI;
 import ui.views.PurchaseBagsGUI;
 import ui.views.ScanScreenGUI;
 import ui.views.StartScreenGUI;
@@ -33,7 +34,8 @@ public class CustomerUI {
 		PURCHASE_BAGS = 5,
 		ENTER_MEMBERSHIP = 6,
 		WEIGHT_DISCREPANCY = 7,
-		END = 8;
+		END = 8,
+		PAY_WITH_GIFT = 9;
 	
 	private CustomerView[] views;
 	
@@ -58,7 +60,8 @@ public class CustomerUI {
 				new PurchaseBagsGUI(this),
 				new EnterMemberNumberGUI(this),
 				new WeightDiscrepancyGUI(this),
-				new OrderFinishedGUI(this)
+				new OrderFinishedGUI(this),
+				new PayWithGiftCardGUI(this, station)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -116,8 +119,8 @@ public class CustomerUI {
 		((PayWithCashGUI) views[PAY_WITH_CASH]).update(paid, balance);
 	}
 
-	public void updateProductList(long balance, String productString, String priceString) {
-		((ScanScreenGUI) views[SCAN]).update(balance, productString, priceString);
+	public void updateProductList(long total, long paid, String productString, String priceString) {
+		((ScanScreenGUI) views[SCAN]).update(total, paid, productString, priceString);
 	}
 
 	/**

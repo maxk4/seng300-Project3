@@ -59,10 +59,12 @@ public class CardReadListener implements CardReaderListener {
 			return;
 		}
 		//Added in iteration 3 @Simrat (ends)
-		try {
-			manager.placeHold(data.getNumber(), manager.currentBalance(), data.getType());
-		} catch (HoldException e) {
-			e.printStackTrace();
+		if (manager.currentBalance() > 0) {
+			try {
+				manager.placeHold(data.getNumber(), manager.currentBalance(), data.getType());
+			} catch (HoldException e) {
+				e.printStackTrace();
+			}
 		}
 		station.cardReader.remove();
 	}

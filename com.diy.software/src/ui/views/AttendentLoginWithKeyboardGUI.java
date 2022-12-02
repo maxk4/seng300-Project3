@@ -829,31 +829,17 @@ public class AttendentLoginWithKeyboardGUI extends AttendantView {
 		textField_UsernameInput.setColumns(10);
 		
 		JButton button_UsernameSelect = new JButton("Username");
-		button_UsernameSelect.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				textField_UsernameInput.requestFocusInWindow();
-				
-			}
-		});
 		button_UsernameSelect.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		button_UsernameSelect.addActionListener(e -> {
 			selected = textField_UsernameInput;
+			textField_UsernameInput.requestFocusInWindow();
 		});
 		
 		JButton button_PasswordSelect = new JButton("Password");
-		button_PasswordSelect.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				textField_PasswordInput.requestFocusInWindow();
-				
-			}
-		});
 		button_PasswordSelect.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		button_PasswordSelect.addActionListener(e -> {
 			selected = textField_PasswordInput;
+			textField_PasswordInput.requestFocusInWindow();
 		});
 		
 		JButton button_Login = new JButton("Login");
