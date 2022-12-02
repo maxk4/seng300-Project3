@@ -52,6 +52,13 @@ public class CardReadListener implements CardReaderListener {
 	public void cardDataRead(CardReader reader, CardData data) {
 		if (!enabled) return;
 		this.data = data;
+		//Added in iteration 3 @Simrat (Starts)
+		if(data.getType().equals("Membership")){
+			//Scanning a membership card return, do not do anything, do not put any hold on it
+			System.out.println("(CardReadListener): Membership card Scanned");
+			return;
+		}
+		//Added in iteration 3 @Simrat (ends)
 		try {
 			manager.placeHold(data.getNumber(), manager.currentBalance(), data.getType());
 		} catch (HoldException e) {

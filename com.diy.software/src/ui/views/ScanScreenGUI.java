@@ -187,7 +187,7 @@ public class ScanScreenGUI extends CustomerView {
 		textField_OrderTotal_Number.setText(String.format("$%.2f", balance / 100d));
 	}
 
-	public void updateMember(Integer number) {
-		textField_MemberNumber.setText(number + "");
+	public void updateMember(String customerName) {
+		textField_MemberNumber.setText(customerName + "");
 	}
 }
