@@ -55,10 +55,10 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
+		aStation.screen.getFrame().setLocation(1000, 0);
 		aStation.plugIn();
 		aStation.turnOn();
 		AttendantUI attendant = new AttendantUI(aStation, diyStations);
-		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
 			attendant.addStation(station);
