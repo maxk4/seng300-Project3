@@ -50,7 +50,6 @@ public class AttendantLoginGUI extends AttendantView {
 				attendant.setView(AttendantUI.MAIN);
 			}
 		});
-		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

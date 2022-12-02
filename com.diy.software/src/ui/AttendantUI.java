@@ -9,8 +9,8 @@ import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.views.AttendantGUI;
-import ui.views.AttendantLoginGUI;
 import ui.views.AttendantView;
+import ui.views.AttendentLoginWithKeyboardGUI;
 
 public class AttendantUI {
 	
@@ -36,7 +36,7 @@ public class AttendantUI {
 	
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
-		views = new AttendantView[]{new AttendantLoginGUI(this), gui};
+		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this), gui};
 		
 		setView(LOGIN);
 		mainFrame.setVisible(true);
