@@ -702,9 +702,12 @@ public class SearchCatalogueGUI extends CustomerView {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton button_CancelSearch = new JButton("Canel Search");
+		JButton button_CancelSearch = new JButton("Cancel Search");
 		button_CancelSearch.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		
+		button_CancelSearch.addActionListener(e -> {
+			textField_Input.setText("");
+			controller.setView(CustomerUI.SCAN);
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
