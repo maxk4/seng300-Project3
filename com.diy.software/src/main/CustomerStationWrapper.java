@@ -1,6 +1,7 @@
 package main;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 import cart.CartController;
 import payment.PaymentController;
@@ -80,6 +81,11 @@ public class CustomerStationWrapper {
 			public void beginSession() {
 				inProgress = true;
 			}
+
+			@Override
+			public void selectItem(Product product, String description) {
+				// Notify ScanningArea scale to look for weight
+			}
 			
 		});
 		
@@ -115,15 +121,18 @@ public class CustomerStationWrapper {
 		scale.register(new ScaleListener() {
 			@Override
 			public void notifyWeightDiscrepancyDetected() {
-				if (inProgress)
+				if (inProgress) {
 					customer.setView(CustomerUI.WEIGHT_DISCREPANCY);
+					attendant.notifyWeightDiscrepancyDetected(diySstation);
+				}
 			}
 
 			@Override
 			public void notifyWeightDiscrepancyResolved() {
-				if (inProgress)
+				if (inProgress) {
 					customer.setView(CustomerUI.SCAN);
-				else {
+					attendant.notifyWeightDiscrepancyResolved(diySstation);
+				} else {
 					customer.setView(CustomerUI.START);
 					inProgress = true;
 				}
@@ -133,7 +142,7 @@ public class CustomerStationWrapper {
 	}
 	
 	private void updateProductList() {
-		customer.updateProductList(payment.getBalance() - payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
+		customer.updateProductList(payment.getBalance(), payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
 	}
 	
 	private void updateCashGUI() {

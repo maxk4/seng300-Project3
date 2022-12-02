@@ -22,11 +22,16 @@ import com.unitedbankingservices.coin.Coin;
 
 public class CustomerUISimulator{
 
+	//Added in Iteration 3 @Simrat (Starts)
+	public static Customer currentCustomer;
+	//Added In iteration 3 @simrat (ends)
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
 		JDialog customerSim = new JDialog();
 		customerSim.setLocationRelativeTo(null);
-		
+		//Added in Iteration 3 @Simrat (Starts)
+		currentCustomer = customer;
+		//Added In iteration 3 @simrat (ends)
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(1, 5));
 		
@@ -121,7 +126,7 @@ public class CustomerUISimulator{
 		JLabel coinLabel = new JLabel("Coins: Click to insert");
 		cash.add(coinLabel);
 		for (long denom : station.coinDenominations) {
-			JButton coin = new JButton(String.format("¢%d", denom));
+			JButton coin = new JButton(String.format("ï¿½%d", denom));
 			coin.addActionListener(e -> {
 				try {
 					station.coinSlot.receive(new Coin(Currency.getInstance(Locale.CANADA), denom));

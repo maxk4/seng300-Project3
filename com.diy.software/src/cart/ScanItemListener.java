@@ -8,6 +8,7 @@ import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodeScannerListener;
+import util.MembershipDatabase;
 
 /**
  * A BarcodeScannerListener to track when an item is scanned then notify the attached CustomerUI
@@ -22,6 +23,10 @@ public class ScanItemListener implements BarcodeScannerListener {
 	
 	private boolean enabled = false;
 	private int successfulScan;
+
+	//Added Iteration 3 @Simrat (Starts)
+	static String barcodeScanned;
+	//Added Iteration 3 @Simrat (Ends)
 	
 	public ScanItemListener(BarcodeScanner scanner, CartController controller) {
 		this.controller = controller;
@@ -48,7 +53,18 @@ public class ScanItemListener implements BarcodeScannerListener {
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 		if (!enabled) return;
 		if (barcode == null) throw new NullPointerException("no barcode provided");
-		
+
+		//Added in Iteration 3 @Simrat (starts)
+		System.out.println("(ScanItemListener) BarcodeScanned : " + barcode.toString());
+		barcodeScanned = barcode.toString();
+		//check if this barcode exists in membership database, if yes return, this is the call from membership gui
+		if(MembershipDatabase.MEMBER_DATABASE.containsKey(Integer.valueOf(barcodeScanned)))
+		{
+			System.out.println("(ScanItemListener) barcode exists in membership database");
+			return;
+		}
+		//Added in Iteration 3 @Simrat (ends)
+
 		// Search database for product with matching barcode
 		// if no such product exists the scan will be ignored
 		if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode)) return;
@@ -62,4 +78,15 @@ public class ScanItemListener implements BarcodeScannerListener {
 		return successfulScan;
 	}
 
+	//Added in Iteration 3 @Simrat (Starts)
+
+	/**
+	 * @author Simrat
+	 * @return String of barcode currently scanned
+	 */
+	public static String getBarcodeScanned_String()
+	{
+		return barcodeScanned;
+	}
+	//Added in Iteration 3 @Simrat (ENDS)
 }

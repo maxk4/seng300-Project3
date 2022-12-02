@@ -8,23 +8,40 @@ package ui.views;
 
 import javax.swing.border.EmptyBorder;
 
+import com.diy.hardware.BarcodedProduct;
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.Product;
+import com.diy.hardware.external.ProductDatabases;
+
 import ui.CustomerUI;
+import util.ActionDocument;
 
 import java.awt.Color;
+
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
-public class KeyboardGUI extends CustomerView {
+public class SearchCatalogueGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6242487627854166656L;
 	private JTextField textField_Input;
 	private boolean isShifted = false;
+	private JPanel product_panel;
+	private List<ProductButton> productButtons = new ArrayList<ProductButton>();
 
 
 	/**
@@ -32,9 +49,9 @@ public class KeyboardGUI extends CustomerView {
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public KeyboardGUI(CustomerUI controller) {
+	public SearchCatalogueGUI(CustomerUI controller) {
 		super(controller);
-		setBounds(100, 100, 653, 340);
+		setBounds(100, 100, 657, 659);
 		setBackground(new Color(94, 193, 255));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -47,6 +64,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Q.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Q.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_W = new JButton("w");
 		button_W.addActionListener(new ActionListener() {
@@ -57,6 +75,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_W.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_W.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_E = new JButton("e");
 		button_E.addActionListener(new ActionListener() {
@@ -67,6 +86,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_E.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_E.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_R = new JButton("r");
 		button_R.addActionListener(new ActionListener() {
@@ -77,6 +97,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_R.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_R.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_T = new JButton("t");
 		button_T.addActionListener(new ActionListener() {
@@ -87,6 +108,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_T.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_T.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Y = new JButton("y");
 		button_Y.addActionListener(new ActionListener() {
@@ -97,6 +119,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Y.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Y.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_U = new JButton("u");
 		button_U.addActionListener(new ActionListener() {
@@ -107,6 +130,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_U.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_U.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_I = new JButton("i");
 		button_I.addActionListener(new ActionListener() {
@@ -117,6 +141,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_I.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_I.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_O = new JButton("o");
 		button_O.addActionListener(new ActionListener() {
@@ -127,6 +152,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_O.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_O.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_P = new JButton("p");
 		button_P.addActionListener(new ActionListener() {
@@ -137,6 +163,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_P.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_P.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_A = new JButton("a");
 		button_A.addActionListener(new ActionListener() {
@@ -147,6 +174,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_A.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_A.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_S = new JButton("s");
 		button_S.addActionListener(new ActionListener() {
@@ -157,6 +185,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_S.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_S.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_D = new JButton("d");
 		button_D.addActionListener(new ActionListener() {
@@ -167,6 +196,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_D.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_D.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_F = new JButton("f");
 		button_F.addActionListener(new ActionListener() {
@@ -177,6 +207,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_F.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_F.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_G = new JButton("g");
 		button_G.addActionListener(new ActionListener() {
@@ -187,6 +218,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_G.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_G.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_H = new JButton("h");
 		button_H.addActionListener(new ActionListener() {
@@ -197,6 +229,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_H.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_H.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_J = new JButton("j");
 		button_J.addActionListener(new ActionListener() {
@@ -207,6 +240,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_J.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_J.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_K = new JButton("k");
 		button_K.addActionListener(new ActionListener() {
@@ -217,6 +251,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_K.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_K.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_L = new JButton("l");
 		button_L.addActionListener(new ActionListener() {
@@ -227,6 +262,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_L.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_L.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Z = new JButton("z");
 		button_Z.addActionListener(new ActionListener() {
@@ -237,6 +273,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Z.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Z.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_X = new JButton("x");
 		button_X.addActionListener(new ActionListener() {
@@ -247,6 +284,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_X.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_X.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_C = new JButton("c");
 		button_C.addActionListener(new ActionListener() {
@@ -257,6 +295,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_C.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_C.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_V = new JButton("v");
 		button_V.addActionListener(new ActionListener() {
@@ -267,6 +306,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_V.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_V.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_B = new JButton("b");
 		button_B.addActionListener(new ActionListener() {
@@ -277,6 +317,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_B.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_B.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_N = new JButton("n");
 		button_N.addActionListener(new ActionListener() {
@@ -287,6 +328,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_N.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_N.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_M = new JButton("m");
 		button_M.addActionListener(new ActionListener() {
@@ -297,6 +339,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_M.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_M.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Comma = new JButton(",");
 		button_Comma.addActionListener(new ActionListener() {
@@ -307,6 +350,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Comma.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Comma.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Period = new JButton(".");
 		button_Period.addActionListener(new ActionListener() {
@@ -317,6 +361,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Period.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Period.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_BackSlash = new JButton("/");
 		button_BackSlash.addActionListener(new ActionListener() {
@@ -327,6 +372,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_BackSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_BackSlash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_SemiColon = new JButton(";");
 		button_SemiColon.addActionListener(new ActionListener() {
@@ -337,6 +383,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_SemiColon.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_SemiColon.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Apostrophe = new JButton("'");
 		button_Apostrophe.addActionListener(new ActionListener() {
@@ -347,6 +394,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Apostrophe.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Apostrophe.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_LeftBracket = new JButton("[");
 		button_LeftBracket.addActionListener(new ActionListener() {
@@ -357,6 +405,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_LeftBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_LeftBracket.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_RightBracket = new JButton("]");
 		button_RightBracket.addActionListener(new ActionListener() {
@@ -367,6 +416,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_RightBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_RightBracket.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_ForwardSlash = new JButton("\\");
 		button_ForwardSlash.addActionListener(new ActionListener() {
@@ -377,6 +427,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_ForwardSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_ForwardSlash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_1 = new JButton("1");
 		button_1.addActionListener(new ActionListener() {
@@ -387,6 +438,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_1.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_1.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_2 = new JButton("2");
 		button_2.addActionListener(new ActionListener() {
@@ -397,6 +449,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_2.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_2.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_3 = new JButton("3");
 		button_3.addActionListener(new ActionListener() {
@@ -407,6 +460,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_3.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_4 = new JButton("4");
 		button_4.addActionListener(new ActionListener() {
@@ -417,6 +471,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_4.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_4.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_5 = new JButton("5");
 		button_5.addActionListener(new ActionListener() {
@@ -427,6 +482,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_5.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_6 = new JButton("6");
 		button_6.addActionListener(new ActionListener() {
@@ -437,6 +493,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_6.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_6.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_7 = new JButton("7");
 		button_7.addActionListener(new ActionListener() {
@@ -447,6 +504,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_7.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_7.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_8 = new JButton("8");
 		button_8.addActionListener(new ActionListener() {
@@ -457,6 +515,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_8.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_8.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_9 = new JButton("9");
 		button_9.addActionListener(new ActionListener() {
@@ -467,6 +526,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_9.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_9.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_0 = new JButton("0");
 		button_0.addActionListener(new ActionListener() {
@@ -477,6 +537,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_0.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_0.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Dash = new JButton("-");
 		button_Dash.addActionListener(new ActionListener() {
@@ -487,6 +548,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Dash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Dash.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Equals = new JButton("=");
 		button_Equals.addActionListener(new ActionListener() {
@@ -497,6 +559,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Equals.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Equals.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Del = new JButton("Del");
 		button_Del.addActionListener(new ActionListener() {
@@ -509,9 +572,11 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Del.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Shift = new JButton("Shift");
 		button_Shift.addActionListener(new ActionListener() {
@@ -617,6 +682,7 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Shift.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Shift.setMargin(new Insets(0, 0, 0, 0));
 		
 		JButton button_Space = new JButton("Space");
 		button_Space.addActionListener(new ActionListener() {
@@ -627,195 +693,243 @@ public class KeyboardGUI extends CustomerView {
 			}
 		});
 		button_Space.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Space.setMargin(new Insets(0, 0, 0, 0));
 		
 		textField_Input = new JTextField();
 		textField_Input.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		textField_Input.setColumns(10);
+		textField_Input.setDocument(new ActionDocument(() -> {
+			updateList();
+		}));
+		
+		JScrollPane scrollPane = new JScrollPane();
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textField_Input, Alignment.LEADING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addGap(17)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Q, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_W, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_E, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_R, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_T, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Y, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_U, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_I, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_O, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_P, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_LeftBracket, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_RightBracket, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_ForwardSlash, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE))
+									.addGap(17)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Q, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_W, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_E, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_R, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_T, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Y, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_U, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_I, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_O, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_P, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_LeftBracket, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_RightBracket, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_ForwardSlash, GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(15)
+											.addComponent(button_A, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_S, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_D, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_F, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_G, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_H, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_J, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_K, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_L, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_SemiColon, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Apostrophe, GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Enter, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(32)
+											.addComponent(button_Z, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_X, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_C, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_V, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_B, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_N, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_M, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Comma, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Period, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_BackSlash, GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(button_Shift, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(15)
-									.addComponent(button_A, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_S, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_D, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_F, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_4, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_G, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_5, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_H, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_6, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_J, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_7, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_K, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_8, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_L, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_9, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_SemiColon, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_0, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Apostrophe, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+									.addComponent(button_Dash, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Enter, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+									.addComponent(button_Equals, GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(button_Del, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(32)
-									.addComponent(button_Z, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_X, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_C, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_V, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_B, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_N, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_M, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Comma, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Period, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_BackSlash, GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_Shift, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_4, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_5, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_6, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_7, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_8, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_9, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_0, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_Dash, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_Equals, GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_Del, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addGap(134)
-							.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-							.addGap(241)))
-					.addGap(15))
+									.addGap(134)
+									.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+									.addGap(241)))
+							.addGap(15))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(textField_Input, 626, 626, 626)
+							.addContainerGap(15, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 623, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(18, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
 					.addComponent(textField_Input, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_3, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_4, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_5, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_6, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_7, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_8, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_9, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_0, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Dash, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Equals, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_3, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_4, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_5, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_6, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_7, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_8, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_9, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_0, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_Dash, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_Equals, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
 					.addGap(8)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_E, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_R, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_T, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Y, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_U, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_I, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_O, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_P, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_LeftBracket, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_RightBracket, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_ForwardSlash, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_W, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Q, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+						.addComponent(button_E, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_R, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_T, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_Y, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_U, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_I, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_O, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_P, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_LeftBracket, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_RightBracket, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_ForwardSlash, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_W, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addComponent(button_Q, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_A, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_S, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_D, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_F, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_G, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_H, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_J, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_K, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_L, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_SemiColon, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Apostrophe, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Enter, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+						.addComponent(button_A, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_S, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_D, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_F, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_G, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_H, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_J, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_K, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_L, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_SemiColon, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_Apostrophe, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_Enter, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_Z, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_X, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_C, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_V, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_B, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_N, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_M, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Comma, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Period, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_BackSlash, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(button_Shift, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+						.addComponent(button_Z, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_X, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_C, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_V, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_B, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_N, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_M, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_Comma, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_Period, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_BackSlash, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(button_Shift, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+					.addComponent(button_Space, GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
 					.addGap(24))
 		);
+		
+		product_panel = new JPanel();
+		scrollPane.setViewportView(product_panel);
+		
+		product_panel.setLayout(new BoxLayout(product_panel, BoxLayout.PAGE_AXIS));
+		
+		
+		
+		for (BarcodedProduct p : ProductDatabases.BARCODED_PRODUCT_DATABASE.values()) {
+			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			if (!productButtons.contains(pb)) productButtons.add(pb);
+		}
+		
+		for (PLUCodedProduct p : ProductDatabases.PLU_PRODUCT_DATABASE.values()) {
+			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			if (!productButtons.contains(pb)) productButtons.add(pb);
+		}
+		productButtons.sort((a, b) -> {
+			return a.name.compareTo(b.name);
+		});
+		updateList();
 		setLayout(gl_contentPane);
+	}
+	
+	public void updateList() {
+		product_panel.removeAll();
+		for (ProductButton pb : productButtons) {
+			if (pb.name.toLowerCase().contains(textField_Input.getText().toLowerCase()))
+				product_panel.add(pb);
+			else if (textField_Input.getText().length() == 0)
+				product_panel.add(pb);
+		}
+		product_panel.revalidate();
+		product_panel.repaint();
 	}
 }

@@ -15,11 +15,12 @@ import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
+import athourization.AttendantDatabase;
 import ca.powerutility.PowerGrid;
 import main.CustomerStationWrapper;
 import ui.AttendantUI;
 import util.Bank;
-import util.MembershipNumber;
+import util.MembershipDatabase;
 
 public class Simulation {
 	
@@ -33,11 +34,24 @@ public class Simulation {
 		new Barcode(new Numeral[] {Numeral.seven}),
 		new Barcode(new Numeral[] {Numeral.eight}),
 		new Barcode(new Numeral[] {Numeral.nine}),
-		new Barcode(new Numeral[] {Numeral.one, Numeral.two})
+		new Barcode(new Numeral[] {Numeral.one, Numeral.zero}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.one}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.two}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.three}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.four}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.five}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.six}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.seven}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.eight}),
+		new Barcode(new Numeral[] {Numeral.one,Numeral.nine}),
+		new Barcode(new Numeral[] {Numeral.two, Numeral.zero})
 	};
 	
 	public static List<Card> cards = new ArrayList<Card>();
-	
+	public static Customer currentCustomer;
+	public static ArrayList<BarcodedItem> barcodesMember = new ArrayList<>();
+	public static AttendantUI attendant;
+	//Added in Iteration 3 @Simrat (end)
 	
 	public static void main(String[] args) {
 		
@@ -52,9 +66,10 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
+		aStation.screen.getFrame().setLocation(1000, 0);
 		aStation.plugIn();
 		aStation.turnOn();
-		AttendantUI attendant = new AttendantUI(aStation, diyStations);
+		attendant = new AttendantUI(aStation, diyStations);
 		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
@@ -64,6 +79,8 @@ public class Simulation {
 		// Initialize diy stations
 		for (DoItYourselfStation station : aStation.attendedStations()) {
 			Customer customer = genCustomer();
+
+			currentCustomer = customer;
 			customer.useStation(station);
 			station.plugIn();
 			station.turnOn();
@@ -71,8 +88,9 @@ public class Simulation {
 			CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
 			new CustomerUISimulator(station, customer, "Customer Simulator");
 			try {
-				station.printer.addInk(100);
-				station.printer.addPaper(100);
+				station.printer.addInk(10);
+				station.printer.addPaper(10);
+
 			} catch (OverloadException e) {
 				e.printStackTrace();
 			}
@@ -93,8 +111,16 @@ public class Simulation {
 		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		PowerGrid.engageUninterruptiblePowerSource();
 		
-		for (int i = 0; i < barcodes.length; i++)
+		for (int i = 0; i < barcodes.length; i++) {
 			ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcodes[i], new BarcodedProduct(barcodes[i], "Product " + (i + 1), (i + 1) * 100, 2.3));
+		}
+		
+		Barcode blueberryBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.one});
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(blueberryBarcode, new BarcodedProduct(blueberryBarcode, "Blueberry", 13 * 100, 2.3));
+
+		
+		Barcode appleBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.two});
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 13 * 100, 2.3));
 		
 		for (int i = 0; i < 10; i++) {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
@@ -103,10 +129,48 @@ public class Simulation {
 			Bank.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry, card.cvv, Double.MAX_VALUE);
 			cards.add(card);
 		}
-		
-		MembershipNumber.MEMBER_NUMBERS.add(12345678);
-		MembershipNumber.MEMBER_NUMBERS.add(23456789);
-		MembershipNumber.MEMBER_NUMBERS.add(34567890);
+
+		//Updated code in Iteration 3 @Simrat (Start)
+		//members.add(12345678);
+		//members.add(23456789);
+		//members.add(34567890);
+		//Setting up the Membership Database
+		MembershipDatabase.MEMBER_DATABASE.put(123456789,"John Doe Customer");
+		MembershipDatabase.MEMBER_DATABASE.put(1234567891,"John Doe");
+		MembershipDatabase.MEMBER_DATABASE.put(1234567892,"John Doe 2");
+		//Data added in MEMBER_DATABASE
+
+		//Create 2 membership card
+		Card membership_card1 = new Card("Membership","99999999", "John Member-Card", "000", "000", false, false);
+		Card membership_card2 = new Card("Membership","88888888", "John OG-Card", "000", "000", false, false);
+		Card membership_card3 = new Card("Membership","88888887", "John Not Member", "000", "000", false, false);
+
+		//Add these to customer's wallet
+		//adding into cards Array which will be added into wallet in genCustomer() method
+		cards.add(membership_card1);
+		cards.add(membership_card2);
+		cards.add(membership_card3);
+
+		///Add the membership cards into the membership database
+		MembershipDatabase.MEMBER_DATABASE.put(99999999,"John Member-Card");
+		MembershipDatabase.MEMBER_DATABASE.put(88888888,"John OG-Card");
+
+		//Create a barcodedItem, so that it can be scanned by barcodeScanner
+		//Added in Iteration 3 @Simrat (Start)
+		BarcodedItem membership_card_barcode1 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine}), 0.1);
+		BarcodedItem membership_card_barcode2 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight}), 0.1);
+		BarcodedItem membership_card_barcode3 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.four, Numeral.four, Numeral.four}), 0.1);
+
+		barcodesMember.add(membership_card_barcode1);
+		barcodesMember.add(membership_card_barcode2);
+		barcodesMember.add(membership_card_barcode3);
+		//MembershipNumber.MEMBER_NUMBERS.add(12345678);
+		//MembershipNumber.MEMBER_NUMBERS.add(23456789);
+		//MembershipNumber.MEMBER_NUMBERS.add(34567890);
+		//Updated code in Iteration 3 Ends @Simrat (Ends)
+
+		// Add a attendant to the attendant database
+		AttendantDatabase.add("John Doe", "Password123");
 	}
 
 	private static Customer genCustomer() {

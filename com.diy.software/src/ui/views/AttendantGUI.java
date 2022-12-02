@@ -2,6 +2,7 @@ package ui.views;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -35,12 +36,23 @@ public class AttendantGUI extends AttendantView {
 		title = "Attendant GUI";
 		setBounds(100, 100, 593, 298);
 		
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+		
+		JButton logout = new JButton("Logout");
+		logout.addActionListener(e -> {
+			attendant.setView(AttendantUI.LOGIN);
+		});
+		
 		stationPanel = new JPanel();
 		stationPanel.setLayout(new BoxLayout(stationPanel, BoxLayout.PAGE_AXIS));
 		stationPanel.setAlignmentX(LEFT_ALIGNMENT);
 		stationPanel.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
 		
-		add(stationPanel);
+		container.add(logout);
+		container.add(stationPanel);
+		
+		add(container);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	}
 	

@@ -27,6 +27,9 @@ public class MaintenanceSimulator {
 		addWidgets();
 		
 		frame.setTitle("Maintanance Simulator");
+		//Added in Iteration 3 @Simrat (Starts)
+		frame.setLocation(800,300);
+		//Added in Iteration 3 @Simrat (Starts)
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);

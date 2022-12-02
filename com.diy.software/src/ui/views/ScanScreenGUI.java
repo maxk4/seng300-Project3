@@ -22,10 +22,12 @@ import java.awt.Font;
 public class ScanScreenGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6049492754371953479L;
-	private JTextField textField_OrderTotal_Number;
 	private JTextField textField_MemberNumber;
 	private JTextArea scannedPricesArea;
 	private JTextArea scannedItemsArea;
+	private JTextField textField_OrderTotal_Number;
+	private JTextField textField_Paid;
+	private JTextField textField_Remaining;
 
 	/**
 	 * Create the frame.
@@ -36,13 +38,8 @@ public class ScanScreenGUI extends CustomerView {
 		setBackground(new Color(14, 144, 215));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JLabel label_DollarSignForTotal_Text = new JLabel("$");
-		label_DollarSignForTotal_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
-		
-		textField_OrderTotal_Number = new JTextField();
-		textField_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		textField_OrderTotal_Number.setColumns(10);
-		textField_OrderTotal_Number.setEditable(false);
+		JLabel lbl_Total_Text = new JLabel("Total $ ");
+		lbl_Total_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		textField_MemberNumber = new JTextField();
 		textField_MemberNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
@@ -78,6 +75,13 @@ public class ScanScreenGUI extends CustomerView {
 			station.banknoteOutput.enable();
 		});
 		
+		JButton button_PayWithGiftCard = new JButton("Gift Card");
+		button_PayWithGiftCard.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
+		button_PayWithGiftCard.addActionListener(e -> {
+			controller.setView(CustomerUI.PAY_WITH_GIFT);
+			station.cardReader.enable();
+		});
+		
 		JButton button_Attendant = new JButton("Attendant");
 		JButton button_EnterMemberNum = new JButton("Enter Member #");
 		button_EnterMemberNum.addActionListener(e -> {
@@ -94,44 +98,82 @@ public class ScanScreenGUI extends CustomerView {
 		
 		JButton button_BuyBags = new JButton("Buy Bags");
 		button_BuyBags.addActionListener(e -> controller.setView(CustomerUI.PURCHASE_BAGS));
+		
+		textField_OrderTotal_Number = new JTextField();
+		textField_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		textField_OrderTotal_Number.setEditable(false);
+		textField_OrderTotal_Number.setColumns(10);
+		
+		textField_Paid = new JTextField();
+		textField_Paid.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		textField_Paid.setEditable(false);
+		textField_Paid.setColumns(10);
+		
+		JLabel lbl_Paid_Text = new JLabel("Paid $ ");
+		lbl_Paid_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		
+		textField_Remaining = new JTextField();
+		textField_Remaining.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		textField_Remaining.setEditable(false);
+		textField_Remaining.setColumns(10);
+		
+		JLabel lbl_Remaining_Text = new JLabel("Remaining $ ");
+		lbl_Remaining_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		
+		JButton button_SearchProductCatalogue = new JButton("Search Product Catalogue");
+		button_SearchProductCatalogue.addActionListener(e -> {
+			controller.setView(CustomerUI.CATALOGUE);
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(label_DollarSignForTotal_Text)
+							.addGap(61)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lbl_Total_Text)
+								.addComponent(lbl_Paid_Text, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lbl_Remaining_Text))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_OrderTotal_Number, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(textField_Paid, 0, 0, Short.MAX_VALUE)
+								.addComponent(textField_OrderTotal_Number, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+								.addComponent(textField_Remaining, Alignment.LEADING, 0, 0, Short.MAX_VALUE))))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(button_CompleteAndPrintReceipt, GroupLayout.PREFERRED_SIZE, 271, Short.MAX_VALUE)
+								.addComponent(button_CompleteAndPrintReceipt, GroupLayout.PREFERRED_SIZE, 328, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(100)
 									.addComponent(button_Attendant)
 									.addContainerGap())))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(58)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(button_PayWithCredit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-								.addComponent(button_PayWithCash, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 167, Short.MAX_VALUE)
-								.addComponent(button_PayWithDebit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
+								.addComponent(button_PayWithCredit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+								.addComponent(button_PayWithCash, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE)
+								.addComponent(button_PayWithDebit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+								.addComponent(button_PayWithGiftCard, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE))
 							.addGap(52))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(112)
 							.addComponent(label_Pay_Text, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 							.addGap(112))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(button_EnterMemberNum, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
-								.addComponent(button_UsePersonalBags, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(button_BuyBags, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+								.addComponent(button_EnterMemberNum, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+								.addComponent(button_BuyBags, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+								.addComponent(button_UsePersonalBags, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(6)
+									.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE))
+								.addComponent(button_SearchProductCatalogue, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -143,29 +185,42 @@ public class ScanScreenGUI extends CustomerView {
 							.addComponent(button_Attendant)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_EnterMemberNum)
-							.addComponent(textField_MemberNumber)
-							.addGap(18)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_BuyBags)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_UsePersonalBags)
-							.addGap(102)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_SearchProductCatalogue)
+							.addGap(79)
 							.addComponent(label_Pay_Text)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
 							.addComponent(button_PayWithCash, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_PayWithCredit, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_PayWithDebit, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_PayWithGiftCard, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 							.addGap(30)
 							.addComponent(button_CompleteAndPrintReceipt))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)))
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lbl_Total_Text, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(textField_OrderTotal_Number, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label_DollarSignForTotal_Text)
-						.addComponent(textField_OrderTotal_Number, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(63))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(textField_Paid, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbl_Paid_Text, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lbl_Remaining_Text, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_Remaining, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+					.addGap(12))
 		);
 		
 		scannedPricesArea = new JTextArea();
@@ -181,13 +236,15 @@ public class ScanScreenGUI extends CustomerView {
 		setLayout(gl_contentPane);
 	}
 	
-	public void update(long balance, String productString, String priceString) {
+	public void update(long total, long paid, String productString, String priceString) {
 		scannedItemsArea.setText(priceString);
 		scannedPricesArea.setText(productString);
-		textField_OrderTotal_Number.setText(String.format("$%.2f", balance / 100d));
+		textField_OrderTotal_Number.setText(String.format("$%.2f", total / 100d));
+		textField_Paid.setText(String.format("$%.2f", paid / 100d));
+		textField_Remaining.setText(String.format("$%.2f", (total - paid) / 100d));
 	}
 
-	public void updateMember(Integer number) {
-		textField_MemberNumber.setText(number + "");
+	public void updateMember(String customerName) {
+		textField_MemberNumber.setText(customerName + "");
 	}
 }

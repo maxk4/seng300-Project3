@@ -10,7 +10,7 @@ public abstract class PaymentManager {
 	}
 	
 	public long currentBalance() {
-		return controller.getBalance();
+		return controller.getRemainingBalance();
 	}
 	
 	public long availableFunds() {
