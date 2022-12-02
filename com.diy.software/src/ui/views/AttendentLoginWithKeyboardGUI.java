@@ -6,13 +6,11 @@
 
 package ui.views;
 
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import ui.CustomerUI;
+import athourization.AttendantDatabase;
+import ui.AttendantUI;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -20,507 +18,685 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
 
-public class AttendentLoginWithKeyboardGUI extends CustomerView {
+public class AttendentLoginWithKeyboardGUI extends AttendantView {
+	
+	private class FieldSelection implements MouseListener {
+		JTextField field;
+		
+		public FieldSelection(JTextField field) {
+			this.field = field;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			selected = field;
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {}
+
+		@Override
+		public void mouseExited(MouseEvent e) {}
+		
+	}
 
 	private static final long serialVersionUID = 6242487627854166656L;
-	private JTextField textField_PasswordInput;
+	private JTextField textField_PasswordInput, textField_UsernameInput, selected;;
 	private boolean isShifted = false;
-	private JTextField textField_UsernameInput;
+	private JButton button_Shift;
 
 	/**
 	 * Create the keyboard frame.
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public AttendentLoginWithKeyboardGUI(CustomerUI controller) {
+	public AttendentLoginWithKeyboardGUI(AttendantUI controller) {
 		super(controller);
+		
 		setBounds(100, 100, 653, 445);
 		setBackground(new Color(94, 193, 255));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		button_Shift = new JButton("Shift");
 		
 		JButton button_Q = new JButton("q");
 		button_Q.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Q.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Q.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Q.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_W = new JButton("w");
 		button_W.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_W.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_W.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_W.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_E = new JButton("e");
 		button_E.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_E.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_E.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_E.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_R = new JButton("r");
 		button_R.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_R.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_R.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_R.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_T = new JButton("t");
 		button_T.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_T.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_T.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_T.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Y = new JButton("y");
 		button_Y.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Y.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Y.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Y.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_U = new JButton("u");
 		button_U.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_U.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_U.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_U.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_I = new JButton("i");
 		button_I.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_I.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_I.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_I.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_O = new JButton("o");
 		button_O.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_O.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_O.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_O.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_P = new JButton("p");
 		button_P.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_P.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_P.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_P.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_A = new JButton("a");
 		button_A.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_A.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_A.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_A.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_S = new JButton("s");
 		button_S.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_S.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_S.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_S.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_D = new JButton("d");
 		button_D.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_D.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_D.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_D.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_F = new JButton("f");
 		button_F.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_F.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_F.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_F.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_G = new JButton("g");
 		button_G.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_G.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_G.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_G.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_H = new JButton("h");
 		button_H.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_H.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_H.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_H.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_J = new JButton("j");
 		button_J.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_J.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_J.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_J.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_K = new JButton("k");
 		button_K.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_K.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_K.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_K.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_L = new JButton("l");
 		button_L.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_L.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_L.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_L.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Z = new JButton("z");
 		button_Z.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Z.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Z.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Z.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_X = new JButton("x");
 		button_X.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_X.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_X.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_X.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_C = new JButton("c");
 		button_C.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_C.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_C.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_C.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_V = new JButton("v");
 		button_V.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_V.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_V.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_V.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_B = new JButton("b");
 		button_B.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_B.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_B.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_B.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_N = new JButton("n");
 		button_N.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_N.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_N.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_N.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_M = new JButton("m");
 		button_M.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_M.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_M.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_M.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Comma = new JButton(",");
 		button_Comma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Comma.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Comma.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Comma.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Period = new JButton(".");
 		button_Period.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Period.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Period.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Period.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_BackSlash = new JButton("/");
 		button_BackSlash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_BackSlash.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_BackSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_BackSlash.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_SemiColon = new JButton(";");
 		button_SemiColon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_SemiColon.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_SemiColon.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_SemiColon.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Apostrophe = new JButton("'");
 		button_Apostrophe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Apostrophe.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Apostrophe.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Apostrophe.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_LeftBracket = new JButton("[");
 		button_LeftBracket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_LeftBracket.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_LeftBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_LeftBracket.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_RightBracket = new JButton("]");
 		button_RightBracket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_RightBracket.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_RightBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_RightBracket.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_ForwardSlash = new JButton("\\");
 		button_ForwardSlash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_ForwardSlash.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_ForwardSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_ForwardSlash.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_1 = new JButton("1");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_1.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_1.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_1.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_2 = new JButton("2");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_2.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_2.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_2.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_3 = new JButton("3");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_3.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_3.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_4 = new JButton("4");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_4.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_4.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_4.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_5 = new JButton("5");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_5.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_5.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_6 = new JButton("6");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_6.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_6.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_6.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_7 = new JButton("7");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_7.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_7.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_7.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_8 = new JButton("8");
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_8.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_8.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_8.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_9 = new JButton("9");
 		button_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_9.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_9.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_9.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_0 = new JButton("0");
 		button_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_0.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_0.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_0.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Dash = new JButton("-");
 		button_Dash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Dash.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Dash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Dash.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Equals = new JButton("=");
 		button_Equals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += button_Equals.getText();
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Equals.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Equals.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Del = new JButton("Del");
 		button_Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				if(currValue.length() > 0) {
 					currValue = currValue.substring(0, currValue.length()-1);
-					textField_PasswordInput.setText(currValue);
+					selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 				}
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Del.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Enter.setMargin(new Insets(0, 0, 0, 0));
+		button_Enter.addActionListener(e -> {
+			if (AttendantDatabase.validate(textField_UsernameInput.getText(), textField_PasswordInput.getText())) {
+				controller.setView(AttendantUI.MAIN);
+				clear();
+			}
+		});
 		
-		JButton button_Shift = new JButton("Shift");
+		
 		button_Shift.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(isShifted) {
@@ -624,34 +800,54 @@ public class AttendentLoginWithKeyboardGUI extends CustomerView {
 			}
 		});
 		button_Shift.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Shift.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		JButton button_Space = new JButton("Space");
 		button_Space.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_PasswordInput.getText();
+				String currValue = selected.getText();
 				currValue += " ";
-				textField_PasswordInput.setText(currValue);
+				selected.setText(currValue);
+				if (isShifted) button_Shift.doClick();
 			}
 		});
 		button_Space.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		button_Space.setMargin(new Insets(0, 0, 0, 0));
+		
 		
 		textField_PasswordInput = new JTextField();
 		textField_PasswordInput.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		textField_PasswordInput.addMouseListener(new FieldSelection(textField_PasswordInput));
+		
 		textField_PasswordInput.setColumns(10);
 		
 		textField_UsernameInput = new JTextField();
 		textField_UsernameInput.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		textField_UsernameInput.addMouseListener(new FieldSelection(textField_UsernameInput));
+		
 		textField_UsernameInput.setColumns(10);
 		
 		JButton button_UsernameSelect = new JButton("Username");
 		button_UsernameSelect.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		button_UsernameSelect.addActionListener(e -> {
+			selected = textField_UsernameInput;
+		});
 		
 		JButton button_PasswordSelect = new JButton("Password");
 		button_PasswordSelect.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
+		button_PasswordSelect.addActionListener(e -> {
+			selected = textField_PasswordInput;
+		});
 		
 		JButton button_Login = new JButton("Login");
 		button_Login.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
+		button_Login.addActionListener(e -> {
+			if (AttendantDatabase.validate(textField_UsernameInput.getText(), textField_PasswordInput.getText())) {
+				controller.setView(AttendantUI.MAIN);
+				clear();
+			}
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
@@ -856,5 +1052,14 @@ public class AttendentLoginWithKeyboardGUI extends CustomerView {
 					.addGap(24))
 		);
 		setLayout(gl_contentPane);
+		
+		selected = textField_UsernameInput;
+	}
+	
+	private void clear() {
+		textField_UsernameInput.setText(" ");
+		textField_PasswordInput.setText(" ");
+		selected = textField_UsernameInput;
+		if (isShifted) button_Shift.doClick();
 	}
 }

@@ -15,12 +15,12 @@ import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
+import athourization.AttendantDatabase;
 import ca.powerutility.PowerGrid;
 import main.CustomerStationWrapper;
 import ui.AttendantUI;
 import util.Bank;
 import util.MembershipDatabase;
-import util.MembershipNumber;
 
 public class Simulation {
 	
@@ -55,10 +55,10 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
+		aStation.screen.getFrame().setLocation(1000, 0);
 		aStation.plugIn();
 		aStation.turnOn();
 		AttendantUI attendant = new AttendantUI(aStation, diyStations);
-		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
 			attendant.addStation(station);
@@ -148,6 +148,8 @@ public class Simulation {
 		//MembershipNumber.MEMBER_NUMBERS.add(34567890);
 		//Updated code in Iteration 3 Ends @Simrat (Ends)
 
+		// Add a attendant to the attendant database
+		AttendantDatabase.add("John Doe", "Password123");
 	}
 
 	private static Customer genCustomer() {
