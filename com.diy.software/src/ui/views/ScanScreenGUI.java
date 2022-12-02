@@ -120,6 +120,8 @@ public class ScanScreenGUI extends CustomerView {
 		JLabel lbl_Remaining_Text = new JLabel("Remaining $ ");
 		lbl_Remaining_Text.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
+		JButton button_AddPLUCodeButton = new JButton("Add Item by PLU Code");
+		
 		JButton button_SearchProductCatalogue = new JButton("Search Product Catalogue");
 		button_SearchProductCatalogue.addActionListener(e -> {
 			controller.setView(CustomerUI.CATALOGUE);
@@ -173,7 +175,8 @@ public class ScanScreenGUI extends CustomerView {
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(6)
 									.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE))
-								.addComponent(button_SearchProductCatalogue, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE))
+								.addComponent(button_SearchProductCatalogue, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
+								.addComponent(button_AddPLUCodeButton, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -193,6 +196,8 @@ public class ScanScreenGUI extends CustomerView {
 							.addComponent(button_UsePersonalBags)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(button_SearchProductCatalogue)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_AddPLUCodeButton)
 							.addGap(79)
 							.addComponent(label_Pay_Text)
 							.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
@@ -222,6 +227,7 @@ public class ScanScreenGUI extends CustomerView {
 						.addComponent(textField_Remaining, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
 					.addGap(12))
 		);
+		
 		
 		scannedPricesArea = new JTextArea();
 		scannedPricesArea.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
