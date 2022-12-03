@@ -7,4 +7,8 @@ public interface AttendantUIListener {
 	public void approveOwnBag(DoItYourselfStation station);
 	public void denyOwnBag(DoItYourselfStation station);
 	public void approveNoBag(DoItYourselfStation station);
+
+	public void disableStation(DoItYourselfStation station);
+	public void enableStation(DoItYourselfStation station);
+
 }

@@ -34,8 +34,9 @@ public class StationComponent extends JPanel {
 	private List<String> alerts;
 	private JLabel msgField;
 	private JLabel alertField;
+	private JButton enable,disable;
 	
-	public StationComponent(String descriptor) {
+	public StationComponent(int station_num, AttendantGUI gui) {
 		super();
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
@@ -46,8 +47,10 @@ public class StationComponent extends JPanel {
 		
 		this.alertField = new JLabel();
 		this.alertField.setSize(new Dimension(50, 20));
-		
-		JLabel title = new JLabel(descriptor);
+
+
+
+		JLabel title = new JLabel("Station " + station_num);
 		JButton approve = new JButton("Approve");
 		approve.addActionListener(e -> {
 			if (messages.isEmpty()) return;
@@ -69,6 +72,22 @@ public class StationComponent extends JPanel {
 		denyAll.addActionListener(e -> {
 			for (Action a : actions.values()) a.deny();
 		});
+
+		enable = new JButton("Enable");
+		enable.addActionListener(e -> {
+			System.out.println("Enable button pressed for station " + station_num);
+			gui.notifyEnableCustomerMachine(this);
+			toggleEnabledButtons(true);
+		});
+
+		disable = new JButton("Disable");
+		disable.addActionListener(e -> {
+			System.out.println("Disable button pressed for station " + station_num);
+			gui.notifyDisableCustomerMachine(this);
+			toggleEnabledButtons(false);
+		});
+
+		toggleEnabledButtons(true);
 		
 		this.setSize(400, 50);
 
@@ -80,6 +99,8 @@ public class StationComponent extends JPanel {
 		this.add(approveAll);
 		this.add(deny);
 		this.add(denyAll);
+		this.add(disable);
+		this.add(enable);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
 		this.setAlignmentX(LEFT_ALIGNMENT);
 		this.setBackground(new Color(0xFF, 0xFF, 0xFF));
@@ -119,4 +140,18 @@ public class StationComponent extends JPanel {
 		else alerts.add(alertMessage);
 		update();
 	}
+
+	private void toggleEnabledButtons(boolean isEnabled){
+		if(disable == null || enable == null)
+			return;
+		if(isEnabled){
+			enable.setEnabled(false);
+			disable.setEnabled(true);
+		}
+		else{
+			enable.setEnabled(true);
+			disable.setEnabled(false);
+		}
+	}
+
 }
