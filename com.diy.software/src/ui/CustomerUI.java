@@ -11,6 +11,7 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.*;
+import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 
 
@@ -57,7 +58,7 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this),
+				new CustomerSearchCatalogueGUI(this),
 				new AddProductWIthPLUCodeGUI(this),
 				new PlaceItemGUI(this),
 				new PlaceBagGUI(this),

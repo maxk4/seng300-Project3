@@ -1,4 +1,4 @@
-package ui.views;
+package ui.views.util;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.diy.hardware.DoItYourselfStation;
+
+import ui.views.AttendantGUI;
 
 
 @SuppressWarnings("serial")
@@ -34,9 +38,9 @@ public class StationComponent extends JPanel {
 	private List<String> alerts;
 	private JLabel msgField;
 	private JLabel alertField;
-	private JButton enable,disable;
+	private JButton enable, disable, openList;
 	
-	public StationComponent(int station_num, AttendantGUI gui) {
+	public StationComponent(int station_num, DoItYourselfStation station, AttendantGUI gui) {
 		super();
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
@@ -86,8 +90,13 @@ public class StationComponent extends JPanel {
 			gui.notifyDisableCustomerMachine(this);
 			toggleEnabledButtons(false);
 		});
-
+		
 		toggleEnabledButtons(true);
+		
+		openList = new JButton("Open Cart");
+		openList.addActionListener(e -> {
+			gui.requestOpenStation(station);
+		});
 		
 		this.setSize(400, 50);
 
@@ -101,6 +110,7 @@ public class StationComponent extends JPanel {
 		this.add(denyAll);
 		this.add(disable);
 		this.add(enable);
+		this.add(openList);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
 		this.setAlignmentX(LEFT_ALIGNMENT);
 		this.setBackground(new Color(0xFF, 0xFF, 0xFF));
