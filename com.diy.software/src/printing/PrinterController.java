@@ -126,15 +126,4 @@ public class PrinterController implements ReceiptPrinterListener {
 		}
 		station.printer.cutPaper();
 	}
-	
-	public void addPaper() {
-		noPaper = false;
-		paperAdded(this.station.printer);
-	}
-	
-	public void addInk() {
-		noInk = false;
-		inkAdded(this.station.printer);
-	}
-	
 }
