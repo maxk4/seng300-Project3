@@ -121,7 +121,6 @@ public class CustomerStationWrapper {
 			@Override
 			public void disableStation(DoItYourselfStation station) {
 				if (station == diySstation) {
-					System.out.println("SYSTEM DISABLED");
 					if(!inProgress){
 						customer.setView(CustomerUI.DISABLED);
 						return;
@@ -136,7 +135,6 @@ public class CustomerStationWrapper {
 			@Override
 			public void enableStation(DoItYourselfStation station) {
 				if (station == diySstation) {
-					System.out.println("SYSTEM ENABLED");
 					if (inProgress)
 						customer.setView(CustomerUI.SCAN);
 					else
