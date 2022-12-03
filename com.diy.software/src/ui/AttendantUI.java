@@ -158,4 +158,12 @@ public class AttendantUI {
 	
 		return choice == 0;
 	}
+
+	public void disableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.disableStation(station);
+	}
+
+	public void enableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.enableStation(station);
+	}
  }

@@ -154,6 +154,31 @@ public class CustomerStationWrapper {
 					scale.removeLastItemWeight();
 				}
 			}
+
+			// Disables the station, preventing customers from using it, until attendant re-enables it
+			@Override
+			public void disableStation(DoItYourselfStation station) {
+				if (station == diyStation) {
+					if(!inProgress){
+						customer.setView(CustomerUI.DISABLED);
+						return;
+					}
+					//Customer Session currently in progress
+					//TODO: Make attendant confirm system is to be disabled when customer sessions are in progress
+					customer.setView(CustomerUI.DISABLED);
+				}
+			}
+
+			//Enables the use of a station by customers, after it has been disabled
+			@Override
+			public void enableStation(DoItYourselfStation station) {
+				if (station == diyStation) {
+					if (inProgress)
+						customer.setView(CustomerUI.SCAN);
+					else
+						customer.setView(CustomerUI.START);
+				}
+			}
 		});
 		
 		scale.register(new ScaleListener() {
