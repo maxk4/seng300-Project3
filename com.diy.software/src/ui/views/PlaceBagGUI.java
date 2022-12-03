@@ -3,6 +3,7 @@ package ui.views;
 import javax.swing.border.EmptyBorder;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import java.awt.Color;
 import javax.swing.JLabel;

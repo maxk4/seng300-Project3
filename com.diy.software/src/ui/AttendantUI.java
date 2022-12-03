@@ -8,10 +8,13 @@ import javax.swing.JOptionPane;
 
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 import ui.views.AttendantGUI;
-import ui.views.AttendantView;
+import ui.views.AttendantSearchCatalogueGUI;
 import ui.views.AttendentLoginWithKeyboardGUI;
+import ui.views.util.AttendantView;
+import util.ProductInfo;
 
 public class AttendantUI {
 	
@@ -37,6 +40,7 @@ public class AttendantUI {
 	
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
+		
 		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this), gui};
 		
 		setView(LOGIN);
@@ -46,6 +50,13 @@ public class AttendantUI {
 	
 	public void setView(int view) {
 		mainFrame.setContentPane(views[view]);
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		mainFrame.pack();
+	}
+	
+	public void setView(AttendantView view) {
+		mainFrame.setContentPane(view);
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		mainFrame.pack();
@@ -144,6 +155,26 @@ public class AttendantUI {
 	
 	public void notifyAddBag(DoItYourselfStation station) {
 		gui.notifyAddOwnBag(station);
+	}
+	
+	public void forceAddItem(DoItYourselfStation station, Product product, String description) {
+		for (AttendantUIListener listener : listeners) {
+			listener.addItem(station, product, description);
+		}
+	}
+	
+	public void forceRemove(DoItYourselfStation station, Product product, String description, long price, double weight) {
+		for (AttendantUIListener listener : listeners) {
+			listener.removeItem(station, product, description, price, weight);
+		}
+	}
+	
+	public ProductInfo[] requestProductList(DoItYourselfStation station) {
+		for (AttendantUIListener listener : listeners) {
+			ProductInfo[] response = listener.requestProductInfo(station);
+			if (response != null) return response;
+		}
+		return null;
 	}
 	
 	/**

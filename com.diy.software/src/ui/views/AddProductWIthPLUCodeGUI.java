@@ -2,6 +2,8 @@ package ui.views;
 
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;

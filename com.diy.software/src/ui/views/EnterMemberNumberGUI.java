@@ -7,6 +7,7 @@ import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.CardReaderListener;
 import simulation.Simulation;
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 import membership.MembershipListener;
 
