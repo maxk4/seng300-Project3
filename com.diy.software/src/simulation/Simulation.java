@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.PriceLookUpCode;
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
@@ -35,15 +37,15 @@ public class Simulation {
 		new Barcode(new Numeral[] {Numeral.eight}),
 		new Barcode(new Numeral[] {Numeral.nine}),
 		new Barcode(new Numeral[] {Numeral.one, Numeral.zero}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.one}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.two}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.three}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.four}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.five}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.six}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.seven}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.eight}),
-		new Barcode(new Numeral[] {Numeral.one,Numeral.nine}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.one}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.two}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.three}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.four}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.five}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.six}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.seven}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.eight}),
+		new Barcode(new Numeral[] {Numeral.one, Numeral.nine}),
 		new Barcode(new Numeral[] {Numeral.two, Numeral.zero})
 	};
 	
@@ -115,12 +117,68 @@ public class Simulation {
 			ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcodes[i], new BarcodedProduct(barcodes[i], "Product " + (i + 1), (i + 1) * 100, 2.3));
 		}
 		
-		Barcode blueberryBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.one});
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(blueberryBarcode, new BarcodedProduct(blueberryBarcode, "Blueberry", 13 * 100, 2.3));
+		PriceLookUpCode blueberryCode = new PriceLookUpCode("4240");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(blueberryCode, new PLUCodedProduct(blueberryCode, "Blueberry", 3 * 100));
 
+		PriceLookUpCode appleCode = new PriceLookUpCode("3283");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(appleCode, new PLUCodedProduct(appleCode, "Apple", 4 * 100));
 		
-		Barcode appleBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.two});
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 13 * 100, 2.3));
+		PriceLookUpCode bananaCode = new PriceLookUpCode("4011");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(bananaCode, new PLUCodedProduct(bananaCode, "Banana", 1 * 100));
+		
+		PriceLookUpCode papayaCode = new PriceLookUpCode("3303");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(papayaCode, new PLUCodedProduct(papayaCode, "Papaya", 10 * 100));
+		
+		PriceLookUpCode peachCode = new PriceLookUpCode("3113");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(peachCode, new PLUCodedProduct(peachCode, "Peach", 6 * 100));
+		
+		PriceLookUpCode mushroomCode = new PriceLookUpCode("4647");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mushroomCode, new PLUCodedProduct(mushroomCode, "Mushrooms", 8 * 100));
+		
+		PriceLookUpCode mangoCode = new PriceLookUpCode("3363");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mangoCode, new PLUCodedProduct(mangoCode, "Mango", 6 * 100));
+		
+		PriceLookUpCode strawberryCode = new PriceLookUpCode("7000");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(strawberryCode, new PLUCodedProduct(strawberryCode, "Strawberry", 6 * 100));
+		
+		PriceLookUpCode broccoliCode = new PriceLookUpCode("7001");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(broccoliCode, new PLUCodedProduct(broccoliCode, "Broccoli", 6 * 100));
+
+		PriceLookUpCode cabbageCode = new PriceLookUpCode("7002");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(cabbageCode, new PLUCodedProduct(cabbageCode, "Cabbage", 6 * 100));
+
+		PriceLookUpCode carrotCode = new PriceLookUpCode("7003");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(carrotCode, new PLUCodedProduct(carrotCode, "Carrot", 6 * 100));
+
+		PriceLookUpCode cherryCode = new PriceLookUpCode("7004");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(cherryCode, new PLUCodedProduct(cherryCode, "Cherry", 6 * 100));
+
+		PriceLookUpCode cornCode = new PriceLookUpCode("7005");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(cornCode, new PLUCodedProduct(cornCode, "Corn", 6 * 100));
+
+		PriceLookUpCode cucumberCode = new PriceLookUpCode("7006");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(cucumberCode, new PLUCodedProduct(cucumberCode, "Cucumber", 6 * 100));
+
+		PriceLookUpCode raspberryCode = new PriceLookUpCode("7007");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(raspberryCode, new PLUCodedProduct(raspberryCode, "Raspberry", 6 * 100));
+
+		PriceLookUpCode watermelonCode = new PriceLookUpCode("7008");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(watermelonCode, new PLUCodedProduct(watermelonCode, "Watermelon", 6 * 100));
+
+		PriceLookUpCode kiwiCode = new PriceLookUpCode("7009");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(kiwiCode, new PLUCodedProduct(kiwiCode, "Kiwi", 6 * 100));
+
+		PriceLookUpCode lettuceCode = new PriceLookUpCode("7010");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(lettuceCode, new PLUCodedProduct(lettuceCode, "Lettuce", 6 * 100));
+
+		PriceLookUpCode onionCode = new PriceLookUpCode("7011");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(onionCode, new PLUCodedProduct(onionCode, "Onion", 6 * 100));
+
+		PriceLookUpCode peasCode = new PriceLookUpCode("7012");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(peasCode, new PLUCodedProduct(peasCode, "Lettuce", 6 * 100));
+		
+		
+		System.out.println("Successfully populated Barcoded Product Database and PLU Product Database");
 		
 		for (int i = 0; i < 10; i++) {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
