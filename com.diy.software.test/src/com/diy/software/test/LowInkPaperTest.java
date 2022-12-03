@@ -1,18 +1,24 @@
+package com.diy.software.test;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.ReceiptPrinterND;
 
-import util.AttendantStation;
-import util.AttendantUI;
-import util.CustomerUI;
-import util.LowInkLowPaper;
+//import util.AttendantStation; //?
+
+//import util.LowInkLowPaper;
+//new
+import ui.AttendantUI;
+import ui.CustomerUI;
+import printing.PrinterController;
+import printing.PrintListener;
 
 
 public class LowInkPaperTest {
@@ -22,7 +28,7 @@ public class LowInkPaperTest {
 	public static final int MAXIMUM_PAPER = 10;
 	public static final int MAXIMUM_INK = 20;
 
-	LowInkLowPaper listener;
+	PrinterController listener; //previously lowinklowpaper
 	DoItYourselfStation station;
 	CustomerUI customer;
 	
@@ -33,10 +39,10 @@ public class LowInkPaperTest {
 		station = new DoItYourselfStation();
 		station.plugIn();
 		station.turnOn();
-		customer = new CustomerUI(station);
+		customer = new CustomerUI(station, title);
 		AttendantUI attendant = new AttendantUI(new AttendantStation(), 1);
 		
-		listener = new LowInkLowPaper(customer, attendant) {
+		listener = new PrinterController(station) {
 			@Override
 			public void abortPrinting() {}
 		};

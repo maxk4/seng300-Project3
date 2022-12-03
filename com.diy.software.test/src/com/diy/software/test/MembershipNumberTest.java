@@ -1,3 +1,4 @@
+package com.diy.software.test;
 
 import static org.junit.Assert.assertEquals;
 
