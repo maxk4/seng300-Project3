@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import athourization.AttendantDatabase;
 import ui.AttendantUI;
+import ui.views.util.AttendantView;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -1059,8 +1060,8 @@ public class AttendentLoginWithKeyboardGUI extends AttendantView {
 	}
 	
 	private void clear() {
-		textField_UsernameInput.setText(" ");
-		textField_PasswordInput.setText(" ");
+		textField_UsernameInput.setText("");
+		textField_PasswordInput.setText("");
 		selected = textField_UsernameInput;
 		if (isShifted) button_Shift.doClick();
 	}
