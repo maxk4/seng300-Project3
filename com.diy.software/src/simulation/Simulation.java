@@ -128,6 +128,31 @@ public class Simulation {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 4 * 100, 2.3));
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(appleCode, new PLUCodedProduct(appleCode, "Apple", 4 * 100));
 		
+		Barcode bananaBarcode = new Barcode(new Numeral[] {Numeral.three, Numeral.five});
+		PriceLookUpCode bananaCode = new PriceLookUpCode("4011");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bananaBarcode, new BarcodedProduct(bananaBarcode, "Banana", 1 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(bananaCode, new PLUCodedProduct(bananaCode, "Banana", 1 * 100));
+		
+		Barcode papayaBarcode = new Barcode(new Numeral[] {Numeral.seven, Numeral.six});
+		PriceLookUpCode papayaCode = new PriceLookUpCode("3303");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(papayaBarcode, new BarcodedProduct(papayaBarcode, "Papaya", 10 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(papayaCode, new PLUCodedProduct(papayaCode, "Papaya", 10 * 100));
+		
+		Barcode peachBarcode = new Barcode(new Numeral[] {Numeral.five, Numeral.zero});
+		PriceLookUpCode peachCode = new PriceLookUpCode("3113");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(peachBarcode, new BarcodedProduct(peachBarcode, "Peach", 6 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(peachCode, new PLUCodedProduct(peachCode, "Peach", 6 * 100));
+		
+		Barcode mushroomBarcode = new Barcode(new Numeral[] {Numeral.six, Numeral.nine});
+		PriceLookUpCode mushroomCode = new PriceLookUpCode("4647");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(mushroomBarcode, new BarcodedProduct(mushroomBarcode, "Mushrooms", 8 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mushroomCode, new PLUCodedProduct(mushroomCode, "Mushrooms", 8 * 100));
+		
+		Barcode mangoBarcode = new Barcode(new Numeral[] {Numeral.seven, Numeral.one});
+		PriceLookUpCode mangoCode = new PriceLookUpCode("3363");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(mangoBarcode, new BarcodedProduct(mangoBarcode, "Mango", 6 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mangoCode, new PLUCodedProduct(mangoCode, "Mango", 6 * 100));
+		
 		
 		System.out.println("Successfully populated Barcoded Product Database and PLU Product Database");
 		
