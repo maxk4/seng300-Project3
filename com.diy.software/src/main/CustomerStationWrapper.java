@@ -117,21 +117,30 @@ public class CustomerStationWrapper {
 				}
 			}
 
+			// Disables the station, preventing customers from using it, until attendant re-enables it
 			@Override
 			public void disableStation(DoItYourselfStation station) {
-			// Reduces the expected weight in the Bagging Area by the expected weight of the item
 				if (station == diySstation) {
-					customer.setView(CustomerUI.DISABLED);
 					System.out.println("SYSTEM DISABLED");
+					if(!inProgress){
+						customer.setView(CustomerUI.DISABLED);
+						return;
+					}
+					//Customer Session currently in progress
+					//TODO: Make attendant confirm system is to be disabled when customer sessions are in progress
+					customer.setView(CustomerUI.DISABLED);
 				}
 			}
 
+			//Enables the use of a station by customers, after it has been disabled
 			@Override
 			public void enableStation(DoItYourselfStation station) {
-				// Reduces the expected weight in the Bagging Area by the expected weight of the item
 				if (station == diySstation) {
-					customer.setView(CustomerUI.SCAN);
 					System.out.println("SYSTEM ENABLED");
+					if (inProgress)
+						customer.setView(CustomerUI.SCAN);
+					else
+						customer.setView(CustomerUI.START);
 				}
 			}
 		});

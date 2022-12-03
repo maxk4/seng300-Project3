@@ -34,6 +34,7 @@ public class StationComponent extends JPanel {
 	private List<String> alerts;
 	private JLabel msgField;
 	private JLabel alertField;
+	private JButton enable,disable;
 	
 	public StationComponent(int station_num, AttendantGUI gui) {
 		super();
@@ -46,6 +47,8 @@ public class StationComponent extends JPanel {
 		
 		this.alertField = new JLabel();
 		this.alertField.setSize(new Dimension(50, 20));
+
+
 
 		JLabel title = new JLabel("Station " + station_num);
 		JButton approve = new JButton("Approve");
@@ -70,25 +73,21 @@ public class StationComponent extends JPanel {
 			for (Action a : actions.values()) a.deny();
 		});
 
-		/*
-			System Disable/Enable
-		 */
-		JButton enable = new JButton("Enable");
+		enable = new JButton("Enable");
 		enable.addActionListener(e -> {
 			System.out.println("Enable button pressed for station " + station_num);
 			gui.notifyEnableCustomerMachine(this);
+			toggleEnabledButtons(true);
 		});
 
-		enable.setEnabled(false);
-
-		JButton disable = new JButton("Disable");
+		disable = new JButton("Disable");
 		disable.addActionListener(e -> {
 			System.out.println("Disable button pressed for station " + station_num);
 			gui.notifyDisableCustomerMachine(this);
-			enable.setEnabled(true);
+			toggleEnabledButtons(false);
 		});
 
-
+		toggleEnabledButtons(true);
 		
 		this.setSize(400, 50);
 
@@ -140,6 +139,19 @@ public class StationComponent extends JPanel {
 		if (resolved) alerts.remove(alertMessage);
 		else alerts.add(alertMessage);
 		update();
+	}
+
+	private void toggleEnabledButtons(boolean isEnabled){
+		if(disable == null || enable == null)
+			return;
+		if(isEnabled){
+			enable.setEnabled(false);
+			disable.setEnabled(true);
+		}
+		else{
+			enable.setEnabled(true);
+			disable.setEnabled(false);
+		}
 	}
 
 }
