@@ -14,6 +14,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.PriceLookUpCode;
+import com.diy.hardware.external.ProductDatabases;
+
+import simulation.CustomerUISimulator;
+
 public class AddProductWIthPLUCodeGUI extends CustomerView {
 	private static final long serialVersionUID = -2878096921110787780L;
 	private JTextField textField_PLUCode;
@@ -139,9 +145,13 @@ public class AddProductWIthPLUCodeGUI extends CustomerView {
 		JButton button_Enter = new JButton("Enter");
 		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		button_Enter.addActionListener(e -> {
-			controller.setView(CustomerUI.SCAN);
-			//Cindy, You'll need to change this to your own code
-			//controller.purchaseBags(Integer.parseInt(textField_PLUCode.getText()));
+			String numberPLUString = textField_PLUCode.getText();
+			PriceLookUpCode PLUCode = new PriceLookUpCode(numberPLUString); 
+			// get product from database 
+			PLUCodedProduct product = ProductDatabases.PLU_PRODUCT_DATABASE.get(PLUCode);
+			// add item using cartController
+			controller.addPLUProduct(product);
+			textField_PLUCode.setText(""); //clears text field
 		});
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		

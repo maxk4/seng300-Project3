@@ -117,12 +117,30 @@ public class Simulation {
 			ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcodes[i], new BarcodedProduct(barcodes[i], "Product " + (i + 1), (i + 1) * 100, 2.3));
 		}
 		
-		PriceLookUpCode blueberryCode = new PriceLookUpCode("0021");
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(blueberryCode, new PLUCodedProduct(blueberryCode, "Blueberry", 13 * 100));
+		PriceLookUpCode blueberryCode = new PriceLookUpCode("4240");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(blueberryCode, new PLUCodedProduct(blueberryCode, "Blueberry", 3 * 100));
 
 		
-		PriceLookUpCode appleCode = new PriceLookUpCode("0022");
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(appleCode, new PLUCodedProduct(appleCode, "Apple", 13 * 100));
+		PriceLookUpCode appleCode = new PriceLookUpCode("3283");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(appleCode, new PLUCodedProduct(appleCode, "Apple", 4 * 100));
+		
+		PriceLookUpCode bananaCode = new PriceLookUpCode("4011");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(bananaCode, new PLUCodedProduct(bananaCode, "Banana", 1 * 100));
+		
+		PriceLookUpCode papayaCode = new PriceLookUpCode("3303");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(papayaCode, new PLUCodedProduct(papayaCode, "Papaya", 10 * 100));
+		
+		PriceLookUpCode peachCode = new PriceLookUpCode("3113");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(peachCode, new PLUCodedProduct(peachCode, "Peach", 6 * 100));
+		
+		PriceLookUpCode mushroomCode = new PriceLookUpCode("4647");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mushroomCode, new PLUCodedProduct(mushroomCode, "Mushrooms", 8 * 100));
+		
+		PriceLookUpCode mangoCode = new PriceLookUpCode("3363");
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(mangoCode, new PLUCodedProduct(mangoCode, "Mango", 6 * 100));
+		
+		
+		System.out.println("Successfully populated Barcoded Product Database and PLU Product Database");
 		
 		for (int i = 0; i < 10; i++) {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);

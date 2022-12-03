@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.swing.JFrame;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.EnterMemberNumberGUI;
@@ -44,7 +45,6 @@ public class CustomerUI {
 		PLU = 11,
 		PLACE_ITEM = 12,
 		PLACE_BAG = 13;
-	
 	private CustomerView[] views;
 	
 	private JFrame mainFrame;
@@ -115,6 +115,10 @@ public class CustomerUI {
 	
 	public void purchaseBags(int amount) {
 		for (CustomerUIListener listener : listeners) listener.purchaseBags(amount);
+	}
+	
+	public void addPLUProduct(PLUCodedProduct product) {
+		for (CustomerUIListener listener : listeners) listener.addPLUProduct(product);
 	}
 
 	//Removed in Iteration 3 @Simrat (Starts)

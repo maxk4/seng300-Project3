@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 

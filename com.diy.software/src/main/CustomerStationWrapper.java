@@ -2,6 +2,7 @@ package main;
 
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import cart.CartController;
@@ -71,7 +72,14 @@ public class CustomerStationWrapper {
 				}
 				updateProductList();
 			}
-
+			
+			@Override
+			public void addPLUProduct(PLUCodedProduct product) {
+				waitingFor = product;
+				waitingForDescription = product.getDescription();
+				customer.setView(CustomerUI.PLACE_ITEM);
+			}
+			
 			@Override
 			public void endSession() {
 				if (payment.hasRemainingBalance()) return;
