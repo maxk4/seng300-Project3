@@ -8,4 +8,5 @@ public interface CustomerUIListener {
 	public abstract void beginSession();
 	public abstract void selectItem(Product product, String description);
 	public abstract void itemPlaced();
+	public abstract void requestUsePersonalBag();
 }

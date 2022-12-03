@@ -94,7 +94,7 @@ public class CustomerStationWrapper {
 			public void selectItem(Product product, String description) {
 				waitingFor = product;
 				waitingForDescription = description;
-				customer.setView(CustomerUI.PLACE);
+				customer.setView(CustomerUI.PLACE_ITEM);
 			}
 
 			@Override
@@ -108,6 +108,14 @@ public class CustomerStationWrapper {
 				cart.addItem(waitingFor, waitingForDescription, price, weight);
 				customer.setView(CustomerUI.SCAN);
 				waitingFor = null;
+			}
+
+			@Override
+			public void requestUsePersonalBag() {
+				boolean approved = attendant.approveOwnBagRequest(diyStation);
+				customer.setView(CustomerUI.SCAN);
+				if (approved) scale.approveWeight();
+				
 			}
 			
 		});

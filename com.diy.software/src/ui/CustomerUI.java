@@ -15,6 +15,7 @@ import ui.views.PayWithCashGUI;
 import ui.views.PayWithCreditGUI;
 import ui.views.PayWithDebitGUI;
 import ui.views.PayWithGiftCardGUI;
+import ui.views.PlaceBagGUI;
 import ui.views.PlaceItemGUI;
 import ui.views.PurchaseBagsGUI;
 import ui.views.ScanScreenGUI;
@@ -41,7 +42,8 @@ public class CustomerUI {
 		PAY_WITH_GIFT = 9,
 		CATALOGUE = 10,
 		PLU = 11,
-		PLACE = 12;
+		PLACE_ITEM = 12,
+		PLACE_BAG = 13;
 	
 	private CustomerView[] views;
 	
@@ -70,7 +72,8 @@ public class CustomerUI {
 				new PayWithGiftCardGUI(this, station),
 				new SearchCatalogueGUI(this),
 				new AddProductWIthPLUCodeGUI(this),
-				new PlaceItemGUI(this)
+				new PlaceItemGUI(this),
+				new PlaceBagGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -104,6 +107,10 @@ public class CustomerUI {
 		if (!listeners.contains(listener)) return false;
 		listeners.remove(listener);
 		return false;
+	}
+	
+	public void requestPersonalBag() {
+		for (CustomerUIListener listener : listeners) listener.requestUsePersonalBag();
 	}
 	
 	public void purchaseBags(int amount) {

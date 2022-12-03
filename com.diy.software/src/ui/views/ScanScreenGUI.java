@@ -89,7 +89,7 @@ public class ScanScreenGUI extends CustomerView {
 		});
 		
 		JButton button_UsePersonalBags = new JButton("Use Personal Bags");
-		button_UsePersonalBags.addActionListener(e -> controller.setView(CustomerUI.ENTER_MEMBERSHIP));
+		button_UsePersonalBags.addActionListener(e -> controller.setView(CustomerUI.PLACE_BAG));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		

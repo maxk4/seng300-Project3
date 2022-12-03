@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
@@ -53,6 +54,7 @@ public class AttendantUI {
 	public void addStation(DoItYourselfStation customerStation) {
 		station.add(customerStation);
 		gui.addStation(customerStation);
+		stations.add(customerStation);
 	}
 	
 	public void approveWeight(DoItYourselfStation station) {
@@ -142,5 +144,18 @@ public class AttendantUI {
 	
 	public void notifyAddBag(DoItYourselfStation station) {
 		gui.notifyAddOwnBag(station);
+	}
+	
+	/**
+	 * Prompt Attendant to approve or deny a own bag request
+	 * @param station DoItYourselfStation that made the request
+	 * @return boolean true if approved false otherwise
+	 */
+	public boolean approveOwnBagRequest(DoItYourselfStation station) {
+		int index  = idOf(station);
+		
+		int choice = JOptionPane.showConfirmDialog(gui, String.format("Allow station %d to use their own bag?", index), "Aprove/Deny Own Bag Request", JOptionPane.YES_NO_OPTION);
+	
+		return choice == 0;
 	}
  }
