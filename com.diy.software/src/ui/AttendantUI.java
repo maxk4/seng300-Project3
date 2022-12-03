@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.Product;
 
 import ui.views.AttendantGUI;
-import ui.views.AttendantView;
+import ui.views.AttendantSearchCatalogueGUI;
 import ui.views.AttendentLoginWithKeyboardGUI;
+import ui.views.util.AttendantView;
+import util.ProductInfo;
 
 public class AttendantUI {
 	
@@ -36,6 +40,7 @@ public class AttendantUI {
 	
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
+		
 		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this), gui};
 		
 		setView(LOGIN);
@@ -50,9 +55,17 @@ public class AttendantUI {
 		mainFrame.pack();
 	}
 	
+	public void setView(AttendantView view) {
+		mainFrame.setContentPane(view);
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		mainFrame.pack();
+	}
+	
 	public void addStation(DoItYourselfStation customerStation) {
 		station.add(customerStation);
 		gui.addStation(customerStation);
+		stations.add(customerStation);
 	}
 	
 	public void approveWeight(DoItYourselfStation station) {
@@ -142,5 +155,46 @@ public class AttendantUI {
 	
 	public void notifyAddBag(DoItYourselfStation station) {
 		gui.notifyAddOwnBag(station);
+	}
+	
+	public void forceAddItem(DoItYourselfStation station, Product product, String description) {
+		for (AttendantUIListener listener : listeners) {
+			listener.addItem(station, product, description);
+		}
+	}
+	
+	public void forceRemove(DoItYourselfStation station, Product product, String description, long price, double weight) {
+		for (AttendantUIListener listener : listeners) {
+			listener.removeItem(station, product, description, price, weight);
+		}
+	}
+	
+	public ProductInfo[] requestProductList(DoItYourselfStation station) {
+		for (AttendantUIListener listener : listeners) {
+			ProductInfo[] response = listener.requestProductInfo(station);
+			if (response != null) return response;
+		}
+		return null;
+	}
+	
+	/**
+	 * Prompt Attendant to approve or deny a own bag request
+	 * @param station DoItYourselfStation that made the request
+	 * @return boolean true if approved false otherwise
+	 */
+	public boolean approveOwnBagRequest(DoItYourselfStation station) {
+		int index  = idOf(station);
+		
+		int choice = JOptionPane.showConfirmDialog(gui, String.format("Allow station %d to use their own bag?", index), "Aprove/Deny Own Bag Request", JOptionPane.YES_NO_OPTION);
+	
+		return choice == 0;
+	}
+
+	public void disableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.disableStation(station);
+	}
+
+	public void enableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.enableStation(station);
 	}
  }
