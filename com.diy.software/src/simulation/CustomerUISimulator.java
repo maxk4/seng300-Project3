@@ -84,6 +84,7 @@ public class CustomerUISimulator{
 			placeList.add(button);
 		}
 		
+		
 		JPanel wallet = new JPanel();
 		wallet.setLayout(new BoxLayout(wallet, BoxLayout.PAGE_AXIS));
 		
