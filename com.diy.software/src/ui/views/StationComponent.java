@@ -69,6 +69,18 @@ public class StationComponent extends JPanel {
 		denyAll.addActionListener(e -> {
 			for (Action a : actions.values()) a.deny();
 		});
+
+		JButton disable = new JButton("Disable");
+		disable.addActionListener(e -> {
+			System.out.println("Disable button pressed");
+//			for (Action a : actions.values()) a.deny();
+		});
+
+		JButton enable = new JButton("Enable");
+		enable.addActionListener(e -> {
+			System.out.println("Enable button pressed");
+//			for (Action a : actions.values()) a.deny();
+		});
 		
 		this.setSize(400, 50);
 
@@ -80,6 +92,8 @@ public class StationComponent extends JPanel {
 		this.add(approveAll);
 		this.add(deny);
 		this.add(denyAll);
+		this.add(disable);
+		this.add(enable);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
 		this.setAlignmentX(LEFT_ALIGNMENT);
 		this.setBackground(new Color(0xFF, 0xFF, 0xFF));
