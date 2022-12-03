@@ -34,6 +34,10 @@ public class PlaceItemGUI extends CustomerView {
 		
 		JButton button_ItemPlaced = new JButton("Item Placed");
 		button_ItemPlaced.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		button_ItemPlaced.addActionListener(e -> {
+			customer.itemPlaced();
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(this);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)

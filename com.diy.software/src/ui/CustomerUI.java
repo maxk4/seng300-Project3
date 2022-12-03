@@ -15,6 +15,7 @@ import ui.views.PayWithCashGUI;
 import ui.views.PayWithCreditGUI;
 import ui.views.PayWithDebitGUI;
 import ui.views.PayWithGiftCardGUI;
+import ui.views.PlaceItemGUI;
 import ui.views.PurchaseBagsGUI;
 import ui.views.ScanScreenGUI;
 import ui.views.SearchCatalogueGUI;
@@ -68,7 +69,8 @@ public class CustomerUI {
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
 				new SearchCatalogueGUI(this),
-				new AddProductWIthPLUCodeGUI(this)
+				new AddProductWIthPLUCodeGUI(this),
+				new PlaceItemGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -167,7 +169,10 @@ public class CustomerUI {
 	//Updated in Iteration @Simrat (Ends)
 	
 	public void selectItem(Product product, String description) {
-		if (product.isPerUnit())
-			for (CustomerUIListener listener : listeners) listener.selectItem(product, description);
+		for (CustomerUIListener listener : listeners) listener.selectItem(product, description);
+	}
+
+	public void itemPlaced() {
+		for (CustomerUIListener listener : listeners) listener.itemPlaced();
 	}
 }

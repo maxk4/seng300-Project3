@@ -103,9 +103,10 @@ public class CustomerStationWrapper {
 				
 				long price = waitingFor.getPrice();
 				double weight = scale.getScanningAreaWeight();
-				if (waitingFor.isPerUnit()) price *= weight;
+				if (!waitingFor.isPerUnit()) price *= weight;
 				
 				cart.addItem(waitingFor, waitingForDescription, price, weight);
+				customer.setView(CustomerUI.SCAN);
 				waitingFor = null;
 			}
 			
