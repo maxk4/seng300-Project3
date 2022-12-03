@@ -116,6 +116,24 @@ public class CustomerStationWrapper {
 					scale.removeLastItemWeight();
 				}
 			}
+
+			@Override
+			public void disableStation(DoItYourselfStation station) {
+			// Reduces the expected weight in the Bagging Area by the expected weight of the item
+				if (station == diySstation) {
+					customer.setView(CustomerUI.DISABLED);
+					System.out.println("SYSTEM DISABLED");
+				}
+			}
+
+			@Override
+			public void enableStation(DoItYourselfStation station) {
+				// Reduces the expected weight in the Bagging Area by the expected weight of the item
+				if (station == diySstation) {
+					customer.setView(CustomerUI.SCAN);
+					System.out.println("SYSTEM ENABLED");
+				}
+			}
 		});
 		
 		scale.register(new ScaleListener() {

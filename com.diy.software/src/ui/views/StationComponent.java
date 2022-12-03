@@ -35,7 +35,7 @@ public class StationComponent extends JPanel {
 	private JLabel msgField;
 	private JLabel alertField;
 	
-	public StationComponent(String descriptor) {
+	public StationComponent(int station_num, AttendantGUI gui) {
 		super();
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
@@ -46,8 +46,8 @@ public class StationComponent extends JPanel {
 		
 		this.alertField = new JLabel();
 		this.alertField.setSize(new Dimension(50, 20));
-		
-		JLabel title = new JLabel(descriptor);
+
+		JLabel title = new JLabel("Station " + station_num);
 		JButton approve = new JButton("Approve");
 		approve.addActionListener(e -> {
 			if (messages.isEmpty()) return;
@@ -70,17 +70,25 @@ public class StationComponent extends JPanel {
 			for (Action a : actions.values()) a.deny();
 		});
 
-		JButton disable = new JButton("Disable");
-		disable.addActionListener(e -> {
-			System.out.println("Disable button pressed");
-//			for (Action a : actions.values()) a.deny();
-		});
-
+		/*
+			System Disable/Enable
+		 */
 		JButton enable = new JButton("Enable");
 		enable.addActionListener(e -> {
-			System.out.println("Enable button pressed");
-//			for (Action a : actions.values()) a.deny();
+			System.out.println("Enable button pressed for station " + station_num);
+			gui.notifyEnableCustomerMachine(this);
 		});
+
+		enable.setEnabled(false);
+
+		JButton disable = new JButton("Disable");
+		disable.addActionListener(e -> {
+			System.out.println("Disable button pressed for station " + station_num);
+			gui.notifyDisableCustomerMachine(this);
+			enable.setEnabled(true);
+		});
+
+
 		
 		this.setSize(400, 50);
 
@@ -133,4 +141,5 @@ public class StationComponent extends JPanel {
 		else alerts.add(alertMessage);
 		update();
 	}
+
 }

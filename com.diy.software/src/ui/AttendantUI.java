@@ -143,4 +143,13 @@ public class AttendantUI {
 	public void notifyAddBag(DoItYourselfStation station) {
 		gui.notifyAddOwnBag(station);
 	}
+
+	public void disableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.disableStation(station);
+	}
+
+	public void enableStation(DoItYourselfStation station){
+		for (AttendantUIListener listener : listeners) listener.enableStation(station);
+	}
+
  }

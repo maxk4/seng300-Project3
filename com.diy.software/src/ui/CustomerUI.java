@@ -9,18 +9,7 @@ import javax.swing.JFrame;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
 
-import ui.views.EnterMemberNumberGUI;
-import ui.views.OrderFinishedGUI;
-import ui.views.PayWithCashGUI;
-import ui.views.PayWithCreditGUI;
-import ui.views.PayWithDebitGUI;
-import ui.views.PayWithGiftCardGUI;
-import ui.views.PurchaseBagsGUI;
-import ui.views.ScanScreenGUI;
-import ui.views.SearchCatalogueGUI;
-import ui.views.StartScreenGUI;
-import ui.views.CustomerView;
-import ui.views.WeightDiscrepancyGUI;
+import ui.views.*;
 import util.MembershipDatabase;
 
 
@@ -37,7 +26,8 @@ public class CustomerUI {
 		WEIGHT_DISCREPANCY = 7,
 		END = 8,
 		PAY_WITH_GIFT = 9,
-		CATALOGUE = 10;
+		CATALOGUE = 10,
+		DISABLED = 11;
 	
 	private CustomerView[] views;
 	
@@ -64,7 +54,8 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this)
+				new SearchCatalogueGUI(this),
+				new StationDisabledGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
