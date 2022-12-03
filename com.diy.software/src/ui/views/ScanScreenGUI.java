@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -89,7 +90,7 @@ public class ScanScreenGUI extends CustomerView {
 		});
 		
 		JButton button_UsePersonalBags = new JButton("Use Personal Bags");
-		button_UsePersonalBags.addActionListener(e -> controller.setView(CustomerUI.ENTER_MEMBERSHIP));
+		button_UsePersonalBags.addActionListener(e -> controller.setView(CustomerUI.PLACE_BAG));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		

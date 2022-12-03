@@ -54,10 +54,10 @@ public class CustomerUISimulator{
 		
 		JPanel remove = new JPanel();
 		remove.setLayout(new BoxLayout(remove, BoxLayout.PAGE_AXIS));
-		JLabel removeLabel = new JLabel("Items: Click to remove");
+		JLabel removeLabel = new JLabel("Items: Click to remove from Bagging Area");
 		remove.add(removeLabel);
 		
-		JLabel placeLabel = new JLabel("Items: Click to add to Scale");
+		JLabel placeLabel = new JLabel("Items: Click to add to Bagging Area");
 		JPanel placeList = new JPanel();
 		placeList.setLayout(new BoxLayout(placeList, BoxLayout.PAGE_AXIS));
 		placeList.add(placeLabel);
@@ -83,6 +83,7 @@ public class CustomerUISimulator{
 			});
 			placeList.add(button);
 		}
+		
 		
 		JPanel wallet = new JPanel();
 		wallet.setLayout(new BoxLayout(wallet, BoxLayout.PAGE_AXIS));

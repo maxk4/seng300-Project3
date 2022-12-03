@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diy.hardware.DoItYourselfStation;
-import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
 public class ScaleController {
 	private List<ScaleListener> listeners;
 	
-	private ElectronicScaleListener scanningAreaListener;
+	private ScanningAreaListener scanningAreaListener;
 	private ExpectedWeightListener baggingAreaListener;
 	
 	public ScaleController(DoItYourselfStation station) {
 		listeners = new ArrayList<ScaleListener>();
 		baggingAreaListener = new ExpectedWeightListener(this);
-		scanningAreaListener = null;
+		scanningAreaListener = new ScanningAreaListener();
 		
 		station.baggingArea.register(baggingAreaListener);
-//		station.scanningArea.register(scanningAreaListener);
+		station.scanningArea.register(scanningAreaListener);
 		station.baggingArea.enable();
 		station.scanningArea.enable();
 	}
@@ -67,5 +66,9 @@ public class ScaleController {
 		if (!listeners.contains(listener)) return false;
 		listeners.remove(listener);
 		return true;
+	}
+	
+	public double getScanningAreaWeight() {
+		return scanningAreaListener.getWeight();
 	}
 }

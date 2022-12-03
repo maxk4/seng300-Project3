@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;

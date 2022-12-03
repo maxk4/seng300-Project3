@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.AttendantUI;
+import ui.CustomerUI;
+import ui.views.util.AttendantView;
+import ui.views.util.StationComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +23,7 @@ public class AttendantGUI extends AttendantView {
 
 	private List<StationComponent> stationComponents;
 	private Map<DoItYourselfStation, StationComponent> componentMap = new HashMap<DoItYourselfStation, StationComponent>();
+	private Map<StationComponent, DoItYourselfStation> stationMap = new HashMap<StationComponent, DoItYourselfStation>();
 	private JPanel stationPanel;
 	private AttendantUI attendant;
 	
@@ -51,7 +55,7 @@ public class AttendantGUI extends AttendantView {
 		
 		container.add(logout);
 		container.add(stationPanel);
-		
+
 		add(container);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	}
@@ -65,10 +69,15 @@ public class AttendantGUI extends AttendantView {
 	}
 	
 	public void addStation(DoItYourselfStation station) {
-		StationComponent sc = new StationComponent("Station " + (stationComponents.size() + 1));
+		StationComponent sc = new StationComponent(stationComponents.size() + 1, station, this);
 		stationComponents.add(sc);
 		componentMap.put(station, sc);
+		stationMap.put(sc, station);
 		update();
+	}
+	
+	public void requestOpenStation(DoItYourselfStation station) {
+		controller.setView(new CustomerCart(station, attendant, controller.requestProductList(station)));
 	}
 	
 	public void notifyWeightDiscrepancyDetected(DoItYourselfStation station) {
@@ -86,7 +95,7 @@ public class AttendantGUI extends AttendantView {
 			}
 		});
 	}
-	
+
 	public void notifyWeightDiscrepancyResolved(DoItYourselfStation station) {
 		StationComponent sc = componentMap.get(station);
 		sc.notifyResolved(StationComponent.WEIGHT_DISCREPANCY);
@@ -138,5 +147,15 @@ public class AttendantGUI extends AttendantView {
 			}
 		});
 	}
-	
+
+	public void notifyDisableCustomerMachine(StationComponent sc){
+		DoItYourselfStation station = stationMap.get(sc);
+		attendant.disableStation(station);
+	}
+	public void notifyEnableCustomerMachine(StationComponent sc){
+		DoItYourselfStation station = stationMap.get(sc);
+		attendant.enableStation(station);
+	}
+
+
 }

@@ -7,21 +7,11 @@ import java.util.Objects;
 import javax.swing.JFrame;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
-import ui.views.EnterMemberNumberGUI;
-import ui.views.OrderFinishedGUI;
-import ui.views.PayWithCashGUI;
-import ui.views.PayWithCreditGUI;
-import ui.views.PayWithDebitGUI;
-import ui.views.PayWithGiftCardGUI;
-import ui.views.PurchaseBagsGUI;
-import ui.views.ScanScreenGUI;
-import ui.views.SearchCatalogueGUI;
-import ui.views.StartScreenGUI;
-import ui.views.AddProductWIthPLUCodeGUI;
-import ui.views.CustomerView;
-import ui.views.WeightDiscrepancyGUI;
+import ui.views.*;
+import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 
 
@@ -39,8 +29,10 @@ public class CustomerUI {
 		END = 8,
 		PAY_WITH_GIFT = 9,
 		CATALOGUE = 10,
-		PLU = 11;
-	
+		PLU = 11,
+		PLACE_ITEM = 12,
+		PLACE_BAG = 13,
+		DISABLED = 14;
 	private CustomerView[] views;
 	
 	private JFrame mainFrame;
@@ -66,8 +58,11 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this),
-				new AddProductWIthPLUCodeGUI(this)
+				new CustomerSearchCatalogueGUI(this),
+				new AddProductWIthPLUCodeGUI(this),
+				new PlaceItemGUI(this),
+				new PlaceBagGUI(this),
+				new StationDisabledGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -103,8 +98,16 @@ public class CustomerUI {
 		return false;
 	}
 	
+	public void requestPersonalBag() {
+		for (CustomerUIListener listener : listeners) listener.requestUsePersonalBag();
+	}
+	
 	public void purchaseBags(int amount) {
 		for (CustomerUIListener listener : listeners) listener.purchaseBags(amount);
+	}
+	
+	public void addPLUProduct(PLUCodedProduct product) {
+		for (CustomerUIListener listener : listeners) listener.addPLUProduct(product);
 	}
 
 	//Removed in Iteration 3 @Simrat (Starts)
@@ -166,7 +169,10 @@ public class CustomerUI {
 	//Updated in Iteration @Simrat (Ends)
 	
 	public void selectItem(Product product, String description) {
-		if (product.isPerUnit())
-			for (CustomerUIListener listener : listeners) listener.selectItem(product, description);
+		for (CustomerUIListener listener : listeners) listener.selectItem(product, description);
+	}
+
+	public void itemPlaced() {
+		for (CustomerUIListener listener : listeners) listener.itemPlaced();
 	}
 }
