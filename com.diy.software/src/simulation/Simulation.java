@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.PriceLookUpCode;
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
@@ -116,11 +118,18 @@ public class Simulation {
 		}
 		
 		Barcode blueberryBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.one});
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(blueberryBarcode, new BarcodedProduct(blueberryBarcode, "Blueberry", 13 * 100, 2.3));
+		PriceLookUpCode blueberryCode = new PriceLookUpCode("4240");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(blueberryBarcode, new BarcodedProduct(blueberryBarcode, "Blueberry", 3 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(blueberryCode, new PLUCodedProduct(blueberryCode, "Blueberry", 3 * 100));
 
 		
 		Barcode appleBarcode = new Barcode(new Numeral[] {Numeral.two, Numeral.two});
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 13 * 100, 2.3));
+		PriceLookUpCode appleCode = new PriceLookUpCode("3283");
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(appleBarcode, new BarcodedProduct(appleBarcode, "Apple", 4 * 100, 2.3));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(appleCode, new PLUCodedProduct(appleCode, "Apple", 4 * 100));
+		
+		
+		System.out.println("Successfully populated Barcoded Product Database and PLU Product Database");
 		
 		for (int i = 0; i < 10; i++) {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);

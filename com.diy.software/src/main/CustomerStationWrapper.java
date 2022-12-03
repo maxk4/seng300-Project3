@@ -1,7 +1,9 @@
 package main;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
+import com.diy.hardware.external.ProductDatabases;
 
 import cart.CartController;
 import payment.PaymentController;
@@ -63,7 +65,13 @@ public class CustomerStationWrapper {
 				}
 				updateProductList();
 			}
-
+			
+			@Override
+			public void addPLUProduct(PLUCodedProduct product) {
+				cart.addItem(product, product.getDescription(), product.getPrice(), 2.3);
+				updateProductList();
+			}
+			
 			@Override
 			public void endSession() {
 				if (payment.hasRemainingBalance()) return;

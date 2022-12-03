@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.swing.JFrame;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.PLUCodedItem;
+import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.EnterMemberNumberGUI;
@@ -21,6 +23,7 @@ import ui.views.SearchCatalogueGUI;
 import ui.views.StartScreenGUI;
 import ui.views.CustomerView;
 import ui.views.WeightDiscrepancyGUI;
+import ui.views.AddProductWIthPLUCodeGUI;
 import util.MembershipDatabase;
 
 
@@ -37,7 +40,8 @@ public class CustomerUI {
 		WEIGHT_DISCREPANCY = 7,
 		END = 8,
 		PAY_WITH_GIFT = 9,
-		CATALOGUE = 10;
+		CATALOGUE = 10,
+		PLU = 11;
 	
 	private CustomerView[] views;
 	
@@ -64,7 +68,8 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this)
+				new SearchCatalogueGUI(this),
+				new AddProductWIthPLUCodeGUI(this)
 		};
 		mainFrame.setAlwaysOnTop(true);
 		setView(START);
@@ -102,6 +107,10 @@ public class CustomerUI {
 	
 	public void purchaseBags(int amount) {
 		for (CustomerUIListener listener : listeners) listener.purchaseBags(amount);
+	}
+	
+	public void addPLUProduct(PLUCodedProduct product) {
+		for (CustomerUIListener listener : listeners) listener.addPLUProduct(product);
 	}
 
 	//Removed in Iteration 3 @Simrat (Starts)
