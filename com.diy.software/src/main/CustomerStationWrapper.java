@@ -1,5 +1,6 @@
 package main;
 
+
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
 
@@ -16,6 +17,7 @@ import ui.CustomerUIListener;
 import util.Bag;
 
 public class CustomerStationWrapper {
+	
 	private CartController cart;
 	private PaymentController payment;
 	private PrinterController print;
@@ -23,13 +25,19 @@ public class CustomerStationWrapper {
 	private CustomerUI customer;
 	private boolean inProgress = true;
 	
-	public CustomerStationWrapper(DoItYourselfStation diySstation, AttendantUI attendant) {
+	
+	private Product waitingFor = null;
+	private String waitingForDescription = null;
+	
+	
+	
+	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		
-		payment = new PaymentController(diySstation);
-		cart = new CartController(diySstation);
-		print = new PrinterController(diySstation);
-		scale = new ScaleController(diySstation);
-		customer = new CustomerUI(diySstation, "Customer Station");
+		payment = new PaymentController(diyStation);
+		cart = new CartController(diyStation);
+		print = new PrinterController(diyStation);
+		scale = new ScaleController(diyStation);
+		customer = new CustomerUI(diyStation, "Customer Station");
 		
 		payment.register(new PaymentListener() {
 			@Override
@@ -84,7 +92,21 @@ public class CustomerStationWrapper {
 
 			@Override
 			public void selectItem(Product product, String description) {
-				// Notify ScanningArea scale to look for weight
+				waitingFor = product;
+				waitingForDescription = description;
+				customer.setView(CustomerUI.PLACE);
+			}
+
+			@Override
+			public void itemPlaced() {
+				if (waitingFor == null) return;
+				
+				long price = waitingFor.getPrice();
+				double weight = scale.getScanningAreaWeight();
+				if (waitingFor.isPerUnit()) price *= weight;
+				
+				cart.addItem(waitingFor, waitingForDescription, price, weight);
+				waitingFor = null;
 			}
 			
 		});
@@ -92,14 +114,13 @@ public class CustomerStationWrapper {
 		attendant.register(new AttendantUIListener() {
 			@Override
 			public void approveWeight(DoItYourselfStation station) {
-				if (station == diySstation) {
+				if (station == diyStation) {
 					scale.approveWeight();
 				}
 			}
 
 			@Override
 			public void approveOwnBag(DoItYourselfStation station) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
@@ -112,7 +133,7 @@ public class CustomerStationWrapper {
 			@Override
 			public void approveNoBag(DoItYourselfStation station) {
 			// Reduces the expected weight in the Bagging Area by the expected weight of the item
-				if (station == diySstation) {
+				if (station == diyStation) {
 					scale.removeLastItemWeight();
 				}
 			}
@@ -123,7 +144,7 @@ public class CustomerStationWrapper {
 			public void notifyWeightDiscrepancyDetected() {
 				if (inProgress) {
 					customer.setView(CustomerUI.WEIGHT_DISCREPANCY);
-					attendant.notifyWeightDiscrepancyDetected(diySstation);
+					attendant.notifyWeightDiscrepancyDetected(diyStation);
 				}
 			}
 
@@ -131,7 +152,7 @@ public class CustomerStationWrapper {
 			public void notifyWeightDiscrepancyResolved() {
 				if (inProgress) {
 					customer.setView(CustomerUI.SCAN);
-					attendant.notifyWeightDiscrepancyResolved(diySstation);
+					attendant.notifyWeightDiscrepancyResolved(diyStation);
 				} else {
 					customer.setView(CustomerUI.START);
 					inProgress = true;

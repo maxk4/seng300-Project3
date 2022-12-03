@@ -39,7 +39,8 @@ public class CustomerUI {
 		END = 8,
 		PAY_WITH_GIFT = 9,
 		CATALOGUE = 10,
-		PLU = 11;
+		PLU = 11,
+		PLACE = 12;
 	
 	private CustomerView[] views;
 	
