@@ -181,6 +181,7 @@ public class CustomerStationWrapper {
 						customer.setView(CustomerUI.END);
 						inProgress = false;
 						scale.setExpectedWeight(0);
+						payment.completeTransaction();
 						System.out.println("Finish");
 						String receipt = cart.getReceipt();
 						print.print(receipt);
