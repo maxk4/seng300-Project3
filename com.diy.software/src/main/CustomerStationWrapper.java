@@ -212,6 +212,7 @@ public class CustomerStationWrapper {
 			@Override
 			public void shutdownStation(DoItYourselfStation station) {
 				if(station != diyStation) return;
+				// TO DO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
 				payment.deregister(paymentListener);
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);

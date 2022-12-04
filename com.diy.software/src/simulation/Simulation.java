@@ -85,7 +85,6 @@ public class Simulation {
 			currentCustomer = customer;
 			customer.useStation(station);
 			station.plugIn();
-//			station.turnOn();
 			
 			 CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
 			new CustomerUISimulator(station, customer, "Customer Simulator");
