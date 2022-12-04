@@ -84,6 +84,7 @@ public class PrinterController implements ReceiptPrinterListener {
 		for (PrinterListener listener : listeners) listener.notifyPaperRefilled(station);
 		System.out.println("(Printer Controller) Paper Added");
 		lowPaper = false;
+		noPaper = false;
 	}
 
 	@Override
@@ -91,6 +92,7 @@ public class PrinterController implements ReceiptPrinterListener {
 		for (PrinterListener listener : listeners) listener.notifyInkRefilled(station);
 		System.out.println("(Printer Controller) Ink Added");
 		lowInk = false;
+		noInk = false;
 	}
 	
 	public boolean getLowInk() {
