@@ -63,8 +63,9 @@ public class CustomerStationWrapper {
 				payment.addCost(price);
 				updateProductList();
 				updateCashGUI();
-				if (!(prod instanceof Bag))
+				if (!(prod instanceof Bag)) {
 					scale.updateExpectedWeight(weight);
+				}
 			}
 
 			@Override
@@ -127,10 +128,10 @@ public class CustomerStationWrapper {
 				
 				long price = waitingFor.getPrice();
 				double weight = scale.getScanningAreaWeight();
-				if (!waitingFor.isPerUnit()) price *= weight;
-				
-				cart.addItem(waitingFor, waitingForDescription, price, weight);
+				if (!waitingFor.isPerUnit()) price *= weight / 1000d;
+
 				customer.setView(CustomerUI.SCAN);
+				cart.addItem(waitingFor, waitingForDescription, price, weight);
 				waitingFor = null;
 			}
 

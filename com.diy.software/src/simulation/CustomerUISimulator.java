@@ -96,7 +96,7 @@ public class CustomerUISimulator{
 		JPanel scanningArea = new JPanel();
 		scanningArea.setLayout(new BoxLayout(scanningArea, BoxLayout.PAGE_AXIS));
 		
-		JLabel scanningAreaLabel = new JLabel("Enter Weight on Scanning Area Scale:");
+		JLabel scanningAreaLabel = new JLabel("Enter Weight on Scanning Area Scale (grams):");
 		JTextField scanningWeight = new JTextField();
 		scanningWeight.setDocument(new IntegerOnlyDocument(() -> {
 			if (scanWeightItem != null)
@@ -108,8 +108,15 @@ public class CustomerUISimulator{
 		}));
 		scanningWeight.setColumns(10);
 		
+		JButton addScanningToBagging = new JButton("Add Weight to Bagging Area:");
+		addScanningToBagging.addActionListener(e -> {
+			if (scanWeightItem != null)
+				station.baggingArea.add(scanWeightItem);
+		});
+		
 		scanningArea.add(scanningAreaLabel);
 		scanningArea.add(scanningWeight);
+		scanningArea.add(addScanningToBagging);
 		
 		scales.add(remove);
 		scales.add(scanningArea);
