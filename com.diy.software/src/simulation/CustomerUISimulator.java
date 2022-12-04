@@ -1,5 +1,5 @@
 package simulation;
-import java.awt.GridLayout;
+
 import java.io.IOException;
 import java.util.Currency;
 import java.util.Locale;

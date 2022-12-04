@@ -4,16 +4,18 @@
  * @author Brody Wells
  */
 
-package ui.views;
+package ui.views.attendant;
 
 import javax.swing.border.EmptyBorder;
 
 import com.diy.hardware.BarcodedProduct;
+import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 
+import ui.AttendantUI;
 import ui.CustomerUI;
-import ui.views.util.CustomerView;
+import ui.views.util.AttendantView;
 import ui.views.util.ProductButton;
 import util.ActionDocument;
 
@@ -35,7 +37,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 
-public class CustomerSearchCatalogueGUI extends CustomerView {
+public class AttendantSearchCatalogueGUI extends AttendantView {
 
 	private static final long serialVersionUID = 6242487627854166656L;
 	private JTextField textField_Input;
@@ -43,13 +45,12 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 	private JPanel product_panel;
 	private List<ProductButton> productButtons = new ArrayList<ProductButton>();
 
-
 	/**
 	 * Create the keyboard frame.
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public CustomerSearchCatalogueGUI(CustomerUI controller) {
+	public AttendantSearchCatalogueGUI(AttendantUI controller, AttendantView previousView, DoItYourselfStation station) {
 		super(controller);
 		setBounds(100, 100, 657, 659);
 		setBackground(new Color(94, 193, 255));
@@ -918,14 +919,16 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 		
 		for (BarcodedProduct p : ProductDatabases.BARCODED_PRODUCT_DATABASE.values()) {
 			ProductButton pb = new ProductButton(p, p.getDescription(), e -> {
-				controller.selectItem(p, p.getDescription());
+				controller.forceAddItem(station, p, p.getDescription());
+				controller.setView(previousView);
 			});
 			if (!productButtons.contains(pb)) productButtons.add(pb);
 		}
 		
 		for (PLUCodedProduct p : ProductDatabases.PLU_PRODUCT_DATABASE.values()) {
 			ProductButton pb = new ProductButton(p, p.getDescription(), e -> {
-				controller.selectItem(p, p.getDescription());
+				controller.forceAddItem(station, p, p.getDescription());
+				controller.setView(previousView);
 			});
 			if (!productButtons.contains(pb)) productButtons.add(pb);
 		}
@@ -936,7 +939,7 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 		setLayout(gl_contentPane);
 	}
 	
-	public void updateList() {
+	private void updateList() {
 		product_panel.removeAll();
 		for (ProductButton pb : productButtons) {
 			if (pb.name.toLowerCase().contains(textField_Input.getText().toLowerCase()))

@@ -4,7 +4,7 @@
  * @author Brody Wells
  */
 
-package ui.views;
+package ui.views.attendant;
 
 
 import javax.swing.border.EmptyBorder;
