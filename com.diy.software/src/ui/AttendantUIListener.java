@@ -16,4 +16,6 @@ public interface AttendantUIListener {
 	public void addItem(DoItYourselfStation station, Product product, String description);
 	public void removeItem(DoItYourselfStation station, Product product, String description, long price, double weightInGrams);
 
+	public void startupStation(DoItYourselfStation station);
+	public void shutdownStation(DoItYourselfStation station);
 }

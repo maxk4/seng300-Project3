@@ -15,7 +15,8 @@ import javax.swing.JPanel;
 
 import com.diy.hardware.DoItYourselfStation;
 
-import ui.views.AttendantGUI;
+import ui.AttendantUI;
+import ui.views.attendant.AttendantGUI;
 
 
 @SuppressWarnings("serial")
@@ -39,8 +40,9 @@ public class StationComponent extends JPanel {
 	private JLabel msgField;
 	private JLabel alertField;
 	private JButton enable, disable, openList;
+	boolean isOn = false;
 	
-	public StationComponent(int station_num, DoItYourselfStation station, AttendantGUI gui) {
+	public StationComponent(int station_num, DoItYourselfStation station, AttendantGUI gui, AttendantUI attendant) {
 		super();
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
@@ -51,7 +53,6 @@ public class StationComponent extends JPanel {
 		
 		this.alertField = new JLabel();
 		this.alertField.setSize(new Dimension(50, 20));
-
 
 
 		JLabel title = new JLabel("Station " + station_num);
@@ -98,10 +99,40 @@ public class StationComponent extends JPanel {
 			gui.requestOpenStation(station);
 		});
 		
+
+		JButton power = new JButton("Start Up");
+		power.addActionListener(e -> {
+			isOn = !isOn;
+			if (isOn) {
+				power.setText("Shutdown");
+				approve.setEnabled(true);
+				approveAll.setEnabled(true);
+				deny.setEnabled(true);
+				denyAll.setEnabled(true);
+				deny.setEnabled(true);
+				toggleEnabledButtons(false);
+				
+				attendant.startupStation(station);
+			} else {
+				power.setText("Start Up");
+
+				approve.setEnabled(false);
+				approveAll.setEnabled(false);
+				deny.setEnabled(false);
+				denyAll.setEnabled(false);
+				deny.setEnabled(false);
+				enable.setEnabled(false);
+				disable.setEnabled(false);
+				
+				// Code for shutting down station goes here
+			}
+		});
+		
 		this.setSize(400, 50);
 
-		this.setLayout(new GridLayout(1, 7));
+		this.setLayout(new GridLayout(1, 8));
 		this.add(title);
+		this.add(power);
 		this.add(alertField);
 		this.add(msgField);
 		this.add(approve);
@@ -111,9 +142,18 @@ public class StationComponent extends JPanel {
 		this.add(disable);
 		this.add(enable);
 		this.add(openList);
-		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+		this.setBorder(BorderFactory.createLineBorder(new Color(0xEE, 0xEE, 0xEE), 1, false));
 		this.setAlignmentX(LEFT_ALIGNMENT);
 		this.setBackground(new Color(0xFF, 0xFF, 0xFF));
+		
+
+		approve.setEnabled(false);
+		approveAll.setEnabled(false);
+		deny.setEnabled(false);
+		denyAll.setEnabled(false);
+		deny.setEnabled(false);
+		enable.setEnabled(false);
+		disable.setEnabled(false);
 	}
 
 	public void update() {
