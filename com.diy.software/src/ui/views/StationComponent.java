@@ -34,6 +34,7 @@ public class StationComponent extends JPanel {
 	private List<String> alerts;
 	private JLabel msgField;
 	private JLabel alertField;
+	public static JButton enable,disable;
 	
 	public StationComponent(String descriptor) {
 		super();
