@@ -13,7 +13,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
@@ -21,6 +20,7 @@ public class PayWithCreditGUI extends CustomerView {
 
 	private static final long serialVersionUID = -6094043016720414433L;
 
+	private JLabel label_OrderTotal_Number;
 
 	/**
 	 * Create the frame.
@@ -36,7 +36,7 @@ public class PayWithCreditGUI extends CustomerView {
 		JLabel label_OrderTotal_Text = new JLabel("Order Total: $");
 		label_OrderTotal_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_OrderTotal_Number = new JLabel("0.00");
+		label_OrderTotal_Number = new JLabel("0.00");
 		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
 
@@ -77,5 +77,9 @@ public class PayWithCreditGUI extends CustomerView {
 					.addContainerGap(111, Short.MAX_VALUE))
 		);
 		setLayout(gl_contentPane);
+	}
+	
+	public void update(long paid, long balance) {
+		label_OrderTotal_Number.setText(String.format("%.2f", (balance - paid) / 100d));
 	}
 }

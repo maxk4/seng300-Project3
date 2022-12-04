@@ -19,6 +19,9 @@ import javax.swing.ImageIcon;
 
 public class PayWithDebitGUI extends CustomerView {
 	private static final long serialVersionUID = 7114333266530075624L;
+	
+	private JLabel label_OrderTotal_Number;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -32,7 +35,7 @@ public class PayWithDebitGUI extends CustomerView {
 		JLabel label_OrderTotal_Text = new JLabel("Order Total: $");
 		label_OrderTotal_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_OrderTotal_Number = new JLabel("0.00");
+		label_OrderTotal_Number = new JLabel("0.00");
 		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
 		JButton button_CancelPayment = new JButton("Cancel Payment / Return to Order");
@@ -78,5 +81,9 @@ public class PayWithDebitGUI extends CustomerView {
 					.addGap(73))
 		);
 		setLayout(gl_contentPane);
+	}
+	
+	public void update(long paid, long balance) {
+		label_OrderTotal_Number.setText(String.format("%.2f", (balance - paid) / 100d));
 	}
 }
