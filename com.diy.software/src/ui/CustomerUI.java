@@ -11,6 +11,21 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.*;
+import ui.views.customer.AddProductWIthPLUCodeGUI;
+import ui.views.customer.CustomerSearchCatalogueGUI;
+import ui.views.customer.EnterMemberNumberGUI;
+import ui.views.customer.OrderFinishedGUI;
+import ui.views.customer.PayWithCashGUI;
+import ui.views.customer.PayWithCreditGUI;
+import ui.views.customer.PayWithDebitGUI;
+import ui.views.customer.PayWithGiftCardGUI;
+import ui.views.customer.PlaceBagGUI;
+import ui.views.customer.PlaceItemGUI;
+import ui.views.customer.PurchaseBagsGUI;
+import ui.views.customer.ScanScreenGUI;
+import ui.views.customer.StartScreenGUI;
+import ui.views.customer.StationDisabledGUI;
+import ui.views.customer.WeightDiscrepancyGUI;
 import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 
@@ -41,6 +56,8 @@ public class CustomerUI {
 	private String currentMember = null;
 	private DoItYourselfStation currentStationInUse = null;
 	//Added in Iteration 3 @Simrat (Ends)
+	private int lastView = 0;
+	private int currentView = 0;
 	
 	public CustomerUI(DoItYourselfStation station, String title) {
 		mainFrame = station.screen.getFrame();
@@ -77,6 +94,14 @@ public class CustomerUI {
 		return mainFrame;
 	}
 	
+	public void disable() {
+		setView(DISABLED);
+	}
+	
+	public void enable() {
+		setView(lastView);
+	}
+	
 	public void setView(int view) {
 		mainFrame.setVisible(false);
 		mainFrame.setContentPane(views[view]);
@@ -84,6 +109,8 @@ public class CustomerUI {
 		mainFrame.repaint();
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+		lastView = currentView;
+		currentView = view;
 	}
 	
 	public boolean register(CustomerUIListener listener) {
@@ -126,6 +153,9 @@ public class CustomerUI {
 	
 	public void updateCashGUI(long paid, long balance) {
 		((PayWithCashGUI) views[PAY_WITH_CASH]).update(paid, balance);
+		((PayWithDebitGUI) views[PAY_WITH_DEBIT]).update(paid, balance);
+		((PayWithCreditGUI) views[PAY_WITH_CREDIT]).update(paid, balance);
+		((PayWithGiftCardGUI) views[PAY_WITH_GIFT]).update(paid, balance);
 	}
 
 	public void updateProductList(long total, long paid, String productString, String priceString) {

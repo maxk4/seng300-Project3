@@ -1,4 +1,4 @@
-package ui.views;
+package ui.views.customer;
 
 
 import cart.ScanItemListener;

@@ -85,17 +85,9 @@ public class Simulation {
 			currentCustomer = customer;
 			customer.useStation(station);
 			station.plugIn();
-			station.turnOn();
 			
-			CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
+			 CustomerStationWrapper customerStation = new CustomerStationWrapper(station, attendant);
 			new CustomerUISimulator(station, customer, "Customer Simulator");
-			try {
-				station.printer.addInk(10);
-				station.printer.addPaper(10);
-
-			} catch (OverloadException e) {
-				e.printStackTrace();
-			}
 		}
 //		
 //		// Register diy stations with the attendant station

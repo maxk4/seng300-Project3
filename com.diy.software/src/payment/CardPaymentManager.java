@@ -19,13 +19,12 @@ public class CardPaymentManager extends PaymentManager {
 	}
 
 	private Queue<HoldData> holds = new LinkedList<HoldData>();
-	
 	private class HoldData {
-		String cardNumber;
-		long id;
-		double amount;
+		public String cardNumber;
+		public long id;
+		public double amount;
 		// the instution that issued the card
-		CardIssuer issuer;
+		public CardIssuer issuer;
 		
 		public HoldData(String cardNumber, long id, double amount, CardIssuer issuer) {
 			this.cardNumber = cardNumber;
@@ -55,14 +54,9 @@ public class CardPaymentManager extends PaymentManager {
 		while (rem > 0 && !holds.isEmpty()) {
 			HoldData hold = holds.poll();
 			double payment = Math.min(hold.amount, rem);
-			try {
-				for (int i = 0; i < 5 && !hold.issuer.postTransaction(hold.cardNumber, hold.id, payment); i++) Thread.sleep(20000);
-				rem -= payment;
-				funds -= payment;
-				break;
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
+			hold.issuer.postTransaction(hold.cardNumber, hold.id, payment);
+			rem -= payment;
+			funds -= payment;
 		}
 		while (!holds.isEmpty()) {
 			HoldData hold = holds.poll();
