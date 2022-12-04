@@ -1,4 +1,4 @@
-package ui.views;
+package ui.views.attendant;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -9,7 +9,11 @@ import javax.swing.JPanel;
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.AttendantUI;
+import ui.CustomerUI;
+import ui.views.util.AttendantView;
+import ui.views.util.StationComponent;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +40,11 @@ public class AttendantGUI extends AttendantView {
 		stationComponents = new ArrayList<StationComponent>();
 		title = "Attendant GUI";
 		setBounds(100, 100, 593, 298);
+		setBackground(new Color(65, 139, 212));
 		
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+		container.setBackground(new Color(65, 139, 212));
 		
 		JButton logout = new JButton("Logout");
 		logout.addActionListener(e -> {
@@ -49,6 +55,7 @@ public class AttendantGUI extends AttendantView {
 		stationPanel.setLayout(new BoxLayout(stationPanel, BoxLayout.PAGE_AXIS));
 		stationPanel.setAlignmentX(LEFT_ALIGNMENT);
 		stationPanel.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
+		stationPanel.setBackground(new Color(65, 139, 212));
 		
 		container.add(logout);
 		container.add(stationPanel);
@@ -66,11 +73,15 @@ public class AttendantGUI extends AttendantView {
 	}
 	
 	public void addStation(DoItYourselfStation station) {
-		StationComponent sc = new StationComponent(stationComponents.size() + 1, this);
+		StationComponent sc = new StationComponent(stationComponents.size() + 1, station, this);
 		stationComponents.add(sc);
 		componentMap.put(station, sc);
 		stationMap.put(sc, station);
 		update();
+	}
+	
+	public void requestOpenStation(DoItYourselfStation station) {
+		controller.setView(new CustomerCart(station, attendant, controller.requestProductList(station)));
 	}
 	
 	public void notifyWeightDiscrepancyDetected(DoItYourselfStation station) {

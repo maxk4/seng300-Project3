@@ -1,16 +1,17 @@
-package ui.views;
+package ui.views.util;
 
 import javax.swing.JPanel;
 
-import ui.AttendantUI;
+import ui.CustomerUI;
 
-public abstract class AttendantView extends JPanel {
+public abstract class CustomerView extends JPanel {
 	private static final long serialVersionUID = 755704336014907219L;
 	protected String title;
-	protected AttendantUI controller;
+	protected CustomerUI controller;
 	
 	
-	protected AttendantView(AttendantUI controller) {
+	protected CustomerView(CustomerUI controller) {
+		super();
 		this.controller = controller;
 	}
 	

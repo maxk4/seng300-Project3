@@ -1,8 +1,9 @@
-package ui.views;
+package ui.views.customer;
 
 import javax.swing.border.EmptyBorder;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -14,28 +15,28 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
-public class PlaceItemGUI extends CustomerView {
+public class PlaceBagGUI extends CustomerView {
 	private static final long serialVersionUID = 960506723715532997L;
 
 	/**
 	 * Create the frame.
 	 */
-	public PlaceItemGUI(CustomerUI customer) {
+	public PlaceBagGUI(CustomerUI customer) {
 		super(customer);
 		setBounds(100, 100, 548, 266);
 		setBackground(new Color(50, 126, 192));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel label_PlaceItem_Icon = new JLabel("");
-		label_PlaceItem_Icon.setIcon(new ImageIcon(PlaceItemGUI.class.getResource("/resources/icons8-weight-light-100.png")));
+		label_PlaceItem_Icon.setIcon(new ImageIcon(PlaceBagGUI.class.getResource("/resources/icons8-weight-light-100.png")));
 		
-		JLabel label_PlaceItem_Text = new JLabel("Please place item in the scanning area to weigh");
+		JLabel label_PlaceItem_Text = new JLabel("Please place your bag in the bagging ares");
 		label_PlaceItem_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
-		JButton button_ItemPlaced = new JButton("Item Placed");
+		JButton button_ItemPlaced = new JButton("Bag Placed");
 		button_ItemPlaced.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		button_ItemPlaced.addActionListener(e -> {
-			customer.itemPlaced();
+			customer.requestPersonalBag();
 		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(this);

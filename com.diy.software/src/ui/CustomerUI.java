@@ -11,6 +11,22 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.*;
+import ui.views.customer.AddProductWIthPLUCodeGUI;
+import ui.views.customer.CustomerSearchCatalogueGUI;
+import ui.views.customer.EnterMemberNumberGUI;
+import ui.views.customer.OrderFinishedGUI;
+import ui.views.customer.PayWithCashGUI;
+import ui.views.customer.PayWithCreditGUI;
+import ui.views.customer.PayWithDebitGUI;
+import ui.views.customer.PayWithGiftCardGUI;
+import ui.views.customer.PlaceBagGUI;
+import ui.views.customer.PlaceItemGUI;
+import ui.views.customer.PurchaseBagsGUI;
+import ui.views.customer.ScanScreenGUI;
+import ui.views.customer.StartScreenGUI;
+import ui.views.customer.StationDisabledGUI;
+import ui.views.customer.WeightDiscrepancyGUI;
+import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 
 
@@ -57,7 +73,7 @@ public class CustomerUI {
 				new WeightDiscrepancyGUI(this),
 				new OrderFinishedGUI(this),
 				new PayWithGiftCardGUI(this, station),
-				new SearchCatalogueGUI(this),
+				new CustomerSearchCatalogueGUI(this),
 				new AddProductWIthPLUCodeGUI(this),
 				new PlaceItemGUI(this),
 				new PlaceBagGUI(this),
@@ -125,6 +141,9 @@ public class CustomerUI {
 	
 	public void updateCashGUI(long paid, long balance) {
 		((PayWithCashGUI) views[PAY_WITH_CASH]).update(paid, balance);
+		((PayWithDebitGUI) views[PAY_WITH_DEBIT]).update(paid, balance);
+		((PayWithCreditGUI) views[PAY_WITH_CREDIT]).update(paid, balance);
+		((PayWithGiftCardGUI) views[PAY_WITH_GIFT]).update(paid, balance);
 	}
 
 	public void updateProductList(long total, long paid, String productString, String priceString) {

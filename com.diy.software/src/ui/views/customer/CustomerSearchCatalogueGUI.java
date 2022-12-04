@@ -4,7 +4,7 @@
  * @author Brody Wells
  */
 
-package ui.views;
+package ui.views.customer;
 
 import javax.swing.border.EmptyBorder;
 
@@ -13,6 +13,8 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
+import ui.views.util.ProductButton;
 import util.ActionDocument;
 
 import java.awt.Color;
@@ -33,7 +35,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 
-public class SearchCatalogueGUI extends CustomerView {
+public class CustomerSearchCatalogueGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6242487627854166656L;
 	private JTextField textField_Input;
@@ -47,7 +49,7 @@ public class SearchCatalogueGUI extends CustomerView {
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public SearchCatalogueGUI(CustomerUI controller) {
+	public CustomerSearchCatalogueGUI(CustomerUI controller) {
 		super(controller);
 		setBounds(100, 100, 657, 659);
 		setBackground(new Color(94, 193, 255));
@@ -915,12 +917,16 @@ public class SearchCatalogueGUI extends CustomerView {
 		
 		
 		for (BarcodedProduct p : ProductDatabases.BARCODED_PRODUCT_DATABASE.values()) {
-			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			ProductButton pb = new ProductButton(p, p.getDescription(), e -> {
+				controller.selectItem(p, p.getDescription());
+			});
 			if (!productButtons.contains(pb)) productButtons.add(pb);
 		}
 		
 		for (PLUCodedProduct p : ProductDatabases.PLU_PRODUCT_DATABASE.values()) {
-			ProductButton pb = new ProductButton(controller, p, p.getDescription());
+			ProductButton pb = new ProductButton(p, p.getDescription(), e -> {
+				controller.selectItem(p, p.getDescription());
+			});
 			if (!productButtons.contains(pb)) productButtons.add(pb);
 		}
 		productButtons.sort((a, b) -> {

@@ -1,25 +1,36 @@
-package ui.views;
+package ui.views.util;
 
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.diy.hardware.Product;
 
-import ui.CustomerUI;
-
 public class ProductButton extends JButton {
 	private static final long serialVersionUID = -6966276679344423613L;
 	
-	private final Product product;
-	public final String name;
+	private Product product;
+	public String name;
 	
-	public ProductButton(CustomerUI controller, Product product, String name) {
+	public ProductButton(Product product, String name) {
 		super(name);
 		
+		init(product, name);
+	}
+	
+	public ProductButton(Product product, String name, ActionListener listener) {
+		super(name);
+		
+		init(product, name);
+		
+		addActionListener(listener);
+	}
+	
+	private void init(Product product, String name) {
 		this.product = product;
 		this.name = name;
 		setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -30,10 +41,6 @@ public class ProductButton extends JButton {
 		try {
 			setIcon(new ImageIcon(ProductButton.class.getResource("/resources/products/icons8-" + name.toLowerCase() + "-100.png")));
 		} catch(Exception e) {}
-		
-		addActionListener(e -> {
-			controller.selectItem(product, name);
-		});
 	}
 	
 	@Override

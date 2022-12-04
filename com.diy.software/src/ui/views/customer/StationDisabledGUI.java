@@ -1,6 +1,7 @@
-package ui.views;
+package ui.views.customer;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
