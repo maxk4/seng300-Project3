@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.simulation.Customer;
@@ -20,11 +21,16 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
+import util.IntegerOnlyDocument;
+
 public class CustomerUISimulator{
 
 	//Added in Iteration 3 @Simrat (Starts)
 	public static Customer currentCustomer;
 	//Added In iteration 3 @simrat (ends)
+	
+	private Item scanWeightItem;
+	
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
 		JDialog customerSim = new JDialog();
@@ -33,7 +39,7 @@ public class CustomerUISimulator{
 		currentCustomer = customer;
 		//Added In iteration 3 @simrat (ends)
 		JPanel container = new JPanel();
-		container.setLayout(new GridLayout(1, 5));
+		//container.setLayout(new GridLayout(1, 5));
 		
 		JPanel cart = new JPanel();
 		cart.setLayout(new BoxLayout(cart, BoxLayout.PAGE_AXIS));
@@ -51,6 +57,9 @@ public class CustomerUISimulator{
 			});
 			cart.add(button);
 		}
+		
+		JPanel scales = new JPanel();
+		scales.setLayout(new BoxLayout(scales, BoxLayout.PAGE_AXIS));
 		
 		JPanel remove = new JPanel();
 		remove.setLayout(new BoxLayout(remove, BoxLayout.PAGE_AXIS));
@@ -83,6 +92,34 @@ public class CustomerUISimulator{
 			});
 			placeList.add(button);
 		}
+		
+		JPanel scanningArea = new JPanel();
+		scanningArea.setLayout(new BoxLayout(scanningArea, BoxLayout.PAGE_AXIS));
+		
+		JLabel scanningAreaLabel = new JLabel("Enter Weight on Scanning Area Scale (grams):");
+		JTextField scanningWeight = new JTextField();
+		scanningWeight.setDocument(new IntegerOnlyDocument(() -> {
+			if (scanWeightItem != null)
+				station.scanningArea.remove(scanWeightItem);
+			int weight = 0;
+			if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
+			scanWeightItem = new Item(weight) {};
+			station.scanningArea.add(scanWeightItem);
+		}));
+		scanningWeight.setColumns(10);
+		
+		JButton addScanningToBagging = new JButton("Add Weight to Bagging Area:");
+		addScanningToBagging.addActionListener(e -> {
+			if (scanWeightItem != null)
+				station.baggingArea.add(scanWeightItem);
+		});
+		
+		scanningArea.add(scanningAreaLabel);
+		scanningArea.add(scanningWeight);
+		scanningArea.add(addScanningToBagging);
+		
+		scales.add(remove);
+		scales.add(scanningArea);
 		
 		
 		JPanel wallet = new JPanel();
@@ -142,7 +179,7 @@ public class CustomerUISimulator{
 		
 		container.add(cart);
 		container.add(placeList);
-		container.add(remove);
+		container.add(scales);
 		container.add(cash);
 		container.add(wallet);
 		container.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));

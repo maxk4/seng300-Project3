@@ -66,6 +66,7 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	public void updateExpectedWeight(double inc) {
 		setExpectedWeight(expectedWeight + inc);
 		lastItemWeight = inc;
+		System.out.println(String.format("Expected: %.2f Actual: %.2f", expectedWeight, lastWeight));
 	}
 
 	public void removeLastItemWeight() {
