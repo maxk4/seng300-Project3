@@ -73,7 +73,7 @@ public class AttendantGUI extends AttendantView {
 	}
 	
 	public void addStation(DoItYourselfStation station) {
-		StationComponent sc = new StationComponent(stationComponents.size() + 1, station, this);
+		StationComponent sc = new StationComponent(stationComponents.size() + 1, station, this, attendant);
 		stationComponents.add(sc);
 		componentMap.put(station, sc);
 		stationMap.put(sc, station);

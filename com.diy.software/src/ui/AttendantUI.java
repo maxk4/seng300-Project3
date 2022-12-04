@@ -199,10 +199,10 @@ public class AttendantUI {
 	}
 	
 	public void startupStation(DoItYourselfStation station) {
-		for (AttendantUIListener listener : listeners) listener.disableStation(station);
+		for (AttendantUIListener listener : listeners) listener.startupStation(station);
 	}
 
 	public void shutdownStation(DoItYourselfStation station) {
-		for (AttendantUIListener listener : listeners) listener.enableStation(station);
+		for (AttendantUIListener listener : listeners) listener.shutdownStation(station);
 	}
  }

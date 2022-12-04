@@ -56,6 +56,8 @@ public class CustomerUI {
 	private String currentMember = null;
 	private DoItYourselfStation currentStationInUse = null;
 	//Added in Iteration 3 @Simrat (Ends)
+	private int lastView = 0;
+	private int currentView = 0;
 	
 	public CustomerUI(DoItYourselfStation station, String title) {
 		mainFrame = station.screen.getFrame();
@@ -92,6 +94,14 @@ public class CustomerUI {
 		return mainFrame;
 	}
 	
+	public void disable() {
+		setView(DISABLED);
+	}
+	
+	public void enable() {
+		setView(lastView);
+	}
+	
 	public void setView(int view) {
 		mainFrame.setVisible(false);
 		mainFrame.setContentPane(views[view]);
@@ -99,6 +109,8 @@ public class CustomerUI {
 		mainFrame.repaint();
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+		lastView = currentView;
+		currentView = view;
 	}
 	
 	public boolean register(CustomerUIListener listener) {

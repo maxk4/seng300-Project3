@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import com.diy.hardware.DoItYourselfStation;
 
+import ui.AttendantUI;
 import ui.views.attendant.AttendantGUI;
 
 
@@ -41,7 +42,7 @@ public class StationComponent extends JPanel {
 	private JButton enable, disable, openList;
 	boolean isOn = false;
 	
-	public StationComponent(int station_num, DoItYourselfStation station, AttendantGUI gui) {
+	public StationComponent(int station_num, DoItYourselfStation station, AttendantGUI gui, AttendantUI attendant) {
 		super();
 		this.messages = new ArrayList<String>();
 		this.alerts = new ArrayList<String>();
@@ -111,7 +112,7 @@ public class StationComponent extends JPanel {
 				deny.setEnabled(true);
 				toggleEnabledButtons(false);
 				
-				// Code for starting up station goes here
+				attendant.startupStation(station);
 			} else {
 				power.setText("Start Up");
 

@@ -74,8 +74,7 @@ public class CustomerStationWrapper {
 						return;
 					}
 					//Customer Session currently in progress
-					//TODO: Make attendant confirm system is to be disabled when customer sessions are in progress
-					customer.setView(CustomerUI.DISABLED);
+					customer.disable();
 				}
 			}
 
@@ -84,7 +83,7 @@ public class CustomerStationWrapper {
 			public void enableStation(DoItYourselfStation station) {
 				if (station == diyStation) {
 					if (inProgress)
-						customer.setView(CustomerUI.SCAN);
+						customer.enable();
 					else
 						customer.setView(CustomerUI.START);
 				}
@@ -246,6 +245,8 @@ public class CustomerStationWrapper {
 					
 				};
 				scale.register(scaleListener);
+				
+				customer.disable();
 			}
 
 			@Override
@@ -256,6 +257,7 @@ public class CustomerStationWrapper {
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);
 				customer.deregister(customerUIListener);
+				diyStation.screen.getFrame().dispose();
 				station.turnOff();
 			}
 		});
