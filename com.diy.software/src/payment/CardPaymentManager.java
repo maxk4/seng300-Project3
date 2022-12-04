@@ -19,13 +19,12 @@ public class CardPaymentManager extends PaymentManager {
 	}
 
 	private Queue<HoldData> holds = new LinkedList<HoldData>();
-	
 	private class HoldData {
-		String cardNumber;
-		long id;
-		double amount;
+		public String cardNumber;
+		public long id;
+		public double amount;
 		// the instution that issued the card
-		CardIssuer issuer;
+		public CardIssuer issuer;
 		
 		public HoldData(String cardNumber, long id, double amount, CardIssuer issuer) {
 			this.cardNumber = cardNumber;
