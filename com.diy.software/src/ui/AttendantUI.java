@@ -10,9 +10,9 @@ import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
 
-import ui.views.AttendantGUI;
-import ui.views.AttendantSearchCatalogueGUI;
-import ui.views.AttendentLoginWithKeyboardGUI;
+import ui.views.attendant.AttendantGUI;
+import ui.views.attendant.AttendantSearchCatalogueGUI;
+import ui.views.attendant.AttendentLoginWithKeyboardGUI;
 import ui.views.util.AttendantView;
 import util.ProductInfo;
 

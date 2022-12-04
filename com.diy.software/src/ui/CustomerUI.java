@@ -11,6 +11,21 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
 import ui.views.*;
+import ui.views.customer.AddProductWIthPLUCodeGUI;
+import ui.views.customer.CustomerSearchCatalogueGUI;
+import ui.views.customer.EnterMemberNumberGUI;
+import ui.views.customer.OrderFinishedGUI;
+import ui.views.customer.PayWithCashGUI;
+import ui.views.customer.PayWithCreditGUI;
+import ui.views.customer.PayWithDebitGUI;
+import ui.views.customer.PayWithGiftCardGUI;
+import ui.views.customer.PlaceBagGUI;
+import ui.views.customer.PlaceItemGUI;
+import ui.views.customer.PurchaseBagsGUI;
+import ui.views.customer.ScanScreenGUI;
+import ui.views.customer.StartScreenGUI;
+import ui.views.customer.StationDisabledGUI;
+import ui.views.customer.WeightDiscrepancyGUI;
 import ui.views.util.CustomerView;
 import util.MembershipDatabase;
 

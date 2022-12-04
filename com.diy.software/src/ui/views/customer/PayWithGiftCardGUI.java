@@ -1,4 +1,4 @@
-package ui.views;
+package ui.views.customer;
 
 import java.awt.Color;
 import java.awt.Font;
