@@ -55,14 +55,9 @@ public class CardPaymentManager extends PaymentManager {
 		while (rem > 0 && !holds.isEmpty()) {
 			HoldData hold = holds.poll();
 			double payment = Math.min(hold.amount, rem);
-			try {
-				for (int i = 0; i < 5 && !hold.issuer.postTransaction(hold.cardNumber, hold.id, payment); i++) Thread.sleep(20000);
-				rem -= payment;
-				funds -= payment;
-				break;
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
+			hold.issuer.postTransaction(hold.cardNumber, hold.id, payment);
+			rem -= payment;
+			funds -= payment;
 		}
 		while (!holds.isEmpty()) {
 			HoldData hold = holds.poll();
