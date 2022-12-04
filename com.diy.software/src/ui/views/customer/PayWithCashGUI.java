@@ -1,10 +1,11 @@
-package ui.views;
+package ui.views.customer;
 
 import javax.swing.border.EmptyBorder;
 
 import com.diy.hardware.DoItYourselfStation;
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
 
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -47,41 +48,10 @@ public class PayWithCashGUI extends CustomerView {
 		JLabel label_Cash_Icon = new JLabel("");
 		label_Cash_Icon.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-cash-100.png")));
 		
-		JButton btnNewButton_2_1_1 = new JButton("1");
-		btnNewButton_2_1_1.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
-		btnNewButton_2_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_2_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Inserted: $");
-		lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-		
-		JButton btnNewButton_1_1_1 = new JButton("5");
-		btnNewButton_1_1_1.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
-		btnNewButton_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton btnNewButton_3_1 = new JButton("10");
-		btnNewButton_3_1.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
-		btnNewButton_3_1.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton btnNewButton_2_2_1 = new JButton("20");
-		btnNewButton_2_2_1.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
-		btnNewButton_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton btnNewButton_2_1_1_1 = new JButton("50");
-		btnNewButton_2_1_1_1.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-dollar-coin-100.png")));
-		btnNewButton_2_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JLabel lblNewLabel_2_1 = new JLabel("0.00");
-		lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(PayWithCashGUI.class.getResource("/resources/icons8-cash-100.png")));
 		GroupLayout gl_contentPane = new GroupLayout(this);
 
-		JButton button_CancelPayment = new JButton("Cancel Cash Payment");
+		JButton button_CancelPayment = new JButton("Cancel Payment / Return to Order");
 		button_CancelPayment.setBackground(new Color(94, 193, 255));
 		button_CancelPayment.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		button_CancelPayment.addActionListener(e -> {
@@ -96,7 +66,7 @@ public class PayWithCashGUI extends CustomerView {
 					.addGap(5)
 					.addComponent(label_MoneyInserted_Text, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(label_MoneyInserted_Number, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+					.addComponent(label_MoneyInserted_Number, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(464, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()

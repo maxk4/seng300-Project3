@@ -1,10 +1,13 @@
-package ui.views;
+package ui.views.customer;
 
 
 import ui.CustomerUI;
+import ui.views.util.CustomerView;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -13,14 +16,20 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class PurchaseBagsGUI extends CustomerView {
+import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.PriceLookUpCode;
+import com.diy.hardware.external.ProductDatabases;
+
+import simulation.CustomerUISimulator;
+
+public class AddProductWIthPLUCodeGUI extends CustomerView {
 	private static final long serialVersionUID = -2878096921110787780L;
-	private JTextField textField_NumberOfBags;
+	private JTextField textField_PLUCode;
 
 	/**
 	 * Create the 
 	 */
-	public PurchaseBagsGUI(CustomerUI customer) {
+	public AddProductWIthPLUCodeGUI(CustomerUI customer) {
 		super(customer);
 		setBackground(new Color(94, 193, 255));
 		
@@ -28,9 +37,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_0 = new JButton("0");
 		button_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "0";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_0.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -38,9 +47,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_1 = new JButton("1");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "1";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_1.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -48,9 +57,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_2 = new JButton("2");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "2";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_2.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -58,9 +67,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_3 = new JButton("3");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "3";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -68,9 +77,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_4 = new JButton("4");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "4";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_4.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -78,9 +87,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_5 = new JButton("5");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "5";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -88,9 +97,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_6 = new JButton("6");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "6";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_6.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -98,9 +107,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_7 = new JButton("7");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "7";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_7.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -108,9 +117,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_8 = new JButton("8");
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "8";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_8.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -118,9 +127,9 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_9 = new JButton("9");
 		button_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += "9";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_9.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -128,40 +137,54 @@ public class PurchaseBagsGUI extends CustomerView {
 		JButton button_Decimal = new JButton(".");
 		button_Decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue += ".";
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_Decimal.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_Enter = new JButton("Enter");
+		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		button_Enter.addActionListener(e -> {
-			controller.setView(CustomerUI.SCAN);
-			controller.purchaseBags(Integer.parseInt(textField_NumberOfBags.getText()));
+			String numberPLUString = textField_PLUCode.getText();
+			PriceLookUpCode PLUCode = new PriceLookUpCode(numberPLUString); 
+			// get product from database 
+			PLUCodedProduct product = ProductDatabases.PLU_PRODUCT_DATABASE.get(PLUCode);
+			// add item using cartController
+			controller.addPLUProduct(product);
+			textField_PLUCode.setText(""); //clears text field
 		});
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
 		JButton button_Del = new JButton("Del");
 		button_Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_NumberOfBags.getText();
+				String currValue = textField_PLUCode.getText();
 				currValue = currValue.substring(0, currValue.length() - 1);
-				textField_NumberOfBags.setText(currValue);
+				textField_PLUCode.setText(currValue);
 			}
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 19));
 		
-		textField_NumberOfBags = new JTextField();
-		textField_NumberOfBags.setColumns(10);
+		textField_PLUCode = new JTextField();
+		textField_PLUCode.setColumns(10);
+		
+		JButton button_Cancel = new JButton("Cancel");
+		button_Cancel.setFont(new Font("Lucida Grande", Font.BOLD, 19));
+		button_Cancel.addActionListener(e -> {
+			controller.setView(CustomerUI.SCAN);
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(textField_NumberOfBags)
-						.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(button_Cancel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(textField_PLUCode, Alignment.LEADING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(button_7, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
@@ -189,7 +212,7 @@ public class PurchaseBagsGUI extends CustomerView {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(button_Enter, 0, 0, Short.MAX_VALUE)
 								.addComponent(button_Del, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-					.addContainerGap(173, Short.MAX_VALUE))
+					.addContainerGap(67, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -218,8 +241,10 @@ public class PurchaseBagsGUI extends CustomerView {
 								.addComponent(button_0, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(button_Enter, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_NumberOfBags, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-					.addGap(175))
+					.addComponent(textField_PLUCode, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(button_Cancel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+					.addGap(62))
 		);
 		setLayout(groupLayout);
 	}
