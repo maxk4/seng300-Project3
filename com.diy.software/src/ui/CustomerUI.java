@@ -126,6 +126,9 @@ public class CustomerUI {
 	
 	public void updateCashGUI(long paid, long balance) {
 		((PayWithCashGUI) views[PAY_WITH_CASH]).update(paid, balance);
+		((PayWithDebitGUI) views[PAY_WITH_DEBIT]).update(paid, balance);
+		((PayWithCreditGUI) views[PAY_WITH_CREDIT]).update(paid, balance);
+		((PayWithGiftCardGUI) views[PAY_WITH_GIFT]).update(paid, balance);
 	}
 
 	public void updateProductList(long total, long paid, String productString, String priceString) {

@@ -13,7 +13,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
@@ -21,6 +20,7 @@ public class PayWithCreditGUI extends CustomerView {
 
 	private static final long serialVersionUID = -6094043016720414433L;
 
+	private JLabel label_OrderTotal_Number;
 
 	/**
 	 * Create the frame.
@@ -36,22 +36,11 @@ public class PayWithCreditGUI extends CustomerView {
 		JLabel label_OrderTotal_Text = new JLabel("Order Total: $");
 		label_OrderTotal_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_OrderTotal_Number = new JLabel("0.00");
+		label_OrderTotal_Number = new JLabel("0.00");
 		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JLabel label_SelectCard_Text = new JLabel("Select Card:");
-		label_SelectCard_Text.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JComboBox<?> comboBox_SelectCardType = new JComboBox<Object>();
-		
-		JButton button_PayByChip = new JButton("Pay by Chip");
-		button_PayByChip.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton button_PayByTap = new JButton("Pay by Tap");
-		button_PayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
 
-		JButton button_CancelPayment = new JButton("Cancel Payment");
+		JButton button_CancelPayment = new JButton("Cancel Payment / Return to Order");
 		button_CancelPayment.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		button_CancelPayment.addActionListener(e -> {
 			controller.setView(CustomerUI.SCAN);
@@ -67,16 +56,11 @@ public class PayWithCreditGUI extends CustomerView {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(label_OrderTotal_Text)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(label_OrderTotal_Number))
-						.addComponent(label_SelectCard_Text)
-						.addComponent(comboBox_SelectCardType, 0, 227, Short.MAX_VALUE)
-						.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-						.addComponent(labe_CreditCard_Icon))
+							.addComponent(label_OrderTotal_Number)
+							.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+							.addComponent(labe_CreditCard_Icon))
+						.addComponent(button_CancelPayment, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
-				.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -86,20 +70,16 @@ public class PayWithCreditGUI extends CustomerView {
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(label_OrderTotal_Text)
-								.addComponent(label_OrderTotal_Number))
-							.addGap(37)
-							.addComponent(label_SelectCard_Text)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_SelectCardType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(label_OrderTotal_Number)))
 						.addComponent(labe_CreditCard_Icon))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(5))
+					.addComponent(button_CancelPayment, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(111, Short.MAX_VALUE))
 		);
 		setLayout(gl_contentPane);
+	}
+	
+	public void update(long paid, long balance) {
+		label_OrderTotal_Number.setText(String.format("%.2f", (balance - paid) / 100d));
 	}
 }
