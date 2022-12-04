@@ -1,6 +1,9 @@
 package com.diy.software.test;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,18 +14,16 @@ import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.ReceiptPrinterND;
 
-//import util.AttendantStation; //?
 
-//import util.LowInkLowPaper;
-//new
 import ui.AttendantUI;
 import ui.CustomerUI;
 import printing.PrinterController;
-import printing.PrintListener;
-
+import printing.PrinterListener;
+//import printing.PrintListener;
 
 public class LowInkPaperTest {
 	
+	private List<PrinterListener> listeners = new ArrayList<PrinterListener>();
 	public ReceiptPrinterND printer = new ReceiptPrinterND();
 	
 	public static final int MAXIMUM_PAPER = 10;
@@ -32,6 +33,8 @@ public class LowInkPaperTest {
 	DoItYourselfStation station;
 	CustomerUI customer;
 	String title;
+
+	//listeners.add(new PrintListener());
 	
 	java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
 	
