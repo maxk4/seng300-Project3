@@ -34,13 +34,7 @@ public class PayWithDebitGUI extends CustomerView {
 		JLabel label_OrderTotal_Number = new JLabel("0.00");
 		label_OrderTotal_Number.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		
-		JButton button_PayByChip = new JButton("Pay by Chip");
-		button_PayByChip.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton button_PayByTap = new JButton("Pay by Tap");
-		button_PayByTap.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
-		
-		JButton button_CancelPayment = new JButton("Cancel Payment");
+		JButton button_CancelPayment = new JButton("Cancel Payment / Return to Order");
 		button_CancelPayment.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		button_CancelPayment.addActionListener(e -> {
 			controller.setView(CustomerUI.SCAN);
@@ -58,19 +52,14 @@ public class PayWithDebitGUI extends CustomerView {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-								.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(label_OrderTotal_Text)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(label_OrderTotal_Number)
-							.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-							.addComponent(lblNewLabel_2)))
+							.addPreferredGap(ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+							.addComponent(lblNewLabel_2))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -84,12 +73,8 @@ public class PayWithDebitGUI extends CustomerView {
 								.addComponent(label_OrderTotal_Number)))
 						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(button_PayByChip, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(button_PayByTap, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(6))
+					.addComponent(button_CancelPayment, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+					.addGap(73))
 		);
 		setLayout(gl_contentPane);
 	}
