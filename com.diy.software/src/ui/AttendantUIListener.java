@@ -11,4 +11,6 @@ public interface AttendantUIListener {
 	public void disableStation(DoItYourselfStation station);
 	public void enableStation(DoItYourselfStation station);
 
+	public void startupStation(DoItYourselfStation station);
+	public void shutdownStation(DoItYourselfStation station);
 }

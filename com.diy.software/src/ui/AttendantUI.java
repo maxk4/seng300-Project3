@@ -166,4 +166,12 @@ public class AttendantUI {
 	public void enableStation(DoItYourselfStation station){
 		for (AttendantUIListener listener : listeners) listener.enableStation(station);
 	}
+	
+	public void startupStation(DoItYourselfStation station) {
+		for (AttendantUIListener listener : listeners) listener.disableStation(station);
+	}
+
+	public void shutdownStation(DoItYourselfStation station) {
+		for (AttendantUIListener listener : listeners) listener.enableStation(station);
+	}
  }
