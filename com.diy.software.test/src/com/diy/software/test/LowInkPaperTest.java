@@ -31,6 +31,7 @@ public class LowInkPaperTest {
 	PrinterController listener; //previously lowinklowpaper
 	DoItYourselfStation station;
 	CustomerUI customer;
+	String title;
 	
 	java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
 	
