@@ -28,6 +28,8 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
+import ca.powerutility.NoPowerException;
+import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import util.IntegerOnlyDocument;
 import util.MembershipDatabase;
 
@@ -108,13 +110,22 @@ public class CustomerUISimulator{
 		JLabel scanningAreaLabel = new JLabel("Enter Weight on Scanning Area Scale (grams):");
 		JTextField scanningWeight = new JTextField();
 		scanningWeight.setDocument(new IntegerOnlyDocument(() -> {
-			if (scanWeightItem != null)
-				station.scanningArea.remove(scanWeightItem);
-			int weight = 0;
-			if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
-			scanWeightItem = new Item(weight) {};
-			scanWeight = weight;
-			station.scanningArea.add(scanWeightItem);
+			try {
+				if (scanWeightItem != null)
+					station.scanningArea.remove(scanWeightItem);
+			} catch(InvalidArgumentSimulationException | NoPowerException e) {
+				System.out.println("Failed" + e.toString());
+			} try {
+
+				int weight = 0;
+				if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
+				scanWeightItem = new Item(weight) {};
+				scanWeight = weight;
+				System.out.println(weight);
+				station.scanningArea.add(scanWeightItem);
+			} catch(InvalidArgumentSimulationException | NoPowerException e) {
+				System.out.println("Failed" + e.toString());
+			}
 		}));
 		scanningWeight.setColumns(10);
 		

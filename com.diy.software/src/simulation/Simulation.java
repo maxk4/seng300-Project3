@@ -66,13 +66,14 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
-		aStation.screen.getFrame().setLocation(750, 0);
+		aStation.screen.getFrame().setLocation(0, 0);
 		aStation.plugIn();
 		aStation.turnOn();
 		attendant = new AttendantUI(aStation, diyStations);
 		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
+			station.screen.getFrame().setLocation(0, 150);
 			attendant.addStation(station);
 		}
 		
@@ -218,6 +219,7 @@ public class Simulation {
 
 		// Add a attendant to the attendant database
 		AttendantDatabase.add("John Doe", "Password123");
+		AttendantDatabase.add("", "");
 	}
 
 	private static Customer genCustomer() {
