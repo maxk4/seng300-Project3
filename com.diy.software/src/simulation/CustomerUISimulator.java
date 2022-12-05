@@ -28,8 +28,6 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
-import cart.ScanItemListener;
-import ui.CustomerUI;
 import util.IntegerOnlyDocument;
 import util.MembershipDatabase;
 
@@ -40,6 +38,7 @@ public class CustomerUISimulator{
 	//Added In iteration 3 @simrat (ends)
 	
 	private Item scanWeightItem;
+	private double scanWeight;
 	
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
@@ -114,14 +113,14 @@ public class CustomerUISimulator{
 			int weight = 0;
 			if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
 			scanWeightItem = new Item(weight) {};
+			scanWeight = weight;
 			station.scanningArea.add(scanWeightItem);
 		}));
 		scanningWeight.setColumns(10);
 		
 		JButton addScanningToBagging = new JButton("Add Weight to Bagging Area:");
 		addScanningToBagging.addActionListener(e -> {
-			if (scanWeightItem != null)
-				station.baggingArea.add(scanWeightItem);
+			station.baggingArea.add(new Item(scanWeight) {});
 		});
 		
 		scanningArea.add(scanningAreaLabel);
