@@ -35,6 +35,7 @@ public class CustomerUISimulator{
 
 	//Added in Iteration 3 @Simrat (Starts)
 	public static Customer currentCustomer;
+	public JButton button_ScanCard;
 	//Added In iteration 3 @simrat (ends)
 	
 	private Item scanWeightItem;
@@ -233,7 +234,7 @@ public class CustomerUISimulator{
 				/*
 				 * Scan Card button, once pressed, gets the value from the combo box field, gets the barcode from the barcode list from Simulation class, scans that using the barcode scanner using the scan() method, then checks if that exists in database and display the result on scan GUI
 				 */
-		JButton button_ScanCard = new JButton("Scan Card");
+		button_ScanCard = new JButton("Scan Card");
 		button_ScanCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();

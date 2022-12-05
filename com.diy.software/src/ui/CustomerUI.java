@@ -188,7 +188,7 @@ public class CustomerUI {
 		System.out.println("(CustomerUI) Membership number entered: " + customerName);
 		if(Objects.equals(customerName, "Invalid Membership Number"))
 		{
-			currentMember = null;
+			currentMember = "Invalid Membership Number";
 		}
 		else
 		{

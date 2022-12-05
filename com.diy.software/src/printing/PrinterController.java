@@ -1,9 +1,12 @@
 package printing;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.AbstractDevice;
@@ -13,6 +16,7 @@ import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.IReceiptPrinter;
 import com.jimmyselectronics.abagnale.ReceiptPrinterListener;
 import simulation.Simulation;
+import ui.CustomerUI;
 
 public class PrinterController implements ReceiptPrinterListener {
 	
@@ -26,7 +30,6 @@ public class PrinterController implements ReceiptPrinterListener {
 	boolean noInk;
 	boolean isOverload;
 	boolean isEmpty;
-	
 	//Constructor
 	public PrinterController(DoItYourselfStation station) {
 		this.lowPaper = false;
@@ -123,9 +126,6 @@ public class PrinterController implements ReceiptPrinterListener {
 	public boolean getIsOverload() {
 		return isOverload;
 	}
-	public boolean getIsEmpty() {
-		return isEmpty;
-	}
 	
 	/** If printer runs of ink/paper while printing
 	 *  Abort printing, suspend station, and inform attendant that duplicate receipt must be printed and station needs maintenance
@@ -151,7 +151,7 @@ public class PrinterController implements ReceiptPrinterListener {
 	}
 
 	public void notifyNoPaper() {
-		for (PrinterListener listener : listeners) listener.notifyNoInk(station);
+		for (PrinterListener listener : listeners) listener.notifyNoPaper(station);
 		System.out.println("(Printer Controller) we got NO Paper");
 	}
 

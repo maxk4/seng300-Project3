@@ -29,7 +29,8 @@ import javax.swing.JComboBox;
 
 public class EnterMemberNumberGUI extends CustomerView {
 	private static final long serialVersionUID = -2878096921110787780L;
-	private JTextField textField_MemberNumber;
+	public JTextField textField_MemberNumber;
+	public JButton button_Enter;
 	//private MembershipListener membership_listener = new MembershipListener();
 	JComboBox comboBox_MemberCardsInWallet = new JComboBox();
 	JComboBox comboBox_MemberCard_Barcodes = new JComboBox();
@@ -164,7 +165,7 @@ public class EnterMemberNumberGUI extends CustomerView {
 		/*
 		 * Enter button, once pressed, gets the value from the text field, converts that to integer value, checks if that exists in membership database and display on the scan GUI (main GUI)
 		 */
-		JButton button_Enter = new JButton("Enter");
+		button_Enter = new JButton("Enter");
 		button_Enter.addActionListener(e -> {
 			String currValue = textField_MemberNumber.getText();
 			boolean dataGood = true;

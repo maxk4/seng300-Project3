@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import ca.powerutility.PowerGrid;
+import com.diy.simulation.Customer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,10 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.CardReader;
 
-import util.MembershipDatabase; 
+import simulation.CustomerUISimulator;
+import ui.CustomerUI;
+import ui.views.customer.EnterMemberNumberGUI;
+import util.MembershipDatabase;
 import membership.MembershipController;
 import membership.MembershipListener;
 import membership.MembershipCardListener;
@@ -46,9 +51,12 @@ import util.MembershipNumber;
 public class MembershipNumberTest {
 
 	private Integer expected;
-	private MembershipController controller;
+	private MembershipController membershipController;
+	private EnterMemberNumberGUI membershipGUI;
 	//private MembershipCardListener memCardListener = new MembershipCardListener(controller);
 	private memListener memListener = new memListener();
+
+	private CustomerUISimulator customerSimulator;
 	Card membership_card1;
 	Card membership_card2;
 	Card membership_card3;
@@ -59,6 +67,7 @@ public class MembershipNumberTest {
 	BarcodedItem item1;
 	BarcodedItem item2;
 	BarcodedItem item3;
+	CustomerUI customerUI;
 
 	
 	
@@ -90,28 +99,70 @@ public class MembershipNumberTest {
 		
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode1, 99999999);
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode2, 88888888);
-		
-		MembershipCardListener listener = new MembershipCardListener(controller);
+
+		//MembershipController controller;
+		MembershipCardListener membershipCardListener = new MembershipCardListener(membershipController);
 		station = new DoItYourselfStation();
-		station.cardReader.register(listener);
-		station.mainScanner.register(listener);
-		station.handheldScanner.register(listener);
+		station.cardReader.register(membershipCardListener);
+		station.mainScanner.register(membershipCardListener);
+		station.handheldScanner.register(membershipCardListener);
+		PowerGrid.disconnect();
+		PowerGrid.engageUninterruptiblePowerSource();
 		station.plugIn();
 		station.turnOn();
+
+		membershipController = new MembershipController(station);
+
+		customerUI = new CustomerUI(station, "Cx Membership Test");
+		membershipGUI = new EnterMemberNumberGUI(customerUI);
+
+		customerSimulator = new CustomerUISimulator(station, new Customer(), "Simulator");
 		
-		controller.register(memListener);
-		
+	}
+
+	/**
+	 * Test using the text box, checks if the member exists, simulates the customer typing in text box, this member exist in the database
+	 */
+    @Test
+    public void testTypingMemberExists(){
+    
+    	membershipGUI.textField_MemberNumber.setText("123456789");
+		membershipGUI.button_Enter.doClick();
+		System.out.println(customerUI.getCurrMem());
+		assertEquals("Cx: John Doe Customer", customerUI.getCurrMem());
+		assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(123456789));
+    }
+	/**
+	 * Test using the text box, checks if the member exists, simulates the customer typing in text box, this member do not exist
+	 */
+	@Test
+	public void testTypingMemberNotExists(){
+
+		membershipGUI.textField_MemberNumber.setText("1234");
+		membershipGUI.button_Enter.doClick();
+		System.out.println(customerUI.getCurrMem());
+		assertEquals("Invalid Membership Number", customerUI.getCurrMem());
+		assertFalse(MembershipDatabase.MEMBER_DATABASE.containsKey(1234));
+	}
+
+	/**
+	 * Test using the text box, checks if the member exists, simulates the customer typing in text box, this customer enters alphabets in the text field
+	 */
+	@Test
+	public void testTypingMemberAlphabets(){
+
+		String expectedResult = "No alphabets are allowed";
+		membershipGUI.textField_MemberNumber.setText("123AA12");
+		membershipGUI.button_Enter.doClick();
+		System.out.println(customerUI.getCurrMem());
+		assertEquals(expectedResult, customerUI.getCurrMem());
+		//assertFalse(MembershipDatabase.MEMBER_DATABASE.containsKey(123AA12));
 	}
 	
     @Test
-    public void testTyping(){
-    
-    	assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(123456789));
-    }
-	
-    @Test
-    public void testSwiping(){
+    public void testSwipingExists(){
     	try {
+			customerSimulator.button_ScanCard.doClick();
 			station.cardReader.swipe(membership_card1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

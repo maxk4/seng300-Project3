@@ -22,6 +22,8 @@ import ui.CustomerUI;
 import printing.PrinterController;
 import printing.PrinterListener;
 
+import javax.swing.*;
+
 
 public class LowInkPaperTest {
 	
@@ -50,6 +52,9 @@ public class LowInkPaperTest {
 		station.plugIn();
 		station.turnOn();
 
+		//station.printer.enable();
+
+
 
 
 		customer = new CustomerUI(station, title);
@@ -59,10 +64,12 @@ public class LowInkPaperTest {
 
 		printController = new PrinterController(station) {
 			@Override
-			//SO we do not see the dialog box as a alert from the PrintController
-			public void abortPrinting() {System.out.println("Printing Aborted in Test");}
+			public void abortPrinting() {
+				System.out.println("Abort Printing");
+			}
 		};
-
+		printController.enabled(station.printer);
+		printController.turnedOn(station.printer);
 		//register the print listener
 		station.printer.register(printController);
 		//System.setOut(new java.io.PrintStream(output));
@@ -74,6 +81,8 @@ public class LowInkPaperTest {
 		try {
 			customer.endSession();
 			station.turnOff();
+			printController.disabled(station.printer);
+			printController.turnedOff(station.printer);
 		} catch(Exception e) {
 			
 		}
@@ -121,6 +130,7 @@ public class LowInkPaperTest {
 		printController.print("A");
 		
 		assertTrue(printController.getLowInk());
+
 	}
 	
 	/**
