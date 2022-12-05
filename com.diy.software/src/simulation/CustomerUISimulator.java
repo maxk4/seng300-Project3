@@ -28,8 +28,6 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
-import cart.ScanItemListener;
-import ui.CustomerUI;
 import util.IntegerOnlyDocument;
 import util.MembershipDatabase;
 

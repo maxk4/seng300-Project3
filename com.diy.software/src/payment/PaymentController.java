@@ -23,7 +23,6 @@ public class PaymentController {
 	public boolean hasRemainingBalance() {
 		long funds = cashManager.availableFunds();
 		funds += cardManager.availableFunds();
-		System.out.println(funds);
 		return balance > funds;
 	}
 	
