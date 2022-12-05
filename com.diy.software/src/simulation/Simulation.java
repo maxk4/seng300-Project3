@@ -11,7 +11,6 @@ import com.diy.hardware.PriceLookUpCode;
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
-import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
@@ -51,7 +50,6 @@ public class Simulation {
 	
 	public static List<Card> cards = new ArrayList<Card>();
 	public static Customer currentCustomer;
-	public static ArrayList<BarcodedItem> barcodesMember = new ArrayList<>();
 	public static AttendantUI attendant;
 	//Added in Iteration 3 @Simrat (end)
 	
@@ -68,7 +66,7 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
-		aStation.screen.getFrame().setLocation(1000, 0);
+		aStation.screen.getFrame().setLocation(750, 0);
 		aStation.plugIn();
 		aStation.turnOn();
 		attendant = new AttendantUI(aStation, diyStations);
@@ -207,13 +205,12 @@ public class Simulation {
 
 		//Create a barcodedItem, so that it can be scanned by barcodeScanner
 		//Added in Iteration 3 @Simrat (Start)
-		BarcodedItem membership_card_barcode1 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine}), 0.1);
-		BarcodedItem membership_card_barcode2 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight}), 0.1);
-		BarcodedItem membership_card_barcode3 = new BarcodedItem(new Barcode(new Numeral[]{Numeral.four, Numeral.four, Numeral.four}), 0.1);
+		Barcode membership_card_barcode1 = new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine});
+		Barcode membership_card_barcode2 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight});
+		Barcode membership_card_barcode3 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.seven});
 
-		barcodesMember.add(membership_card_barcode1);
-		barcodesMember.add(membership_card_barcode2);
-		barcodesMember.add(membership_card_barcode3);
+		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode1, 99999999);
+		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode2, 88888888);
 		//MembershipNumber.MEMBER_NUMBERS.add(12345678);
 		//MembershipNumber.MEMBER_NUMBERS.add(23456789);
 		//MembershipNumber.MEMBER_NUMBERS.add(34567890);

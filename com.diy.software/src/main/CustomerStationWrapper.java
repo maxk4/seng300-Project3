@@ -7,6 +7,8 @@ import com.diy.hardware.Product;
 
 import cart.CartController;
 import cart.CartListener;
+import membership.MembershipController;
+import membership.MembershipListener;
 import payment.PaymentController;
 import payment.PaymentListener;
 import printing.PrinterController;
@@ -26,6 +28,7 @@ public class CustomerStationWrapper {
 	private PrinterController print;
 	private ScaleController scale;
 	private CustomerUI customer;
+	private MembershipController membership;
 	private boolean inProgress = true;
 	
 	
@@ -36,6 +39,7 @@ public class CustomerStationWrapper {
 	private CartListener cartListener;
 	private ScaleListener scaleListener;
 	private CustomerUIListener customerUIListener;
+	private MembershipListener membershipListener;
 	
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
@@ -118,6 +122,7 @@ public class CustomerStationWrapper {
 				print = new PrinterController(diyStation);
 				scale = new ScaleController(diyStation);
 				customer = new CustomerUI(diyStation, "Customer Station");
+				membership = new MembershipController(diyStation);
 				
 				paymentListener = new PaymentListener() {
 					@Override
@@ -181,6 +186,7 @@ public class CustomerStationWrapper {
 						customer.setView(CustomerUI.END);
 						inProgress = false;
 						scale.setExpectedWeight(0);
+						payment.completeTransaction();
 						System.out.println("Finish");
 						String receipt = cart.getReceipt();
 						print.print(receipt);
@@ -245,6 +251,15 @@ public class CustomerStationWrapper {
 					
 				};
 				scale.register(scaleListener);
+				
+				membershipListener = new MembershipListener() {
+					@Override
+					public void notifyMembershipCardRead(int memberId) {
+						customer.useMemberName(memberId);
+					}
+					
+				};
+				membership.register(membershipListener);
 				
 				customer.disable();
 			}
