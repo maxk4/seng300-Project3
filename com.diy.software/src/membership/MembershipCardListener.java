@@ -62,6 +62,7 @@ public class MembershipCardListener implements CardReaderListener, BarcodeScanne
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 		if (!MembershipDatabase.MEMBER_BARCODES.containsKey(barcode)) return;
 		controller.notifyMemberCardRead(MembershipDatabase.MEMBER_BARCODES.get(barcode));
+		System.out.println("Membership card listener: barcode scanned");
 	}
 	/**
 	 * Announces that a card has swiped on the indicated card reader.

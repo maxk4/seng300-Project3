@@ -24,6 +24,8 @@ public class PrinterController implements ReceiptPrinterListener {
 	boolean lowInk;
 	boolean noPaper;
 	boolean noInk;
+	boolean isOverload;
+	boolean isEmpty;
 	
 	//Constructor
 	public PrinterController(DoItYourselfStation station) {
@@ -31,6 +33,8 @@ public class PrinterController implements ReceiptPrinterListener {
 		this.lowInk = false;
 		this.noPaper = false;
 		this.noInk = false;
+		this.isOverload = false;
+		this.isEmpty = false;
 		this.station = station;
 		this.listeners = new ArrayList<PrinterListener>();
 
@@ -57,14 +61,20 @@ public class PrinterController implements ReceiptPrinterListener {
 	public void outOfPaper(IReceiptPrinter printer) {
 		abortPrinting();
 		notifyLowPaper();
+		notifyNoPaper();
+		lowPaper(printer);
 		noPaper = true;
+		lowPaper = true;
 	}
 
 	@Override
 	public void outOfInk(IReceiptPrinter printer) {
 		abortPrinting();
 		notifyLowInk();
+		notifyNoInk();
+		lowInk(printer);
 		noInk = true;
+		lowInk = true;
 	}
 
 	@Override
@@ -110,7 +120,12 @@ public class PrinterController implements ReceiptPrinterListener {
 	public boolean getNoPaper() {
 		 return noPaper;
 	 }
-	
+	public boolean getIsOverload() {
+		return isOverload;
+	}
+	public boolean getIsEmpty() {
+		return isEmpty;
+	}
 	
 	/** If printer runs of ink/paper while printing
 	 *  Abort printing, suspend station, and inform attendant that duplicate receipt must be printed and station needs maintenance
@@ -129,18 +144,34 @@ public class PrinterController implements ReceiptPrinterListener {
 		for (PrinterListener listener : listeners) listener.notifyLowPaper(station);
 		System.out.println("(Printer Controller) we got low Paper, damm it again");
 	}
-	
-	public void print(String receipt) {
+
+	public void notifyNoInk() {
+		for (PrinterListener listener : listeners) listener.notifyNoInk(station);
+		System.out.println("(Printer Controller) we got NO Ink");
+	}
+
+	public void notifyNoPaper() {
+		for (PrinterListener listener : listeners) listener.notifyNoInk(station);
+		System.out.println("(Printer Controller) we got NO Paper");
+	}
+
+
+	public void print(String receipt)  {
 		for (char c : receipt.toCharArray()) {
 			try {
 				station.printer.print(c);
 			} catch (EmptyException e) {
 				// Notify attendant and stop printing, otherwise it will try to print every character and will show dialog box
 				//Added in Iteration 3 @Simrat (Starts)
+				System.out.println("Empty exception in print");
+				isEmpty = true;
 				break;
 				//Added in Iteration 3 @Simrat (ends)
 			} catch (OverloadException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
+				System.out.println("Overload exception in print");
+				isOverload = true;
+				break;
 			}
 		}
 		station.printer.cutPaper();

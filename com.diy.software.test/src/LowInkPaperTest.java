@@ -3,6 +3,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.powerutility.NoPowerException;
+import ca.powerutility.PowerGrid;
+import ca.powerutility.PowerSurge;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +21,7 @@ import ui.AttendantUI;
 import ui.CustomerUI;
 import printing.PrinterController;
 import printing.PrinterListener;
-//import printing.PrintListener;
+
 
 public class LowInkPaperTest {
 	
@@ -28,32 +31,41 @@ public class LowInkPaperTest {
 	public static final int MAXIMUM_PAPER = 10;
 	public static final int MAXIMUM_INK = 20;
 
-	PrinterController listener; //previously lowinklowpaper
+	PrinterController printController; //previously lowinklowpaper, middle between customer and actual printer
 	DoItYourselfStation station;
 	CustomerUI customer;
-	String title;
+	String title = "Low Ink/ Low Paper Tests";
 
 	//listeners.add(new PrintListener());
 	
-	java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
+	//java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
 	
 	@Before
 	public void setup() {
 		station = new DoItYourselfStation();
+
+		PowerGrid.disconnect();
+		PowerGrid.engageUninterruptiblePowerSource();
+
 		station.plugIn();
 		station.turnOn();
+
+
+
 		customer = new CustomerUI(station, title);
 		AttendantUI attendant = new AttendantUI(new AttendantStation(), 1);
-		
-		listener = new PrinterController(station) {
+
+
+
+		printController = new PrinterController(station) {
 			@Override
-			public void abortPrinting() {}
+			//SO we do not see the dialog box as a alert from the PrintController
+			public void abortPrinting() {System.out.println("Printing Aborted in Test");}
 		};
-		printer.plugIn();
-		printer.turnOn();
-		printer.register(listener);
-		
-		System.setOut(new java.io.PrintStream(output));
+
+		//register the print listener
+		station.printer.register(printController);
+		//System.setOut(new java.io.PrintStream(output));
 		
 	}
 	
@@ -61,11 +73,38 @@ public class LowInkPaperTest {
 	public void finish() {
 		try {
 			customer.endSession();
+			station.turnOff();
 		} catch(Exception e) {
 			
 		}
 	}
-	
+
+
+	/**
+	 * Test that when printing is turned off, should throw an exception
+	 * @throws NoPowerException
+	 */
+	@Test (expected = NoPowerException.class)
+	public void testNoPower() throws NoPowerException, OverloadException {
+		//Adding Paper and ink to the printer hardware, should result in an exception
+		station.printer.turnOff();
+		station.printer.addPaper(MAXIMUM_PAPER);
+	}
+
+	/**
+	 * Test that when printing is turned off, should throw an exception
+	 * @throws OverloadException
+	 */
+	@Test
+	public void testOverload() throws NoPowerException, OverloadException {
+		//Adding Paper and ink to the printer hardware, should result in an exception
+		station.printer.addPaper(MAXIMUM_PAPER*2);
+		station.printer.addInk(ReceiptPrinterND.CHARACTERS_PER_LINE + 5);
+		printController.print(String.valueOf("AA" + "A".repeat(ReceiptPrinterND.CHARACTERS_PER_LINE + 1)));
+		assertTrue(printController.getIsOverload());
+	}
+
+
 	/**
 	 * Test that when printing with low ink, the listener notices
 	 * 
@@ -74,11 +113,14 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testLowInk() throws EmptyException, OverloadException {
-		printer.addPaper(MAXIMUM_PAPER);
-		printer.addInk(20);
-		printer.print('A');
+		//Adding Paper and ink to the printer hardware
+		station.printer.addPaper(MAXIMUM_PAPER);
+		station.printer.addInk(1);
+
+		//Trying to print
+		printController.print("A");
 		
-		assertTrue(listener.getLowInk());
+		assertTrue(printController.getLowInk());
 	}
 	
 	/**
@@ -89,11 +131,12 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testLowPaper() throws EmptyException, OverloadException {
-		printer.addInk(MAXIMUM_INK);
-		printer.addPaper(2);
-		printer.print('A');
+		station.printer.addInk(MAXIMUM_INK);
+		station.printer.addPaper(1);
+		//printing one line on paper
+		printController.print("A\nA");
 		
-		assertTrue(listener.getLowPaper());
+		assertTrue(printController.getLowPaper());
 	}
 	
 	/**
@@ -104,9 +147,10 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testOutOfInkThrowsException() throws EmptyException, OverloadException {
-		printer.addPaper(MAXIMUM_PAPER);
+		station.printer.addPaper(MAXIMUM_PAPER);
 		try {
-			printer.print('A');	
+			//printer.print('A');
+			printController.print("\n");
 		} catch (Exception e) {
 			assertTrue(e instanceof EmptyException);
 		}
@@ -120,9 +164,10 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testOutOfPaperThrowsException() throws EmptyException, OverloadException {
-		printer.addInk(MAXIMUM_INK);
+		station.printer.addInk(MAXIMUM_INK);
 		try {
-			printer.print('A');
+			//printer.print('A');
+			printController.print("A\n");
 		} catch (Exception e) {
 			assertTrue(e instanceof EmptyException);
 		}
@@ -136,11 +181,12 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testOutOfPaperTriggersListener() throws EmptyException, OverloadException {
-		printer.addInk(MAXIMUM_INK);
-		printer.addPaper(1);
-		printer.print('\n');
+		station.printer.addInk(MAXIMUM_INK);
+		station.printer.addPaper(1);
+		//printer.print('\n');
+		printController.print("A\n");
 
-		assertTrue(listener.getNoPaper());
+		assertTrue(printController.getNoPaper());
 	}
 	
 	/**
@@ -151,10 +197,11 @@ public class LowInkPaperTest {
 	 */
 	@Test
 	public void testOutOfInkTriggersListener() throws EmptyException, OverloadException {
-		printer.addPaper(MAXIMUM_PAPER);
-		printer.addInk(1);
-		printer.print('A');
+		station.printer.addPaper(MAXIMUM_PAPER);
+		station.printer.addInk(1);
+		//printer.print('A');
+		printController.print("A");
 		
-		assertTrue(listener.getNoInk());
+		assertTrue(printController.getNoInk());
 	}
 }

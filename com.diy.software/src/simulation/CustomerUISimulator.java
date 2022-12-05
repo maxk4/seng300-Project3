@@ -274,7 +274,7 @@ public class CustomerUISimulator{
 			public void actionPerformed(ActionEvent e) {
 				//Make customer select the card
 				String selectedCard = (String) comboBox_MemberCardsInWallet.getSelectedItem();
-				System.out.println("(EnterMemberNumberGUI) Card selected " + selectedCard);
+				System.out.println("(CustomerUISimulator) Card selected " + selectedCard);
 				//John Member-Card , 99999999
 				//Split this to get card number
 				String[] selectedCardSplit = selectedCard.split(" , ");

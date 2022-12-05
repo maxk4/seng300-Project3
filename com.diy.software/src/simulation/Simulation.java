@@ -207,10 +207,11 @@ public class Simulation {
 		//Added in Iteration 3 @Simrat (Start)
 		Barcode membership_card_barcode1 = new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine});
 		Barcode membership_card_barcode2 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight});
-		Barcode membership_card_barcode3 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.seven});
+		Barcode membership_card_barcode3 = new Barcode(new Numeral[]{Numeral.four, Numeral.four, Numeral.four});
 
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode1, 99999999);
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode2, 88888888);
+		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode3, 444);
 		//MembershipNumber.MEMBER_NUMBERS.add(12345678);
 		//MembershipNumber.MEMBER_NUMBERS.add(23456789);
 		//MembershipNumber.MEMBER_NUMBERS.add(34567890);
@@ -218,6 +219,7 @@ public class Simulation {
 
 		// Add a attendant to the attendant database
 		AttendantDatabase.add("John Doe", "Password123");
+		AttendantDatabase.add("", "");
 	}
 
 	private static Customer genCustomer() {

@@ -10,7 +10,7 @@ import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
 
-import ui.views.*;
+
 import ui.views.customer.AddProductWIthPLUCodeGUI;
 import ui.views.customer.CustomerSearchCatalogueGUI;
 import ui.views.customer.EnterMemberNumberGUI;
