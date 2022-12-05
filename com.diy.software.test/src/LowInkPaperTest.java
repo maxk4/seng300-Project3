@@ -1,30 +1,39 @@
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.EmptyException;
 import com.jimmyselectronics.OverloadException;
 import com.jimmyselectronics.abagnale.ReceiptPrinterND;
 
-import util.AttendantStation;
-import util.AttendantUI;
-import util.CustomerUI;
-import util.LowInkLowPaper;
 
+import ui.AttendantUI;
+import ui.CustomerUI;
+import printing.PrinterController;
+import printing.PrinterListener;
+//import printing.PrintListener;
 
 public class LowInkPaperTest {
 	
+	private List<PrinterListener> listeners = new ArrayList<PrinterListener>();
 	public ReceiptPrinterND printer = new ReceiptPrinterND();
 	
 	public static final int MAXIMUM_PAPER = 10;
 	public static final int MAXIMUM_INK = 20;
 
-	LowInkLowPaper listener;
+	PrinterController listener; //previously lowinklowpaper
 	DoItYourselfStation station;
 	CustomerUI customer;
+	String title;
+
+	//listeners.add(new PrintListener());
 	
 	java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
 	
@@ -33,10 +42,10 @@ public class LowInkPaperTest {
 		station = new DoItYourselfStation();
 		station.plugIn();
 		station.turnOn();
-		customer = new CustomerUI(station);
+		customer = new CustomerUI(station, title);
 		AttendantUI attendant = new AttendantUI(new AttendantStation(), 1);
 		
-		listener = new LowInkLowPaper(customer, attendant) {
+		listener = new PrinterController(station) {
 			@Override
 			public void abortPrinting() {}
 		};
