@@ -3,12 +3,10 @@ package com.diy.software.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,20 +14,14 @@ import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
-import com.jimmyselectronics.AbstractDevice;
-import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.necchi.Barcode;
-import com.jimmyselectronics.necchi.BarcodeScanner;
-import com.jimmyselectronics.necchi.BarcodeScannerListener;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import ca.powerutility.PowerGrid;
-import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import cart.CartController;
 import cart.ScanItemListener;
-import simulation.Simulation;
 import ui.CustomerUI;
 import util.MembershipDatabase;
 
@@ -115,12 +107,37 @@ public class AddItemTests {
    		station.mainScanner.enable();
    		
    		customer.shoppingCart.add(item1);
+   		customer.shoppingCart.add(item2);
    		customer.selectNextItem();
-   		customer.scanItem(false);
+   			//causing infinite loop
+//   		while(true) {
+   			customer.scanItem(false);
+//   			if (sil.getSuccessfulScan() == 1) {
+//   				break;
+//   			}
+//   		}
+  
    		customer.placeItemInBaggingArea();
    		
-   		assertTrue(cartController.productList.containsProduct(prod1));
+   		assertTrue(cartController.productList.containsProduct(prod2));
+   		assertFalse(cartController.productList.containsProduct(prod1));
    		assertEquals(1, cartController.productList.size());
+   	}
+   	
+   	/*
+   	 * Test for the number of successful scans.
+   	 */
+   	@Test
+   	public void testSuccessfulScan() {
+   		station.mainScanner.enable();
+   		
+   		customer.shoppingCart.add(item1);
+   		customer.selectNextItem();
+   		customer.scanItem(false);
+   		
+   		int actual = sil.getSuccessfulScan();
+   		
+   		assertEquals(1, actual);
    	}
    	
    	/*
