@@ -45,7 +45,7 @@ public class CustomerUISimulator{
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
 		JDialog customerSim = new JDialog();
-		customerSim.setLocationRelativeTo(null);
+		customerSim.setLocation(0, 400);
 		//Added in Iteration 3 @Simrat (Starts)
 		currentCustomer = customer;
 		//Added In iteration 3 @simrat (ends)
