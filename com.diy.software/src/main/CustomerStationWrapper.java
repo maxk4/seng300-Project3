@@ -148,9 +148,9 @@ public class CustomerStationWrapper {
 					public void notifyRequiresAdditionalBanknote(int req) {
 						
 					}
-
+					
 					@Override
-					public void notifyRequiresAdditionalCoins(int req) {
+					public void notifyRequiresAdditionalCoins(long neededCoinDenomination) {
 						// TODO Auto-generated method stub
 						
 					}
