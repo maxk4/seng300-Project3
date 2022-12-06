@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.hamcrest.core_1.3.0.v20180420-1519.jar!/" />
+          <root url="jar:///home/Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.hamcrest.core_1.3.0.v20180420-1519.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -22,11 +22,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.junit_4.13.2.v20211018-1956.jar!/" />
+          <root url="jar:///home/Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.junit_4.13.2.v20211018-1956.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="junit" level="application" />
   </component>
 </module>
