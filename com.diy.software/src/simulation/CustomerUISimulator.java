@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -183,8 +184,8 @@ public class CustomerUISimulator{
 		
 		JLabel coinLabel = new JLabel("Coins: Click to insert");
 		cash.add(coinLabel);
-		for (long denom : station.coinDenominations) {
-			JButton coin = new JButton(String.format("�%d", denom));
+		for (BigDecimal denom : station.coinDenominations) {
+			JButton coin = new JButton(String.format("c%d", denom.longValue()));
 			coin.addActionListener(e -> {
 				try {
 					station.coinSlot.receive(new Coin(Currency.getInstance(Locale.CANADA), denom));

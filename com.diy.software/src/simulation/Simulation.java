@@ -1,5 +1,6 @@
 package simulation;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -99,7 +100,7 @@ public class Simulation {
 	
 	private static void setup() {
 		int[] banknoteDenominations = {5000,2000,1000,500};
-		long[] coinDenominations = {200, 100, 25, 10, 5};
+		BigDecimal[] coinDenominations = {BigDecimal.valueOf(200), BigDecimal.valueOf(100), BigDecimal.valueOf(25), BigDecimal.valueOf(10), BigDecimal.valueOf(5)};
 		DoItYourselfStation.configureBanknoteDenominations(banknoteDenominations);
 		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		PowerGrid.engageUninterruptiblePowerSource();

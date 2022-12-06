@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Insets;
 
 public class ScanScreenGUI extends CustomerView {
 
@@ -65,6 +66,7 @@ public class ScanScreenGUI extends CustomerView {
 			controller.setView(CustomerUI.PAY_WITH_CREDIT);
 			station.cardReader.enable();
 		});
+		button_PayWithCredit.setMargin(new Insets(0, 0, 0, 0));
 		button_PayWithCredit.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
 
 		JButton button_PayWithCash = new JButton("Cash");

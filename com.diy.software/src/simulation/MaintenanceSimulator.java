@@ -1,6 +1,7 @@
 package simulation;
 
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
@@ -146,7 +147,7 @@ public class MaintenanceSimulator {
 					for (char c : coinAmountField.getText().toCharArray())
 						if (Character.isDigit(c)) parse += c;
 					Coin[] coins = new Coin[Integer.parseInt(parse)];
-					Arrays.fill(coins, new Coin(Currency.getInstance(Locale.CANADA), denomination));
+					Arrays.fill(coins, new Coin(Currency.getInstance(Locale.CANADA), BigDecimal.valueOf(denomination)));
 					station.coinDispensers.get(denomination).load(coins);
 				} catch (Exception e1) {
 					e1.printStackTrace();
