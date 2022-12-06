@@ -1,3 +1,4 @@
+package com.diy.software.test;
 import ca.powerutility.PowerGrid;
 import com.diy.hardware.DoItYourselfStation;
 import com.unitedbankingservices.DisabledException;

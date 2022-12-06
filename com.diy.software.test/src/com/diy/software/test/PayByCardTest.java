@@ -1,3 +1,4 @@
+package com.diy.software.test;
 import com.diy.hardware.DoItYourselfStation;
 import static org.junit.Assert.*;
 import org.junit.Test;
