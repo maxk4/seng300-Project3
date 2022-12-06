@@ -1,5 +1,6 @@
 package simulation;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -66,13 +67,14 @@ public class Simulation {
 		
 		// Initialize attendant station and ui
 		AttendantStation aStation = new AttendantStation();
-		aStation.screen.getFrame().setLocation(750, 0);
+		aStation.screen.getFrame().setLocation(0, 0);
 		aStation.plugIn();
 		aStation.turnOn();
 		attendant = new AttendantUI(aStation, diyStations);
 		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
+			station.screen.getFrame().setLocation(0, 150);
 			attendant.addStation(station);
 		}
 		
@@ -98,7 +100,7 @@ public class Simulation {
 	
 	private static void setup() {
 		int[] banknoteDenominations = {5000,2000,1000,500};
-		long[] coinDenominations = {200, 100, 25, 10, 5};
+		BigDecimal[] coinDenominations = {BigDecimal.valueOf(200), BigDecimal.valueOf(100), BigDecimal.valueOf(25), BigDecimal.valueOf(10), BigDecimal.valueOf(5)};
 		DoItYourselfStation.configureBanknoteDenominations(banknoteDenominations);
 		DoItYourselfStation.configureCoinDenominations(coinDenominations);
 		PowerGrid.engageUninterruptiblePowerSource();
@@ -218,6 +220,7 @@ public class Simulation {
 
 		// Add a attendant to the attendant database
 		AttendantDatabase.add("John Doe", "Password123");
+		AttendantDatabase.add("", "");
 	}
 
 	private static Customer genCustomer() {
