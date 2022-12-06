@@ -129,14 +129,62 @@ public class ScaleTests {
 
 			@Override
 			public void notifyWeightDiscrepancyResolved() {
-				found++;
+				fail();
 			}
-			
 		});
 		station.baggingArea.enable();
 		
 		station.baggingArea.add(heavyItem);
 		
+		assertEquals(2, found);
+	}
+	
+	/*
+	 * Test when the scale enters the overloaded state.
+	 */
+	@Test
+	public void testOverload() {
+		station.baggingArea.enable();
+		
+		station.baggingArea.register(new ElectronicScaleListener( ) {
+
+			@Override
+			public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+				fail();
+			}
+
+			@Override
+			public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+				fail();
+			}
+			
+			@Override
+			public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
+				fail();	
+			}
+
+			@Override
+			public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
+				fail();	
+			}
+
+			@Override
+			public void weightChanged(ElectronicScale scale, double weightInGrams) {
+				found++;
+			}
+
+			@Override
+			public void overload(ElectronicScale scale) {
+				found++;	
+			}
+
+			@Override
+			public void outOfOverload(ElectronicScale scale) {
+				fail();
+				
+			}
+		});
+		station.baggingArea.add(heavyItem);
 		assertEquals(2, found);
 	}
 	
@@ -222,7 +270,7 @@ public class ScaleTests {
 	@Test 
 	public void testSetExpectedWeightGreaterThanSensitivity() {
 		station.baggingArea.enable();
-		ewl.setExpectedWeight(normalWeight);
+		controller.setExpectedWeight(normalWeight);
 		controller.register(new ScaleListener() {
 
 			@Override
@@ -267,6 +315,35 @@ public class ScaleTests {
 		assertEquals(1, found);
 	}
 	
+	/*
+	 * Test for updating the expected weight.
+	 */
+	@Test 
+	public void testUpdateExpectedWeight() {
+		station.baggingArea.enable();
+		
+		controller.register(new ScaleListener() {
+
+			@Override
+			public void notifyWeightDiscrepancyDetected() {
+				found++;
+				
+			}
+
+			@Override
+			public void notifyWeightDiscrepancyResolved() {
+				found++;
+			}
+			
+		});
+		controller.updateExpectedWeight(normalWeight);
+		station.baggingArea.add(normalItem);
+		assertEquals(3, found);
+	}
+	
+	/*
+	 * Test removing last item weight.
+	 */
 	@Test 
 	public void testRemoveLastItemWeight() throws OverloadException {
 		station.baggingArea.add(normalItem);
