@@ -8,22 +8,26 @@ import payment.PaymentController;
 import util.Bank;
 import util.GiftCardIssuer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class PayByCardTest {
     @Test
-    public void testCreditCardPaySuccessful() {
+    public void testCreditCardPaySuccessful() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         CardPaymentManager cardPaymentManager =
                 new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
+//        Calendar calendarInstance = Calendar.getInstance();
+//        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
         Bank.CARD_ISSUER.addCardData("8417992603318970", "Isaacs",
-                        calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318971", "Isaacs",
-                        calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318972", "Isaacs",
-                        calendarInstance, "276", 10000);
+        		date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318970", 20000L, "Membership");
@@ -45,15 +49,14 @@ public class PayByCardTest {
     }
 
     @Test
-    public void testCreditCardPayOverHoldAmount() {
+    public void testCreditCardPayOverHoldAmount() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         doItYourselfStation.plugIn();
         doItYourselfStation.turnOn();
         CardPaymentManager cardPaymentManager = new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-        Bank.CARD_ISSUER.addCardData("8417992603318973", "Isaacs", calendarInstance, "276", 10000);
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
+        Bank.CARD_ISSUER.addCardData("8417992603318973", "Isaacs", date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318974", 20000L, "Membership");
@@ -72,17 +75,16 @@ public class PayByCardTest {
     }
 
     @Test
-    public void testCardReturnFunds() {
+    public void testCardReturnFunds() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         doItYourselfStation.plugIn();
         doItYourselfStation.turnOn();
         CardPaymentManager cardPaymentManager = new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-        Bank.CARD_ISSUER.addCardData("8417992603318975", "Isaacs", calendarInstance, "276", 10000);
-        Bank.CARD_ISSUER.addCardData("8417992603318976", "Isaacs", calendarInstance, "276", 10000);
-        Bank.CARD_ISSUER.addCardData("8417992603318977", "Isaacs", calendarInstance, "276", 10000);
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
+        Bank.CARD_ISSUER.addCardData("8417992603318975", "Isaacs", date, "276", 10000);
+        Bank.CARD_ISSUER.addCardData("8417992603318976", "Isaacs", date, "276", 10000);
+        Bank.CARD_ISSUER.addCardData("8417992603318977", "Isaacs", date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318975", 20000L, "Membership");
@@ -105,15 +107,14 @@ public class PayByCardTest {
     }
 
     @Test
-    public void testGiftCardPaymentSuccessful() {
+    public void testGiftCardPaymentSuccessful() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         doItYourselfStation.plugIn();
         doItYourselfStation.turnOn();
         CardPaymentManager cardPaymentManager = new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-        GiftCardIssuer.CARD_ISSUER.addCardData("8417992603318976", "Isaacs", calendarInstance, "276", 10000);
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
+        GiftCardIssuer.CARD_ISSUER.addCardData("8417992603318976", "Isaacs", date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318976", 20000L, "Gift Card");
@@ -132,15 +133,14 @@ public class PayByCardTest {
 
 
     @Test
-    public void testCardPaymentWithNoHold() {
+    public void testCardPaymentWithNoHold() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         doItYourselfStation.plugIn();
         doItYourselfStation.turnOn();
         CardPaymentManager cardPaymentManager = new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-        GiftCardIssuer.CARD_ISSUER.addCardData("8417992603318977", "Isaacs", calendarInstance, "276", 10000);
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
+        GiftCardIssuer.CARD_ISSUER.addCardData("8417992603318977", "Isaacs", date, "276", 10000);
 
         try {
             cardPaymentManager.pay(10000L);
