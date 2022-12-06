@@ -1,6 +1,8 @@
 package main;
 
 
+import java.awt.event.WindowEvent;
+
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
@@ -242,6 +244,13 @@ public class CustomerStationWrapper {
 						if (approved) scale.approveWeight();
 						
 					}
+
+					@Override
+					public void requestNoBag() {
+						if (attendant.requestNoBag(station)) {
+							scale.approveWeight();
+						}
+					}
 					
 				};
 				customer.register(customerUIListener);
@@ -283,12 +292,13 @@ public class CustomerStationWrapper {
 			@Override
 			public void shutdownStation(DoItYourselfStation station) {
 				if(station != diyStation) return;
-				// TO DO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
 				payment.deregister(paymentListener);
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);
 				customer.deregister(customerUIListener);
-				diyStation.screen.getFrame().dispose();
+				//diyStation.screen.getFrame().dispose();
+				System.out.println("Shutdown");
+				diyStation.screen.setVisible(false);
 				station.turnOff();
 			}
 		});

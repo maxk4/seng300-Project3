@@ -124,7 +124,7 @@ public class StationComponent extends JPanel {
 				enable.setEnabled(false);
 				disable.setEnabled(false);
 				
-				// Code for shutting down station goes here
+				attendant.shutdownStation(station);
 			}
 		});
 		

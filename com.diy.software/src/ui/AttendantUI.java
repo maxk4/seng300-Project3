@@ -210,4 +210,12 @@ public class AttendantUI {
 	public void shutdownStation(DoItYourselfStation station) {
 		for (AttendantUIListener listener : listeners) listener.shutdownStation(station);
 	}
+
+	public boolean requestNoBag(DoItYourselfStation station) {
+		int index  = idOf(station);
+		
+		int choice = JOptionPane.showConfirmDialog(gui, String.format("Approve No Bag Request from station %d?", index), "Aprove/Deny No Bag Request", JOptionPane.YES_NO_OPTION);
+	
+		return choice == 0;
+	}
  }
