@@ -81,7 +81,6 @@ public class CustomerUI {
 				new PlaceBagGUI(this),
 				new StationDisabledGUI(this)
 		};
-		mainFrame.setAlwaysOnTop(true);
 		setView(START);
 		station.screen.setVisible(true);
 	}

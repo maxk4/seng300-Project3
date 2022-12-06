@@ -212,6 +212,7 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 		}
 		funds -= changeIssued;
 		System.out.println("After Return: " + funds);
+		if (funds < station.coinDenominations.get(station.coinDenominations.size() - 1).longValue()) funds = 0;
 		return changeIssued;
 	}
 
