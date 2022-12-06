@@ -31,6 +31,10 @@ public class PaymentController {
 		long remaining = balance - cashManager.pay(balance);
 		remaining -= cardManager.pay(remaining);
 		if (remaining < 0) cashManager.returnFunds(-remaining);
+		if (cashManager.availableFunds() > 0) {
+			System.out.println(cashManager.availableFunds());
+			cashManager.returnFunds(cashManager.availableFunds());
+		}
 		balance = 0;
 	}
 	
