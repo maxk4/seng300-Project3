@@ -112,11 +112,13 @@ public class AddItemTests {
 	public void testScanItemScannerDisabled() {
 		station.mainScanner.disable();
 		
+		
 		customer.shoppingCart.add(item1);
 		customer.selectNextItem();
 		customer.scanItem(false);
 		customer.placeItemInBaggingArea();
 		
+		assertEquals(0, sil.getSuccessfulScan());
 		assertFalse(cartController.productList.containsProduct(prod1));
 		assertEquals(cartController.productList.size(), 0);
 	}
@@ -135,9 +137,9 @@ public class AddItemTests {
    		customer.selectNextItem();
    		
    			//causing infinite loop, because sil.getSuccessfulScan() returns 2, when it should return 1.
-//   		while(true) {
+//		while(true) {
    			customer.scanItem(false);
-//   			if (sil.getSuccessfulScan() == 1) {
+//   			if (sil.getSuccessfulScan() == 2) {
 //   				break;
 //   			}
 //   		}
@@ -165,6 +167,22 @@ public class AddItemTests {
    		int actual = sil.getSuccessfulScan();
    		
    		assertEquals(1, actual);
+   	}
+   	/*
+   	 * Test for the size of the product list after a successful scan.
+   	 * 
+   	 * Current Bug: productList size should be 1, but it is returning 3.
+   	 */
+   	@Test
+   	public void testSizeOfProductListAfterScan() {
+   		station.mainScanner.enable();
+   		
+   		customer.shoppingCart.add(item1);
+   		customer.selectNextItem();
+   		customer.scanItem(false);
+   		customer.placeItemInBaggingArea();
+   		
+   		assertEquals(1, cartController.productList.size());
    	}
    	
    	/*
