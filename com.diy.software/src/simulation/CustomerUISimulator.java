@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -28,8 +29,8 @@ import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
-import cart.ScanItemListener;
-import ui.CustomerUI;
+import ca.powerutility.NoPowerException;
+import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import util.IntegerOnlyDocument;
 import util.MembershipDatabase;
 
@@ -40,11 +41,12 @@ public class CustomerUISimulator{
 	//Added In iteration 3 @simrat (ends)
 	
 	private Item scanWeightItem;
+	private double scanWeight;
 	
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
 		JDialog customerSim = new JDialog();
-		customerSim.setLocationRelativeTo(null);
+		customerSim.setLocation(0, 400);
 		//Added in Iteration 3 @Simrat (Starts)
 		currentCustomer = customer;
 		//Added In iteration 3 @simrat (ends)
@@ -109,19 +111,28 @@ public class CustomerUISimulator{
 		JLabel scanningAreaLabel = new JLabel("Enter Weight on Scanning Area Scale (grams):");
 		JTextField scanningWeight = new JTextField();
 		scanningWeight.setDocument(new IntegerOnlyDocument(() -> {
-			if (scanWeightItem != null)
-				station.scanningArea.remove(scanWeightItem);
-			int weight = 0;
-			if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
-			scanWeightItem = new Item(weight) {};
-			station.scanningArea.add(scanWeightItem);
+			try {
+				if (scanWeightItem != null)
+					station.scanningArea.remove(scanWeightItem);
+			} catch(InvalidArgumentSimulationException | NoPowerException e) {
+				System.out.println("Failed" + e.toString());
+			} try {
+
+				int weight = 0;
+				if (scanningWeight.getText().length() != 0) weight = Integer.parseInt(scanningWeight.getText());
+				scanWeightItem = new Item(weight) {};
+				scanWeight = weight;
+				System.out.println(weight);
+				station.scanningArea.add(scanWeightItem);
+			} catch(InvalidArgumentSimulationException | NoPowerException e) {
+				System.out.println("Failed" + e.toString());
+			}
 		}));
 		scanningWeight.setColumns(10);
 		
 		JButton addScanningToBagging = new JButton("Add Weight to Bagging Area:");
 		addScanningToBagging.addActionListener(e -> {
-			if (scanWeightItem != null)
-				station.baggingArea.add(scanWeightItem);
+			station.baggingArea.add(new Item(scanWeight) {});
 		});
 		
 		scanningArea.add(scanningAreaLabel);
@@ -173,8 +184,8 @@ public class CustomerUISimulator{
 		
 		JLabel coinLabel = new JLabel("Coins: Click to insert");
 		cash.add(coinLabel);
-		for (long denom : station.coinDenominations) {
-			JButton coin = new JButton(String.format("�%d", denom));
+		for (BigDecimal denom : station.coinDenominations) {
+			JButton coin = new JButton(String.format("c%d", denom.longValue()));
 			coin.addActionListener(e -> {
 				try {
 					station.coinSlot.receive(new Coin(Currency.getInstance(Locale.CANADA), denom));

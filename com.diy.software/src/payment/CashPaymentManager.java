@@ -1,5 +1,6 @@
 package payment;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
@@ -43,9 +44,9 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	}
 	
 	@Override
-	public void validCoinDetected(CoinValidator validator, long value) {
+	public void validCoinDetected(CoinValidator validator, BigDecimal value) {
 		validCoinCount++;
-		funds += value;
+		funds += value.longValue();
 		controller.notifyCashPayment();
 	}
 	
@@ -119,7 +120,7 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 			return changeIssued;
 		
 		// get coin denomination available 
-		List<Long> coinDenominations = station.coinDenominations;
+		List<BigDecimal> coinDenominations = station.coinDenominations;
 		Collections.reverse(coinDenominations);
 		
 		// turn coin value into cents
@@ -135,7 +136,7 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 					break;
 				}
 				
-				long coinValue = coinDenominations.get(index);
+				long coinValue = coinDenominations.get(index).longValue();
 				if (coinValue <= changeInCents) {
 					if (station.coinDispensers.get(coinDenominations.get(index)).size() > 0) {
 						station.coinDispensers.get(coinDenominations.get(index)).emit();
@@ -157,7 +158,7 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 		}
 		if (!requiredCoinDenominations.isEmpty()) {
 			for (int i : requiredCoinDenominations) {
-				for (CashIssueListener listener : listeners) listener.notifyRequireAdditionalCoins(coinDenominations.get(i));
+				for (CashIssueListener listener : listeners) listener.notifyRequireAdditionalCoins(coinDenominations.get(i).longValue());
 			}
 		}
 		return centsIssued;
@@ -182,9 +183,9 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	public long returnFunds(long amount) {
 		
 		// Round balance
-		station.coinDenominations.sort((a, b) -> (int) (a - b));
+		station.coinDenominations.sort((a, b) -> a.compareTo(b));
 		long changeToDispense;
-		long smallest = station.coinDenominations.get(0);
+		long smallest = station.coinDenominations.get(0).longValue();
 		long rDown = amount - (amount % smallest);
 		long rUp = amount - (amount % smallest) + smallest;
 		long diffUp = amount - rUp;
