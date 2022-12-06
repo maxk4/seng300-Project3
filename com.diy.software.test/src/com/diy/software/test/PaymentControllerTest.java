@@ -8,7 +8,10 @@ import payment.PaymentController;
 import payment.PaymentListener;
 import util.Bank;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +27,7 @@ public class PaymentControllerTest {
     }
 
     @Test
-    public void testCompleteTransaction() {
+    public void testCompleteTransaction() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         PaymentController paymentController = new PaymentController(doItYourselfStation);
         CardPaymentManager cardPaymentManager =
@@ -32,11 +35,9 @@ public class PaymentControllerTest {
         doItYourselfStation.plugIn();
         doItYourselfStation.turnOn();
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
         Bank.CARD_ISSUER.addCardData("8417992603318973", "Isaacs",
-                calendarInstance, "276", 10000);
+                date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318973", 30000L, "Membership");
@@ -56,7 +57,7 @@ public class PaymentControllerTest {
     }
 
     @Test
-    public void testHasRemainingBalance() {
+    public void testHasRemainingBalance() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         PaymentController paymentController = new PaymentController(doItYourselfStation);
         CardPaymentManager cardPaymentManager =
@@ -65,11 +66,9 @@ public class PaymentControllerTest {
         doItYourselfStation.turnOn();
 
 
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
         Bank.CARD_ISSUER.addCardData("8417992603318974", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
 
 //        Customer customer = new Customer();
 //        customer.useStation(doItYourselfStation);

@@ -11,25 +11,28 @@ import payment.PaymentController;
 import util.Bank;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class PaymentManagerTest {
     @Test
-    public void testAvailableFunds() {
+    public void testAvailableFunds() throws ParseException {
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         CardPaymentManager cardPaymentManager =
                 new CardPaymentManager(new PaymentController(doItYourselfStation), doItYourselfStation);
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
+
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
         Bank.CARD_ISSUER.addCardData("8417992603318970", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318971", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318972", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
 
         try {
             cardPaymentManager.placeHold("8417992603318970", 20000L, "Membership");
@@ -51,7 +54,7 @@ public class PaymentManagerTest {
     }
 
     @Test
-    public void testCurrentBalance() throws IOException {
+    public void testCurrentBalance() throws IOException, ParseException {
 
         DoItYourselfStation doItYourselfStation = new DoItYourselfStation();
         CardPaymentManager cardPaymentManager =
@@ -62,17 +65,13 @@ public class PaymentManagerTest {
 
         doItYourselfStation.cardReader.enable();
 
-
-
-        Calendar calendarInstance = Calendar.getInstance();
-        calendarInstance.set(2023, Calendar.FEBRUARY, 21, 23, 59, 59);
-
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
         Bank.CARD_ISSUER.addCardData("8417992603318973", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318974", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
         Bank.CARD_ISSUER.addCardData("8417992603318975", "Isaacs",
-                calendarInstance, "276", 10000);
+        		date, "276", 10000);
 
         Customer customer = new Customer();
         customer.useStation(doItYourselfStation);
