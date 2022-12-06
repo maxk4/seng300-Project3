@@ -258,20 +258,4 @@ public class AddItemTests {
    	public void testAddingProductWithNullDesciption() {
    		cartController.addItem(prod1, null, 0, 0);
    	}
-   	
-   	@Test 
-   	public void testAddByPLUCode() {
-   		cartController.register(new CartListener() {
-			@Override
-			public void notifyItemAdded(Product product, long price, double weightInGrams) {
-				found++;	
-			}
-			@Override
-			public void notifyItemRemoved(Product product, long price, double weightInGrams) {
-				fail();	
-			}
-   		});
-   		ui.addPLUProduct(productPLU);
-   		assertEquals(1, found);
-   	}
 }
