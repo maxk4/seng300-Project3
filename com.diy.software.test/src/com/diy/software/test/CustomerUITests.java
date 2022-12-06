@@ -20,12 +20,19 @@ import ui.CustomerUI;
 import ui.CustomerUIListener;
 import util.MembershipDatabase;
 
+/**
+ * Test suite for the CustomerUI class.
+ * @author Matthias Kee
+ */
 public class CustomerUITests {
 	
 	CustomerUI customerUI;
 	DoItYourselfStation customerStation;
 	CUL listener;
 	
+	/*
+	 * Setup for the test suite.
+	 */
 	@Before 
 	public void setup() {
 		listener = new CUL();
@@ -36,17 +43,26 @@ public class CustomerUITests {
 		customerUI = new CustomerUI(customerStation, "Station 1");
 	}
 	
+	/*
+	 * Tear down for the test suite.
+	 */
 	@After
 	public void tearDown() {
 		MembershipDatabase.MEMBER_DATABASE.clear();
 	}
 	
+	/*
+	 * Test for registering a listener.
+	 */
 	@Test
 	public void testRegisterListener() {
 		assertTrue(customerUI.register(listener));
 		assertFalse(customerUI.register(listener));
 	}
 	
+	/*
+	 * Test for deregistering a listener.
+	 */
 	@Test
 	public void testDeregisterListener() {
 		customerUI.register(listener);
@@ -55,6 +71,9 @@ public class CustomerUITests {
 		assertFalse(customerUI.deregister(listener2));
 	}
 	
+	/*
+	 * Test for customer requesting to use a personal bag with a listener.
+	 */
 	@Test
 	public void testRequestPersonalBag() {
 		customerUI.register(listener);
@@ -63,6 +82,9 @@ public class CustomerUITests {
 		assertEquals(1,requestPersonalBag);
 	}
 	
+	/*
+	 * Test for customer purchasing bags with a listener.
+	 */
 	@Test
 	public void testPurchaseBags() {
 		customerUI.register(listener);
@@ -71,6 +93,9 @@ public class CustomerUITests {
 		assertEquals(1, purchasedBags);
 	}
 	
+	/*
+	 * Test for customer adding a product though a PLU code.
+	 */
 	@Test
 	public void testAddPLUProduct() {
 		PriceLookUpCode PLUCode = new PriceLookUpCode("0000");
@@ -82,21 +107,38 @@ public class CustomerUITests {
 		assertEquals(1, PLUProductAdded);
 	}
 	
+	/*
+	 * Test for a inactive session.
+	 */
 	@Test 
 	public void testSessionRunningFalse() {
 		customerUI.register(listener);
-		customerUI.beginSession();
-		assertTrue(sessionRunning);
 		customerUI.endSession();
 		assertFalse(sessionRunning);
 	}
 	
+	/*
+	 * Test for an active session.
+	 */
+	@Test 
+	public void testSessionRunningTrue() {
+		customerUI.register(listener);
+		customerUI.beginSession();
+		assertTrue(sessionRunning);
+	}
+	
+	/*
+	 * Test for getting the current station.
+	 */
 	@Test
 	public void testGetStation() {
 		DoItYourselfStation actual = customerUI.getStation();
 		assertEquals(customerStation, actual);
 	}
 	
+	/*
+	 * Test for adding a member number.
+	 */
 	@Test
 	public void testAddMemberNumber() {
 		assertFalse(MembershipDatabase.MEMBER_DATABASE.containsKey(1234));
@@ -104,6 +146,9 @@ public class CustomerUITests {
 		assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(1234));
 	}
 	
+	/*
+	 * Test for using a valid member name.
+	 */
 	@Test
 	public void testUseMemberNameValid() {
 		customerUI.useMemberName(1234);
@@ -113,6 +158,9 @@ public class CustomerUITests {
 		assertEquals("John Doe", customerUI.getCurrMem());
 	}
 	
+	/*
+	 * Test for using a invalid member name.
+	 */
 	@Test
 	public void testUseMemberNameInvalid() {
 		customerUI.addMemberNumber(1234, "Invalid Membership Number");
@@ -120,6 +168,9 @@ public class CustomerUITests {
 		assertEquals(null, customerUI.getCurrMem());
 	}
 	
+	/*
+	 * Test for selecting an item with a listener.
+	 */
 	@Test
 	public void testSelectItem() {
 		customerUI.register(listener);
@@ -129,6 +180,9 @@ public class CustomerUITests {
 		assertEquals(1, itemSelected);
 	}
 	
+	/*
+	 * Test for a item placed with a listener.
+	 */
 	@Test
 	public void testItemPlaced() {
 		customerUI.register(listener);

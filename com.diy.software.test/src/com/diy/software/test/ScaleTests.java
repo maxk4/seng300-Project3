@@ -29,9 +29,9 @@ import scale.ScaleListener;
 import scale.ScanningAreaListener;
 import ui.CustomerUI;
 
-/*
- * Test suite for use cases related to the bagging area.
- * Author: Matthias Kee
+/**
+ * Test suite for the scale package.
+ * @author Matthias Kee
  */
 public class ScaleTests {
 	
@@ -49,6 +49,9 @@ public class ScaleTests {
 	long price1 = 10L, price2 = 15L;
 	double lightWeight = 0.2, normalWeight = 4.0, heavyWeight = 10.0;
 	
+	/*
+	 * Setup for the test suite.
+	 */
 	@Before 
 	public void setup() {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.clear();
@@ -123,18 +126,7 @@ public class ScaleTests {
 	 */
 	@Test
 	public void testWeightDiscrepancyDetected() {
-		controller.register(new ScaleListener() {
-
-			@Override
-			public void notifyWeightDiscrepancyDetected() {
-				found++;
-			}
-
-			@Override
-			public void notifyWeightDiscrepancyResolved() {
-				fail();
-			}
-		});
+		controller.register(scaleListener);
 		station.baggingArea.enable();
 		
 		station.baggingArea.add(heavyItem);
@@ -172,26 +164,12 @@ public class ScaleTests {
 	 */
 	@Test
 	public void testApproveWeightDiscrepancy() {
+		controller.register(scaleListener);
 		station.baggingArea.enable();
 		station.baggingArea.add(heavyItem);
 		
-		controller.register(new ScaleListener() {
-
-			@Override
-			public void notifyWeightDiscrepancyDetected() {
-				fail();
-				
-			}
-
-			@Override
-			public void notifyWeightDiscrepancyResolved() {
-				found++;
-				
-			}
-			
-		});
 		controller.approveWeight();
-		assertEquals(1, found);
+		assertEquals(3, found);
 	}
 	
 	/*
@@ -199,24 +177,12 @@ public class ScaleTests {
 	 */
 	@Test 
 	public void testSetExpectedWeightGreaterThanSensitivity() {
+		controller.register(scaleListener);
 		station.baggingArea.enable();
 		controller.setExpectedWeight(normalWeight);
-		controller.register(new ScaleListener() {
-
-			@Override
-			public void notifyWeightDiscrepancyDetected() {
-				found++;
-				
-			}
-
-			@Override
-			public void notifyWeightDiscrepancyResolved() {
-				found++;
-			}
-			
-		});
+		
 		station.baggingArea.add(normalItem);
-		assertEquals(2, found);
+		assertEquals(3, found);
 	}
 	
 	/*
@@ -224,25 +190,13 @@ public class ScaleTests {
 	 */
 	@Test
 	public void testSetExpectedWeightLessThanSensitivity() {
+		controller.register(scaleListener);
 		station.baggingArea.enable();
 		station.baggingArea.add(normalItem);
 		ewl.setSensitivity(2);
-		//controller.setSen(2);
-		
-		controller.register(new ScaleListener() {
-
-			@Override
-			public void notifyWeightDiscrepancyDetected() {	
-				fail();
-			}
-
-			@Override
-			public void notifyWeightDiscrepancyResolved() {
-				found++;
-			}
-		});
+	
 		ewl.setExpectedWeight(3);
-		assertEquals(1, found);
+		assertEquals(3, found);
 	}
 	
 	/*
@@ -250,24 +204,11 @@ public class ScaleTests {
 	 */
 	@Test 
 	public void testUpdateExpectedWeight() {
+		controller.register(scaleListener);
 		station.baggingArea.enable();
-		
-		controller.register(new ScaleListener() {
-
-			@Override
-			public void notifyWeightDiscrepancyDetected() {
-				found++;
-				
-			}
-
-			@Override
-			public void notifyWeightDiscrepancyResolved() {
-				found++;
-			}
-			
-		});
 		controller.updateExpectedWeight(normalWeight);
 		station.baggingArea.add(normalItem);
+		
 		assertEquals(3, found);
 	}
 	
@@ -282,6 +223,9 @@ public class ScaleTests {
 		
 	}
 	
+	/*
+	 * Test for registering a listner.
+	 */
 	@Test
 	public void testRegisterListener() {
 		assertTrue(controller.register(scaleListener));
@@ -289,6 +233,9 @@ public class ScaleTests {
 		
 	}
 	
+	/*
+	 * Test for deregistering a listener.
+	 */
 	@Test
 	public void testDeregisterListener() {
 		controller.register(scaleListener);
