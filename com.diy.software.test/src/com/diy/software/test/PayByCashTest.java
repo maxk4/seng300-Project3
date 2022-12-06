@@ -13,6 +13,7 @@ import org.junit.Test;
 import payment.CashPaymentManager;
 import payment.PaymentController;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
@@ -20,17 +21,14 @@ import java.util.Locale;
 import static org.junit.Assert.*;
 
 public class PayByCashTest {
-    //    private CustomerUI customer;
-//    private AttendantUI attendant;
     private DoItYourselfStation checkoutStation;
-    //    private AttendantStation attendantStation;
 
     @Before
     public void setup() throws TooMuchCashException {
 
         // configure denominations
         int[] banknoteDenominations = {5000, 2000, 1000, 500};
-        long[] coinDenominations = {200, 100, 25, 10, 5};
+        BigDecimal[] coinDenominations = {new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5)};
         DoItYourselfStation.configureBanknoteDenominations(banknoteDenominations);
         DoItYourselfStation.configureCoinDenominations(coinDenominations);
 
@@ -56,7 +54,7 @@ public class PayByCashTest {
             };
         }
 
-        for (long denomination : coinDenominations) {
+        for (BigDecimal denomination : coinDenominations) {
             checkoutStation.coinDispensers.get(denomination).load(new Coin(Currency.getInstance(Locale.CANADA), denomination));
         }
     }
@@ -80,7 +78,10 @@ public class PayByCashTest {
         int[] banknoteDenominations = {5000, 2000, 1000, 500};
 
         cashPaymentManager.validBanknoteDetected(new BanknoteValidator(Currency.getInstance(Locale.CANADA), banknoteDenominations), Currency.getInstance(Locale.CANADA), 500L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
 
         assertEquals(300L, cashPaymentManager.pay(300L));
     }
@@ -104,7 +105,11 @@ public class PayByCashTest {
         int[] banknoteDenominations = {5000, 2000, 1000, 500};
 
         cashPaymentManager.validBanknoteDetected(new BanknoteValidator(Currency.getInstance(Locale.CANADA), banknoteDenominations), Currency.getInstance(Locale.CANADA), 500L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
 
         assertEquals(500L, cashPaymentManager.pay(600L));
     }
@@ -128,10 +133,19 @@ public class PayByCashTest {
         int[] banknoteDenominations = {5000, 2000, 1000, 500};
 
         cashPaymentManager.validBanknoteDetected(new BanknoteValidator(Currency.getInstance(Locale.CANADA), banknoteDenominations), Currency.getInstance(Locale.CANADA), 500L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
-
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
         assertEquals(200L, cashPaymentManager.pay(200L));
-        assertEquals(400L, cashPaymentManager.returnFunds(400L));
+
+        try {
+            assertEquals(400L, cashPaymentManager.returnFunds(400L));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
     @Test
@@ -153,10 +167,18 @@ public class PayByCashTest {
         int[] banknoteDenominations = {5000, 2000, 1000, 500};
 
         cashPaymentManager.validBanknoteDetected(new BanknoteValidator(Currency.getInstance(Locale.CANADA), banknoteDenominations), Currency.getInstance(Locale.CANADA), 500L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
-
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
         assertEquals(300L, cashPaymentManager.pay(300L));
-        assertEquals(300L, cashPaymentManager.returnFunds(500L));
+        try {
+            assertEquals(300L, cashPaymentManager.returnFunds(500L));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
     @Test
@@ -200,10 +222,26 @@ public class PayByCashTest {
 //            }
 //        })
         CashPaymentManager cashPaymentManager = new CashPaymentManager(paymentController, checkoutStation);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
-        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
+        cashPaymentManager.validCoinDetected(
+                new CoinValidator(
+                        Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
+                new BigDecimal(100));
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
+//        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
 
         assertEquals(4, cashPaymentManager.getValidCoinCount());
     }
