@@ -195,6 +195,11 @@ public class CustomerUI {
 			currentMember = customerName;
 		}
 		((ScanScreenGUI) views[SCAN]).updateMember(customerName);
+		setView(SCAN);
+	}
+	
+	public void useMemberName(int memberId) {
+		useMemberName(MembershipDatabase.MEMBER_DATABASE.get(memberId));
 	}
 	//Updated in Iteration @Simrat (Ends)
 	
