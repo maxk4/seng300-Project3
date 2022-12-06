@@ -81,17 +81,6 @@ public class MembershipTestUnit {
 		station = new DoItYourselfStation();
 		PowerGrid.disconnect();
 		PowerGrid.engageUninterruptiblePowerSource();
-		station.cardReader.turnOn();
-		station.mainScanner.turnOn();
-		station.handheldScanner.turnOn();
-		station.plugIn();
-		station.turnOn();
-		station.cardReader.enable();
-
-		barcodedScannedCount = 0;
-		cardDataRead = 0;
-		count = 0;
-
 		membershipController = new MembershipControllerStub(station);
 		membershipController.register(new MembershipListener() {
 			@Override
@@ -99,6 +88,16 @@ public class MembershipTestUnit {
 				//customerUI.useMemberName(memberId);
 			}
 		});
+		station.plugIn();
+		station.turnOn();
+		station.cardReader.enable();
+		station.mainScanner.enable();
+		station.handheldScanner.enable();
+
+		barcodedScannedCount = 0;
+		cardDataRead = 0;
+		count = 0;
+
 	}
 
 	/**
@@ -110,9 +109,6 @@ public class MembershipTestUnit {
 		station.cardReader.disable();
 		station.mainScanner.disable();
 		station.handheldScanner.disable();
-		station.cardReader.turnOff();
-		station.mainScanner.turnOff();
-		station.handheldScanner.turnOff();
 		station.turnOff();
 	}
 
