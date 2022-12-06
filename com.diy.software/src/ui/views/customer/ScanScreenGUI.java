@@ -23,7 +23,7 @@ import java.awt.Font;
 public class ScanScreenGUI extends CustomerView {
 
 	private static final long serialVersionUID = 6049492754371953479L;
-	private JTextField textField_MemberNumber;
+	public JTextField textField_MemberNumber;
 	private JTextArea scannedPricesArea;
 	private JTextArea scannedItemsArea;
 	private JTextField textField_OrderTotal_Number;
@@ -256,5 +256,6 @@ public class ScanScreenGUI extends CustomerView {
 
 	public void updateMember(String customerName) {
 		textField_MemberNumber.setText(customerName + "");
+		System.out.println("updating text field = " +customerName);
 	}
 }

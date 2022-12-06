@@ -193,6 +193,7 @@ public class CustomerUI {
 		else
 		{
 			currentMember = customerName;
+			System.out.println("CustomerUI: setting customer ");
 		}
 		((ScanScreenGUI) views[SCAN]).updateMember(customerName);
 		setView(SCAN);

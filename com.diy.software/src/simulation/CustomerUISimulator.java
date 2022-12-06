@@ -36,6 +36,11 @@ public class CustomerUISimulator{
 	//Added in Iteration 3 @Simrat (Starts)
 	public static Customer currentCustomer;
 	public JButton button_ScanCard;
+	public boolean isMemberShipScanSuccess = false;
+	public boolean isMemberShipSwipeSuccess = false;
+	public JComboBox<String> comboBox_MemberCard_Barcodes;
+	public JComboBox<String> comboBox_MemberCardsInWallet;
+	public JButton button_SwipeCard;
 	//Added In iteration 3 @simrat (ends)
 	
 	private Item scanWeightItem;
@@ -216,7 +221,7 @@ public class CustomerUISimulator{
 			//Loaded the list with the membership cards
 		}
 		//Display the cards in a GUI
-		JComboBox<String> comboBox_MemberCardsInWallet = new JComboBox<String>(memCardsList.toArray(new String[memCardsList.size()]));
+		comboBox_MemberCardsInWallet = new JComboBox<String>(memCardsList.toArray(new String[memCardsList.size()]));
 		comboBox_MemberCardsInWallet.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 
 		//Barcodes for membership cards
@@ -225,7 +230,7 @@ public class CustomerUISimulator{
 		{
 			barcodes.add(memberBarcode.toString());
 		}
-		JComboBox<String> comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[memCardsList.size()]));
+		comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[barcodes.size()]));
 		comboBox_MemberCard_Barcodes.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		//Added in 3rd Iteration ends
 				//Cancel Button (ends)
@@ -237,9 +242,10 @@ public class CustomerUISimulator{
 		button_ScanCard = new JButton("Scan Card");
 		button_ScanCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();
 				Barcode selectedMemberBarcode = null;
-				System.out.println("(EnterMemberNumber GUI) selected barcode " + selectedBarcodeString);
+				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();
+
+				System.out.println("(CustomerUISimulator GUI) selected barcode " + selectedBarcodeString);
 				//Find this barcode in the list given in Simulation Class (as static list)
 				for (Barcode memberBarcode : MembershipDatabase.MEMBER_BARCODES.keySet())
 				{
@@ -252,10 +258,12 @@ public class CustomerUISimulator{
 				//Scan the selected member barcode with the scanner of the diy system
 				if (station.mainScanner.scan(new BarcodedItem(selectedMemberBarcode, 0.1))) {
 					//scan successfully
-					System.out.println("(EnterMemberNumberGUI) Scan successfully");
+					System.out.println("(CustomerUISimulator) Scan successfully");
+					isMemberShipScanSuccess = true;
 					} else {
 					//scan Failed
-					System.out.println("(EnterMemberNumberGUI) Scan fail");
+					isMemberShipScanSuccess = false;
+					System.out.println("(CustomerUISimulator) Scan fail");
 				}
 			}});
 		button_ScanCard.setFont(new Font("Lucida Grande", Font.BOLD, 19));
@@ -270,7 +278,7 @@ public class CustomerUISimulator{
 		 * in CardReaderListener,
 		 * Swipe method in Card Reader returns the card data, and we get the card-holder name from it
 		 */
-		JButton button_SwipeCard = new JButton("Swipe Card");
+		button_SwipeCard = new JButton("Swipe Card");
 		button_SwipeCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Make customer select the card
@@ -285,9 +293,11 @@ public class CustomerUISimulator{
 				try {
 					station.cardReader.swipe(card);
 					System.out.println("Swipe successful");
+					isMemberShipSwipeSuccess = true;
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					System.out.println("Swipe failed");
+					isMemberShipSwipeSuccess = false;
 				}
 			}
 		});

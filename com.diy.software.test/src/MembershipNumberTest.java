@@ -3,60 +3,39 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 import ca.powerutility.PowerGrid;
 import com.diy.simulation.Customer;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.diy.hardware.DoItYourselfStation;
 import com.jimmyselectronics.necchi.Barcode;
-import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
-import com.jimmyselectronics.opeechee.CardReader;
-
 import simulation.CustomerUISimulator;
 import ui.CustomerUI;
 import ui.views.customer.EnterMemberNumberGUI;
+import ui.views.customer.ScanScreenGUI;
 import util.MembershipDatabase;
 import membership.MembershipController;
 import membership.MembershipListener;
-import membership.MembershipCardListener;
+import javax.swing.*;
 
 // authors Charvi and Simrat 
 
-/*
-- test where input is less than 8 = fail
-- test where input is greater than 8 = fail
-- test where input is exactly 8 = pass
-- test where input is null (empty) = fail
-- test where input is exactly 8 but the number is wrong = fail
-=======
-import org.junit.Before;
-import org.junit.Test;
-
-import util.MembershipNumber;
-
-/*
- * -only test if it exists in the hashmap
-- test where input is exactly 8 but the number is not in the members list = fail
-- test where input is exactly 8 but the currentMember is not null = fail
-- test where input is exactly 8 and the currentMember is null = pass
->>>>>>> origin/JC
- */
-
 public class MembershipNumberTest {
 
-	private Integer expected;
-	private MembershipController membershipController;
 	private EnterMemberNumberGUI membershipGUI;
-	//private MembershipCardListener memCardListener = new MembershipCardListener(controller);
-	private memListener memListener = new memListener();
-
 	private CustomerUISimulator customerSimulator;
+	private MembershipController membershipController;
+	private CustomerUI customerUI;
+	private Customer customer;
+
+	private static List<Card> cards = new ArrayList<Card>();
+
+
 	Card membership_card1;
 	Card membership_card2;
 	Card membership_card3;
@@ -67,9 +46,7 @@ public class MembershipNumberTest {
 	BarcodedItem item1;
 	BarcodedItem item2;
 	BarcodedItem item3;
-	CustomerUI customerUI;
 
-	
 	
 	@Before
 	public void setup() {
@@ -83,6 +60,12 @@ public class MembershipNumberTest {
 		membership_card1 = new Card("Membership","99999999", "John Member-Card", "000", "000", false, false);
 		membership_card2 = new Card("Membership","88888888", "John OG-Card", "000", "000", false, false);
 		membership_card3 = new Card("Membership","88888887", "John Not Member", "000", "000", false, false);
+
+		cards.add(membership_card1);
+		cards.add(membership_card2);
+		cards.add(membership_card3);
+		//membership card 3 is not a member.
+
 		
 		///Add the membership cards into the membership database
 		MembershipDatabase.MEMBER_DATABASE.put(99999999,"John Member-Card");
@@ -94,30 +77,34 @@ public class MembershipNumberTest {
 		item1 = new BarcodedItem(membership_card_barcode1, 0.1);
 		membership_card_barcode2 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight});
 		item2 = new BarcodedItem(membership_card_barcode2, 0.1);
-		membership_card_barcode3 = new Barcode(new Numeral[]{Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.eight, Numeral.seven});
+		membership_card_barcode3 = new Barcode(new Numeral[]{Numeral.four, Numeral.four, Numeral.four, Numeral.four});
 		item3 = new BarcodedItem(membership_card_barcode3, 0.1);
-		
+
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode1, 99999999);
 		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode2, 88888888);
+		MembershipDatabase.MEMBER_BARCODES.put(membership_card_barcode3, 4444);
 
-		//MembershipController controller;
-		MembershipCardListener membershipCardListener = new MembershipCardListener(membershipController);
 		station = new DoItYourselfStation();
-		station.cardReader.register(membershipCardListener);
-		station.mainScanner.register(membershipCardListener);
-		station.handheldScanner.register(membershipCardListener);
 		PowerGrid.disconnect();
 		PowerGrid.engageUninterruptiblePowerSource();
 		station.plugIn();
 		station.turnOn();
+		customer = new Customer();
+		customer.useStation(station);
 
 		membershipController = new MembershipController(station);
+		membershipController.register(new MembershipListener() {
+			@Override
+			public void notifyMembershipCardRead(int memberId) {
+				customerUI.useMemberName(memberId);
+			}
+		});
+		//creates listern and attaches that to scanner and barcodes automatically
 
 		customerUI = new CustomerUI(station, "Cx Membership Test");
 		membershipGUI = new EnterMemberNumberGUI(customerUI);
+		customerSimulator = new CustomerUISimulator(station, customer, "Simulator");
 
-		customerSimulator = new CustomerUISimulator(station, new Customer(), "Simulator");
-		
 	}
 
 	/**
@@ -129,8 +116,9 @@ public class MembershipNumberTest {
     	membershipGUI.textField_MemberNumber.setText("123456789");
 		membershipGUI.button_Enter.doClick();
 		System.out.println(customerUI.getCurrMem());
+	    assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(123456789));
 		assertEquals("Cx: John Doe Customer", customerUI.getCurrMem());
-		assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(123456789));
+
     }
 	/**
 	 * Test using the text box, checks if the member exists, simulates the customer typing in text box, this member do not exist
@@ -158,93 +146,144 @@ public class MembershipNumberTest {
 		assertEquals(expectedResult, customerUI.getCurrMem());
 		//assertFalse(MembershipDatabase.MEMBER_DATABASE.containsKey(123AA12));
 	}
-	
+	//===================================================================
     @Test
-    public void testSwipingExists(){
-    	try {
+    public void testScanningExist(){
+
+	    //Barcodes for membership cards
+	    ArrayList<String> barcodes = new ArrayList<>();
+	    for (Barcode memberBarcode : MembershipDatabase.MEMBER_BARCODES.keySet())
+	    {
+		    barcodes.add(memberBarcode.toString());
+	    }
+	    customerSimulator.comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[barcodes.size()]));
+		String selectedMemberID = null;
+		while (!customerSimulator.isMemberShipScanSuccess)
+		{
+			customerSimulator.comboBox_MemberCard_Barcodes.setSelectedIndex(1);
+			selectedMemberID = customerSimulator.comboBox_MemberCard_Barcodes.getItemAt(1);
+
 			customerSimulator.button_ScanCard.doClick();
-			station.cardReader.swipe(membership_card1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			//if the scan failed for fault scanner, it will be scanned again
 		}
-    	assertTrue(MembershipDatabase.MEMBER_DATABASE.containsKey(99999999));
-    	
-    }
-    
-    @Test
-    public void testScanning(){
-    	station.mainScanner.scan(item1);
-    	assertTrue(MembershipDatabase.MEMBER_BARCODES.containsKey(membership_card_barcode1));
-    }
-    
-    @Test
-    public void NotMemberTest(){
-        assertFalse(MembershipDatabase.MEMBER_DATABASE.containsKey(88888887));
-    }
-    /*
-    this test checks if the length of the number is equal to 8, which it is not.
-    So, the test will fail and give since the membership number is less than 8 digits long.
-     
-    @Test
-    public void NumberIsLessThanEightDigits(){
-    	expected = 8;
-    	assertEquals(expected, memberNum.checkMemNum(1234));
-    }
-
-    /*
-    this test checks if the length of the number is equal to 8, which it is not.
-    So, the test will fail since the membership number is greater than 8 digits long.
-     
-    @Test
-    public void NumberIsGreaterThanEightDigits(){
-
-    	expected = 8;
-        assertEquals(expected, memberNum.checkMemNum(123456789));
-    }
+	    //current member will be set
+		//expected value for the current set customer, will be taken from barcode database
+	    int key = Integer.parseInt(selectedMemberID);
+	    String expectedValue = MembershipDatabase.MEMBER_DATABASE.get(key);
+		System.out.println("Expected value = " + expectedValue);
+		System.out.println("Actual value = " + customerUI.getCurrMem());
+		assertEquals(expectedValue, customerUI.getCurrMem());
+		    }
 
 
-    /*
-    this test checks if a number has been entered or not.
-     
-    @Test
-    public void NotMemberTest(){
-    	expected = 0; 
-        assertEquals(expected, memberNum.checkMemNum(12345679));
-    }
+	//===================================================================
+	@Test
+	public void testScanningNotExist(){
 
-    /*
-    this test checks if the number is correct but the a memberNumber is already in use.
-     
-    @Test
-    public void CorrectLengthButWrongNumber(){
-    	memberNum.checkMemNum(12345678);
-    	expected = 1;
-    	assertEquals(expected, memberNum.checkMemNum(23456789));
-    }    
-    
-    /*
-    this test checks if the length of the number is equal to 8, which it is.
-    So, this test passes since the number is 8 digits long
-     
-    @Test
-    public void CorrectMembershipNumber(){
-    	expected = 12345678;
-        assertEquals(expected, memberNum.checkMemNum(12345678));
-       
-    }
-    */
-    
-   
-}
+		//Barcodes for membership cards
+		ArrayList<String> barcodes = new ArrayList<>();
+		for (Barcode memberBarcode : MembershipDatabase.MEMBER_BARCODES.keySet())
+		{
+			barcodes.add(memberBarcode.toString());
+		}
+		customerSimulator.comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[barcodes.size()]));
+		String selectedMemberID = null;
+		while (!customerSimulator.isMemberShipScanSuccess)
+		{
+			customerSimulator.comboBox_MemberCard_Barcodes.setSelectedIndex(0);
+			selectedMemberID = customerSimulator.comboBox_MemberCard_Barcodes.getItemAt(0);
+				//it should be 4444, whihc is not in mdatabase.
+			customerSimulator.button_ScanCard.doClick();
 
-class memListener implements MembershipListener 
-{
-
-	@Override
-	public void notifyMembershipCardRead(int memberId) {
-		// TODO Auto-generated method stub
-		
+			//if the scan failed for fault scanner, it will be scanned again
+		}
+		//current member will be set
+		//expected value for the current set customer, will be taken from barcode database
+		int key = Integer.parseInt(selectedMemberID);
+		String expectedValue = MembershipDatabase.MEMBER_DATABASE.get(key);
+		System.out.println("Expected value = " + expectedValue);
+		System.out.println("Actual value = " + customerUI.getCurrMem());
+		assertEquals(expectedValue, customerUI.getCurrMem());
 	}
-	
+
+	//===================================================================
+	@Test
+	public void testSwipeExists(){
+
+		//Membership cards
+		ArrayList<String> memCardsList = new ArrayList<>();
+		for (Card card : cards) {
+			if(card.kind.equals("Membership"))
+			{
+				memCardsList.add(card.cardholder + " , " + card.number);
+			}
+			//Loaded the list with the membership cards
+		}
+		//Display the cards in a GUI
+		customerSimulator.comboBox_MemberCardsInWallet = new JComboBox<String>(memCardsList.toArray(new String[memCardsList.size()]));
+
+		String selectedMemberCard = null;
+		while (!customerSimulator.isMemberShipSwipeSuccess)
+		{
+			customerSimulator.comboBox_MemberCardsInWallet.setSelectedIndex(0);
+			selectedMemberCard = customerSimulator.comboBox_MemberCardsInWallet.getItemAt(0);
+			//it should be 4444, whihc is not in mdatabase.
+			customerSimulator.button_SwipeCard.doClick();
+
+			//if the scan failed for fault scanner, it will be scanned again
+		}
+		//current member will be set
+		//John Member-Card , 99999999
+		//Split this to get card number
+		String[] selectedCardSplit = selectedMemberCard.split(" , ");
+		String selectedCardNumber  = selectedCardSplit[1];
+		int key = Integer.parseInt(selectedCardNumber);
+		String expectedValue = MembershipDatabase.MEMBER_DATABASE.get(key);
+		System.out.println("Expected value = " + expectedValue);
+		System.out.println("Actual value = " + customerUI.getCurrMem());
+		assertEquals(expectedValue, customerUI.getCurrMem());
+	}
+
+
+	//===================================================================
+	@Test
+	public void testSwipeNotExists(){
+
+		//Membership cards
+		ArrayList<String> memCardsList = new ArrayList<>();
+		for (Card card : cards) {
+			if(card.kind.equals("Membership"))
+			{
+				memCardsList.add(card.cardholder + " , " + card.number);
+			}
+			//Loaded the list with the membership cards
+		}
+		memCardsList.add(membership_card3.cardholder + " , " + membership_card3.number);
+		//Display the cards in a GUI
+		customerSimulator.comboBox_MemberCardsInWallet = new JComboBox<String>(memCardsList.toArray(new String[memCardsList.size()]));
+
+		String selectedMemberCard = null;
+		while (!customerSimulator.isMemberShipSwipeSuccess)
+		{
+			customerSimulator.comboBox_MemberCardsInWallet.setSelectedIndex(2);
+			selectedMemberCard = customerSimulator.comboBox_MemberCardsInWallet.getItemAt(2);
+			//it should be 4444, whihc is not in mdatabase.
+			customerSimulator.button_SwipeCard.doClick();
+
+			//if the scan failed for fault scanner, it will be scanned again
+		}
+		//current member will be set
+		//John Member-Card , 99999999
+		//Split this to get card number
+		String[] selectedCardSplit = selectedMemberCard.split(" , ");
+		String selectedCardNumber  = selectedCardSplit[1];
+		int key = Integer.parseInt(selectedCardNumber);
+		String expectedValue = MembershipDatabase.MEMBER_DATABASE.get(key);
+		System.out.println("Expected value = " + expectedValue);
+		System.out.println("Actual value = " + customerUI.getCurrMem());
+		assertEquals(expectedValue, customerUI.getCurrMem());
+	}
+
 }
+
