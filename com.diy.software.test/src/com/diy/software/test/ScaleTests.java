@@ -1,6 +1,8 @@
 package com.diy.software.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.After;
@@ -43,15 +45,13 @@ public class ScaleTests {
 	ScanningAreaListener sal;
 	ExpectedWeightListener ewl;
 	ScaleListener scaleListener;
-	int found;
+	ElectronicScaleListener ESLListener;
 	long price1 = 10L, price2 = 15L;
 	double lightWeight = 0.2, normalWeight = 4.0, heavyWeight = 10.0;
 	
 	@Before 
 	public void setup() {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.clear();
-		
-		found = 0;
 		
 	    bc1 = new Barcode(new Numeral[] {Numeral.one});
 	    bc2 = new Barcode(new Numeral[] {Numeral.one, Numeral.two});
@@ -69,6 +69,9 @@ public class ScaleTests {
 	    ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc2, normalProduct);
 	    ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc3, heavyProduct);
 	    
+	    scaleListener = new SL();
+	    ESLListener = new ESL();
+	   
 	    station = new DoItYourselfStation();
 	    DoItYourselfStation.configureScaleMaximumWeight(5);
 	    station.plugIn();
@@ -136,6 +139,7 @@ public class ScaleTests {
 		
 		station.baggingArea.add(heavyItem);
 		
+		assertEquals(heavyWeight, sal.getWeight(), 0.01);
 		assertEquals(2, found);
 	}
 	
@@ -144,46 +148,8 @@ public class ScaleTests {
 	 */
 	@Test
 	public void testOverload() {
+		station.baggingArea.register(ESLListener);
 		station.baggingArea.enable();
-		
-		station.baggingArea.register(new ElectronicScaleListener( ) {
-
-			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-
-			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-			
-			@Override
-			public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();	
-			}
-
-			@Override
-			public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();	
-			}
-
-			@Override
-			public void weightChanged(ElectronicScale scale, double weightInGrams) {
-				found++;
-			}
-
-			@Override
-			public void overload(ElectronicScale scale) {
-				found++;	
-			}
-
-			@Override
-			public void outOfOverload(ElectronicScale scale) {
-				fail();
-				
-			}
-		});
 		station.baggingArea.add(heavyItem);
 		assertEquals(2, found);
 	}
@@ -193,48 +159,12 @@ public class ScaleTests {
 	 */
 	@Test
 	public void testOutOfOverload() {
+		station.baggingArea.register(ESLListener);
 		station.baggingArea.enable();
 		station.baggingArea.add(heavyItem);
-		station.baggingArea.register(new ElectronicScaleListener() {
-
-			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-
-			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-
-			@Override
-			public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-
-			@Override
-			public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
-				fail();
-			}
-
-			@Override
-			public void weightChanged(ElectronicScale scale, double weightInGrams) {
-				fail();
-			}
-
-			@Override
-			public void overload(ElectronicScale scale) {
-				fail();
-			}
-
-			@Override
-			public void outOfOverload(ElectronicScale scale) {
-				found++;
-			}
-		});
 		station.baggingArea.remove(heavyItem);
 		
-		assertEquals(1, found);
+		assertEquals(3, found);
 	}
 	
 	/*
@@ -351,4 +281,87 @@ public class ScaleTests {
 		controller.removeLastItemWeight();
 		
 	}
+	
+	@Test
+	public void testRegisterListener() {
+		assertTrue(controller.register(scaleListener));
+		assertFalse(controller.register(scaleListener));
+		
+	}
+	
+	@Test
+	public void testDeregisterListener() {
+		controller.register(scaleListener);
+		assertTrue(controller.deregister(scaleListener));
+		SL listener2 = new SL();
+		assertFalse(controller.deregister(listener2));
+	}
+	
+	int found = 0;
+	boolean weightChanged = false;
+	boolean enabled = false;
+	boolean isOn = false;
+	
+	public class SL implements ScaleListener {
+
+		@Override
+		public void notifyWeightDiscrepancyDetected() {
+			found++;
+			
+		}
+
+		@Override
+		public void notifyWeightDiscrepancyResolved() {
+			found++;
+			
+		}
+		
+	}
+	
+	public class ESL implements ElectronicScaleListener {
+
+		@Override
+		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+			enabled = true;
+			
+		}
+
+		@Override
+		public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+			enabled = false;
+			
+		}
+
+		@Override
+		public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
+			isOn = true;
+			
+		}
+
+		@Override
+		public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
+			isOn = false;
+			
+		}
+
+		@Override
+		public void weightChanged(ElectronicScale scale, double weightInGrams) {
+			found++;
+			
+		}
+
+		@Override
+		public void overload(ElectronicScale scale) {
+			found++;
+			
+		}
+
+		@Override
+		public void outOfOverload(ElectronicScale scale) {
+			found++;
+			
+		}
+		
+	}
+
 }

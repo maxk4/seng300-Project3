@@ -2,14 +2,15 @@ package com.diy.software.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,13 +30,12 @@ import com.jimmyselectronics.opeechee.Card;
 import ca.powerutility.PowerGrid;
 import cart.CartController;
 import cart.CartListener;
-import cart.ProductList;
 import cart.ScanItemListener;
 import main.CustomerStationWrapper;
 import ui.AttendantUI;
 import ui.CustomerUI;
-import ui.CustomerUIListener;
 import util.MembershipDatabase;
+import util.ProductInfo;
 
 public class AddItemTests {
 	
@@ -51,17 +51,18 @@ public class AddItemTests {
 	BarcodedItem item1, item2, item3, itemNullProduct;
 	BarcodedProduct prod1, prod2, nullProduct;
 	PLUCodedProduct productPLU;
+	CartListener listener;
 	
 	public List<Card> cards = new ArrayList<Card>();
 	long price1 = 10L, price2 = 15L, priceNullProduct= 5L;
 	double weight1 = 1.3, weight2 = 5.2, weight3 = 3.2, weightNullProduct = 3.0;
-	int found;
+	
+	private final ByteArrayOutputStream content = new ByteArrayOutputStream();
+	private final PrintStream original = System.out;
 	
 	@Before
 	public void setup() {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.clear();
-		
-		found = 0;
 		   
 	    bc1 = new Barcode(new Numeral[] {Numeral.one});
 	    bc2 = new Barcode(new Numeral[] {Numeral.one, Numeral.two});
@@ -76,12 +77,11 @@ public class AddItemTests {
 	    prod1 = new BarcodedProduct(bc1, "Product 1", price1, weight1);
 	    prod2 = new BarcodedProduct(bc2, "Product 2", price2, weight2);
 	    productPLU = new PLUCodedProduct(new PriceLookUpCode("1111"), "PLU Product", price1);
-	  //  nullProduct = new BarcodedProduct(barcodeNullProduct, "Null Product", priceNullProduct, weightNullProduct);
-	    
 	    
 	    ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc1, prod1);
 	    ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc2, prod2);
-	    //ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcodeNullProduct, );
+	    
+	    listener = new CL();
 	    
 	    station = new DoItYourselfStation();
 	    station.plugIn();
@@ -105,13 +105,17 @@ public class AddItemTests {
 	    cswrapper = new CustomerStationWrapper(station, attendantUI);
 	}
 	
+	@After
+	public void teardown() {
+		System.setOut(original);
+	}
+	
 	/*
 	 * Test when the scanner is disabled and tries to scan a barcode.
 	 */
 	@Test
 	public void testScanItemScannerDisabled() {
 		station.mainScanner.disable();
-		
 		
 		customer.shoppingCart.add(item1);
 		customer.selectNextItem();
@@ -199,21 +203,29 @@ public class AddItemTests {
         
         assertEquals(0, cartController.productList.size());
    	}
+   	
+   	@Test
+   	public void testBarcodeScannedGetString() {
+   		station.mainScanner.enable();
+   		
+   		sil.barcodeScanned(station.mainScanner, bc1);
+   		
+   		String expected = bc1.toString();
+   		
+   		assertEquals(expected, sil.getBarcodeScanned_String());
+   	}
+   	
+   	@Test (expected = NullPointerException.class)
+   	public void testNullBarcodeScanned() {
+   		station.mainScanner.enable();
+   		
+   		sil.barcodeScanned(station.mainScanner, null);
+   	}
    
    	@Test
    	public void testAddItemThenRemove() {
+   		cartController.register(listener);
    		station.mainScanner.enable();
-   		
-   		cartController.register(new CartListener() {
-			@Override
-			public void notifyItemAdded(Product product, long price, double weightInGrams) {
-				found++;
-			}
-			@Override
-			public void notifyItemRemoved(Product product, long price, double weightInGrams) {
-				found++;
-			}
-   		});
    		
    		customer.shoppingCart.add(item2);
    		customer.selectNextItem();
@@ -227,6 +239,23 @@ public class AddItemTests {
    		
    		assertFalse(cartController.productList.containsProduct(prod2));
    		assertEquals(2, found);
+   	}
+   	
+   	@Test
+   	public void testRemove() {
+   		cartController.productList.add(prod1, prod1.getDescription(), price1, weight1);
+   		assertTrue(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		
+   		assertFalse(cartController.productList.remove(prod2, prod2.getDescription(), price2, weight2));
+   		
+   		cartController.productList.add(prod1, "Not matched", price1, weight1);
+   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		
+   		cartController.productList.add(prod1, prod1.getDescription(), 1, weight1);
+   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		
+   		cartController.productList.add(prod1, prod1.getDescription(), price1, 2);
+   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
    		
    		
    	}
@@ -239,15 +268,94 @@ public class AddItemTests {
    		customer.selectNextItem();
    		customer.scanItem(false);
    		customer.placeItemInBaggingArea();
-   		
-   		assertTrue(cartController.productList.containsProduct(prod1));
-   		
+   
    		cartController.clear();
    		
    		assertFalse(cartController.productList.containsProduct(prod1));
    		
    	}
+	
+	@Test
+	public void testGetReceipt() {
+		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+		
+		long total = 0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("Transaction Complete\n");
+		sb.append("--------------------\n");
+		sb.append(String.format("%s\t\t$%.2f\n", prod1.getDescription(), prod1.getPrice() / 100d));
+		total += prod1.getPrice();
+		sb.append("--------------------\n");
+		sb.append(String.format("\t\tTotal:\t$%.2f", total / 100d));
+		String receipt = sb.toString();
+		
+		assertEquals(receipt, cartController.getReceipt());
+	}
+	
+	@Test
+	public void testGetPriceString() {
+		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+		
+		StringBuilder priceSB = new StringBuilder();
+		priceSB.append(String.format("$%.2f", prod1.getPrice() / 100d));
+		priceSB.append("\n");
+		String priceString = priceSB.toString();
+		
+		assertEquals(priceString, cartController.getPriceString());
+	}
+	
+	@Test 
+	public void getProductString() {
+		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+		
+		StringBuilder productSB = new StringBuilder();
+		
+		productSB.append(prod1.getDescription());
+		productSB.append("\n");
+		String productString = productSB.toString();
+		assertEquals(productString, cartController.getProductString());
+	}
+	
+	@Test
+	public void testGetProductInfo() {
+		
+		cartController.productList.add(prod1, prod1.getDescription(), price1, weight1);
+		ProductInfo[] information = new ProductInfo[cartController.productList.size()];
+		
+		information[0] = cartController.productList.get(0);
+		assertEquals(information[0], cartController.getProductInfo());
+		
+	}
    	
+	@Test
+	public void testRegisterListener() {
+		assertTrue(cartController.register(listener));
+		assertFalse(cartController.register(listener));
+	}
+	
+	@Test
+	public void testDeregisterListener() {
+		cartController.register(listener);
+		assertTrue(cartController.deregister(listener));
+		CartListener listener2 = new CL();
+		assertFalse(cartController.deregister(listener2));
+	}
+	
+	@Test
+	public void testMemberBarcodeExistsInDatabase() {
+		Card membershipCard1 = new Card("Membership","99999999", "John Doe", "000", "000", false, false);
+		cards.add(membershipCard1);
+		MembershipDatabase.MEMBER_DATABASE.put(99999999,"John Doe");
+		Barcode memberBarcode = new Barcode(new Numeral[]{Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine, Numeral.nine});
+		MembershipDatabase.MEMBER_BARCODES.put(memberBarcode, 99999999);
+		
+		sil.barcodeScanned(station.mainScanner, memberBarcode);
+		
+		String expected = "(ScanItemListener) barcode exists in membership database";
+		
+		assertEquals(expected, content.toString());
+	}
+	
    	@Test (expected = NullPointerException.class)
    	public void testAddingNullProduct() {
    		cartController.addItem(null, "Null Product", price1, weight1);
@@ -257,5 +365,23 @@ public class AddItemTests {
    	@Test (expected = NullPointerException.class)
    	public void testAddingProductWithNullDesciption() {
    		cartController.addItem(prod1, null, 0, 0);
+   	}
+   	
+   	
+   	int found = 0;
+   	public class CL implements CartListener {
+
+		@Override
+		public void notifyItemAdded(Product product, long price, double weightInGrams) {
+			found++;
+			
+		}
+
+		@Override
+		public void notifyItemRemoved(Product product, long price, double weightInGrams) {
+			found++;
+			
+		}
+   		
    	}
 }

@@ -76,7 +76,7 @@ public class CartController {
 	public String getProductString() {
 		StringBuilder productSB = new StringBuilder();
 		productList.forEach((prod, desc, price) -> {
-			productSB.append(desc);
+			productSB.append(String.format("%s", desc));
 			productSB.append("\n");
 		});
 		return productSB.toString();
