@@ -228,6 +228,13 @@ public class CustomerStationWrapper {
 						if (approved) scale.approveWeight();
 						
 					}
+
+					@Override
+					public void requestNoBag() {
+						if (attendant.requestNoBag(station)) {
+							scale.approveWeight();
+						}
+					}
 					
 				};
 				customer.register(customerUIListener);

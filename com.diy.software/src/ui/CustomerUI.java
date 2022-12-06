@@ -209,4 +209,8 @@ public class CustomerUI {
 	public void itemPlaced() {
 		for (CustomerUIListener listener : listeners) listener.itemPlaced();
 	}
+
+	public void requestNoBag() {
+		for (CustomerUIListener listener : listeners) listener.requestNoBag();
+	}
 }
