@@ -189,6 +189,11 @@ public class AttendantUI {
 	
 		return choice == 0;
 	}
+	
+	public void requiresBanknotes(int banknote) {
+		JOptionPane.showConfirmDialog(gui, "Requires more " + banknote + " banknotes");
+		JOptionPane.showMessageDialog(mainFrame, gui); / 100d
+	}
 
 	public void disableStation(DoItYourselfStation station){
 		for (AttendantUIListener listener : listeners) listener.disableStation(station);

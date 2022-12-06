@@ -24,7 +24,7 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	private int minimumBanknoteCount = 5;
 	private int minimumCoinCount = 10;
 	
-	private List<CashIssueListener> listeners;
+	private List<CashIssueListener> listeners = new ArrayList<CashIssueListener>();
 	
 	public CashPaymentManager (PaymentController controller, DoItYourselfStation station) {
 		super(controller);
@@ -214,5 +214,10 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 		long max = Math.min(amount, funds);
 		funds -= max;
 		return max;
+	}
+	
+	public void register(CashIssueListener listener) {
+		if (!listeners.contains(listener))
+			listeners.add(listener);
 	}
 }

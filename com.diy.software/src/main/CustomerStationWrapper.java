@@ -136,6 +136,22 @@ public class CustomerStationWrapper {
 						updateCashGUI();
 						updateProductList();
 					}
+
+					@Override
+					public void notifyNotEnoughCash() {
+						attendant.notifyOutOfChange(diyStation);
+					}
+
+					@Override
+					public void notifyRequiresAdditionalBanknote(int req) {
+						
+					}
+
+					@Override
+					public void notifyRequiresAdditionalCoins(int req) {
+						// TODO Auto-generated method stub
+						
+					}
 				};
 				payment.register(paymentListener);
 				
