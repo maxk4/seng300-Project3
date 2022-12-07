@@ -40,6 +40,7 @@ public class CustomerStationWrapper {
 	public ScaleListener scaleListener;
 	public CustomerUIListener customerUIListener;
 	public MembershipListener membershipListener;
+
 	
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
@@ -49,12 +50,6 @@ public class CustomerStationWrapper {
 					scale.approveWeight();
 				}
 			}
-
-			@Override
-			public void approveOwnBag(DoItYourselfStation station) {}
-
-			@Override
-			public void denyOwnBag(DoItYourselfStation station) {}
 
 			// Do Not Place Item in Bagging Area Use Case
 			@Override
@@ -249,8 +244,8 @@ public class CustomerStationWrapper {
 				
 				membershipListener = new MembershipListener() {
 					@Override
-					public void notifyMembershipCardRead(int memberId) {
-						customer.useMemberName(memberId);
+					public String notifyMembershipCardRead(int memberId) {
+						return customer.useMemberName(memberId);
 					}
 					
 				};
@@ -262,7 +257,7 @@ public class CustomerStationWrapper {
 			@Override
 			public void shutdownStation(DoItYourselfStation station) {
 				if(station != diyStation) return;
-				// TO DO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
+				// TODO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
 				payment.deregister(paymentListener);
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);

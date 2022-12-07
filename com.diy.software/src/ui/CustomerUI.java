@@ -182,8 +182,9 @@ public class CustomerUI {
 	 * Updates the Member/Customer Name on the GUI
 	 * @param customerName Name from the membership database, (if the given member exists)
 	 *                      otherwise it says "Invalid Membership Number"
+	 * @return 
 	 */
-	public void useMemberName(String customerName) {
+	public String useMemberName(String customerName) {
 		//update the current member name
 		System.out.println("(CustomerUI) Membership number entered: " + customerName);
 		if(Objects.equals(customerName, "Invalid Membership Number"))
@@ -196,10 +197,11 @@ public class CustomerUI {
 		}
 		((ScanScreenGUI) views[SCAN]).updateMember(customerName);
 		setView(SCAN);
+		return currentMember;
 	}
 	
-	public void useMemberName(int memberId) {
-		useMemberName(MembershipDatabase.MEMBER_DATABASE.get(memberId));
+	public String useMemberName(int memberId) {
+		return useMemberName(MembershipDatabase.MEMBER_DATABASE.get(memberId));
 	}
 	//Updated in Iteration @Simrat (Ends)
 	
