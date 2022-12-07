@@ -7,9 +7,12 @@ import com.diy.hardware.Product;
 
 import cart.CartController;
 import cart.CartListener;
+import membership.MembershipController;
+import membership.MembershipListener;
 import payment.PaymentController;
 import payment.PaymentListener;
 import printing.PrinterController;
+import printing.PrinterListener;
 import scale.ScaleController;
 import scale.ScaleListener;
 import ui.AttendantUI;
@@ -26,6 +29,7 @@ public class CustomerStationWrapper {
 	private PrinterController print;
 	private ScaleController scale;
 	private CustomerUI customer;
+	private MembershipController membership;
 	private boolean inProgress = true;
 	
 	
@@ -36,6 +40,7 @@ public class CustomerStationWrapper {
 	private CartListener cartListener;
 	private ScaleListener scaleListener;
 	private CustomerUIListener customerUIListener;
+	private MembershipListener membershipListener;
 	
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
@@ -118,6 +123,7 @@ public class CustomerStationWrapper {
 				print = new PrinterController(diyStation);
 				scale = new ScaleController(diyStation);
 				customer = new CustomerUI(diyStation, "Customer Station");
+				membership = new MembershipController(diyStation);
 				
 				paymentListener = new PaymentListener() {
 					@Override
@@ -130,6 +136,22 @@ public class CustomerStationWrapper {
 					public void cashInserted() {
 						updateCashGUI();
 						updateProductList();
+					}
+
+					@Override
+					public void notifyNotEnoughCash() {
+						attendant.notifyOutOfChange(diyStation);
+					}
+
+					@Override
+					public void notifyRequiresAdditionalBanknote(int req) {
+						
+					}
+					
+					@Override
+					public void notifyRequiresAdditionalCoins(long neededCoinDenomination) {
+						// TODO Auto-generated method stub
+						
 					}
 				};
 				payment.register(paymentListener);
@@ -181,6 +203,7 @@ public class CustomerStationWrapper {
 						customer.setView(CustomerUI.END);
 						inProgress = false;
 						scale.setExpectedWeight(0);
+						payment.completeTransaction();
 						System.out.println("Finish");
 						String receipt = cart.getReceipt();
 						print.print(receipt);
@@ -220,6 +243,13 @@ public class CustomerStationWrapper {
 						if (approved) scale.approveWeight();
 						
 					}
+
+					@Override
+					public void requestNoBag() {
+						if (attendant.requestNoBag(station)) {
+							scale.approveWeight();
+						}
+					}
 					
 				};
 				customer.register(customerUIListener);
@@ -246,18 +276,56 @@ public class CustomerStationWrapper {
 				};
 				scale.register(scaleListener);
 				
+				membershipListener = new MembershipListener() {
+					@Override
+					public void notifyMembershipCardRead(int memberId) {
+						customer.useMemberName(memberId);
+					}
+					
+				};
+				membership.register(membershipListener);
+				print.register(new PrinterListener() {
+
+					@Override
+					public void notifyLowInk(DoItYourselfStation station) {
+						attendant.notifyLowInkDetected(diyStation);
+					}
+
+					@Override
+					public void notifyLowPaper(DoItYourselfStation station) {
+						attendant.notifyLowPaperDetected(diyStation);
+					}
+
+					@Override
+					public void notifyInkRefilled(DoItYourselfStation station) {
+						attendant.notifyLowInkResolved(diyStation);
+					}
+
+					@Override
+					public void notifyPaperRefilled(DoItYourselfStation station) {
+						attendant.notifyLowPaperResolved(diyStation);
+					}
+
+					@Override
+					public void empty(DoItYourselfStation station) {
+						attendant.notifyPrintFailure(diyStation);
+					}
+					
+				});
+				
 				customer.disable();
 			}
 
 			@Override
 			public void shutdownStation(DoItYourselfStation station) {
 				if(station != diyStation) return;
-				// TO DO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
 				payment.deregister(paymentListener);
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);
 				customer.deregister(customerUIListener);
-				diyStation.screen.getFrame().dispose();
+				//diyStation.screen.getFrame().dispose();
+				System.out.println("Shutdown");
+				diyStation.screen.setVisible(false);
 				station.turnOff();
 			}
 		});

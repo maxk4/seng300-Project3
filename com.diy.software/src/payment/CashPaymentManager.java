@@ -1,7 +1,7 @@
 package payment;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
@@ -21,8 +21,10 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	private DoItYourselfStation station;
 	private boolean needMaintenance;
 	private int validBanknoteCount, validCoinCount;
+	private int minimumBanknoteCount = 5;
+	private int minimumCoinCount = 10;
 	
-	private List<CashIssueListener> listeners;
+	private List<CashIssueListener> listeners = new ArrayList<CashIssueListener>();
 	
 	public CashPaymentManager (PaymentController controller, DoItYourselfStation station) {
 		super(controller);
@@ -42,9 +44,9 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	}
 	
 	@Override
-	public void validCoinDetected(CoinValidator validator, long value) {
+	public void validCoinDetected(CoinValidator validator, BigDecimal value) {
 		validCoinCount++;
-		funds += value;
+		funds += value.longValue();
 		controller.notifyCashPayment();
 	}
 	
@@ -60,14 +62,17 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	 * issue banknote as the change
 	 * return changeIssued
 	 */
-	private long emitBanknotes(long banknoteToDispense, long changeIssued) throws OutOfCashException, DisabledException {
+	private long emitBanknotes(long banknoteToDispense) throws OutOfCashException, DisabledException {
+		
+		ArrayList<Integer> requiredBanknoteDenominations = new ArrayList<Integer>();
 
 		if (banknoteToDispense == 0)
-			return changeIssued;
+			return 0;
 
 		// get banknote denomination available 
 		int[] banknoteDenominations = station.banknoteDenominations;
 		banknoteDenominations = sort(banknoteDenominations);
+		long notesIssued = 0;
 		
 		int index = 0; // index of denomination
 		while (banknoteToDispense != 0) {
@@ -82,8 +87,14 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 				if (station.banknoteDispensers.get(banknoteDenominations[index]).size() > 0) {
 					station.banknoteDispensers.get(banknoteDenominations[index]).emit();
 					banknoteToDispense -= banknoteDenominations[index];
-					changeIssued += banknoteDenominations[index];
+					notesIssued += banknoteDenominations[index];
+					if (station.banknoteDispensers.get(banknoteDenominations[index]).size() < minimumBanknoteCount) {
+						if (requiredBanknoteDenominations.isEmpty() || requiredBanknoteDenominations.get(requiredBanknoteDenominations.size() - 1) != index) {
+							requiredBanknoteDenominations.add(index);
+						}
+					}
 				} else {
+					System.out.println("Out of " + banknoteDenominations[index]);
 					index++; // not enough banknotes for this denomination.
 				}
 			} else {
@@ -91,25 +102,32 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 			}
 			} catch(TooMuchCashException e) {}
 		}
-		return changeIssued;		
+		if (!requiredBanknoteDenominations.isEmpty()) {
+			for (int i : requiredBanknoteDenominations) {
+				for (CashIssueListener listener : listeners) listener.notifyRequireAdditionalBanknotes(banknoteDenominations[i]);
+			}
+		}
+		return notesIssued;		
 	}
 	
 	/*
 	 * issue banknote as the change
 	 * return changeIssued 
 	 */
-	private long emitCoins(long coinToDispense, long changeIssued) throws OutOfCashException, DisabledException {
+	private long emitCoins(long coinToDispense) throws OutOfCashException, DisabledException {
+		
+		ArrayList<Integer> requiredCoinDenominations = new ArrayList<Integer>();
 
 		if (coinToDispense == 0)
-			return changeIssued;
+			return 0;
 		
 		// get coin denomination available 
-		List<Long> coinDenominations = station.coinDenominations;
+		List<BigDecimal> coinDenominations = station.coinDenominations;
 		Collections.reverse(coinDenominations);
 		
 		// turn coin value into cents
 		long changeInCents = coinToDispense;
-		long centsIssued = changeIssued;
+		long centsIssued = 0;
 		
 		int index = 0; // index of denomination
 		while (changeInCents != 0) {
@@ -120,20 +138,32 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 					break;
 				}
 				
-				long coinValue = coinDenominations.get(index);
+				long coinValue = coinDenominations.get(index).longValue();
 				if (coinValue <= changeInCents) {
+					System.out.println("Remaining: " + changeInCents + " Trying: " + coinValue);
 					if (station.coinDispensers.get(coinDenominations.get(index)).size() > 0) {
 						station.coinDispensers.get(coinDenominations.get(index)).emit();
-						
+						System.out.println("Emited: " + coinValue);
 						changeInCents -= coinValue;
 						centsIssued += coinValue;
+						if (station.coinDispensers.get(coinDenominations.get(index)).size() < minimumCoinCount) {
+							if (requiredCoinDenominations.isEmpty() || requiredCoinDenominations.get(requiredCoinDenominations.size() - 1) != index) {
+								requiredCoinDenominations.add(index);
+							}
+						}
 					} else {
+						System.out.println("Out of " + coinValue);
 						index++; // not enough coins for this denomination.
 					}
 				} else {
 					index++; // the current denomination is too large
 				}
 			} catch (TooMuchCashException e) {}
+		}
+		if (!requiredCoinDenominations.isEmpty()) {
+			for (int i : requiredCoinDenominations) {
+				for (CashIssueListener listener : listeners) listener.notifyRequireAdditionalCoins(coinDenominations.get(i).longValue());
+			}
 		}
 		return centsIssued;
 	}
@@ -157,9 +187,9 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	public long returnFunds(long amount) {
 		
 		// Round balance
-		station.coinDenominations.sort((a, b) -> (int) (a - b));
+		station.coinDenominations.sort((a, b) -> a.compareTo(b));
 		long changeToDispense;
-		long smallest = station.coinDenominations.get(0);
+		long smallest = station.coinDenominations.get(0).longValue();
 		long rDown = amount - (amount % smallest);
 		long rUp = amount - (amount % smallest) + smallest;
 		long diffUp = amount - rUp;
@@ -170,16 +200,19 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 		
 		long changeIssued = 0;
 		try {
-					
 			long banknoteToDispense = changeToDispense;
-			changeIssued = emitBanknotes(banknoteToDispense, changeIssued);
+			changeIssued = emitBanknotes(banknoteToDispense);
 			long coinToDispense = changeToDispense - changeIssued;
-			changeIssued = emitCoins(coinToDispense, changeIssued);
+			changeIssued += emitCoins(coinToDispense);
 		} catch(DisabledException e) {
 			e.printStackTrace();
 		} catch (OutOfCashException e) {
 			for (CashIssueListener listener : listeners) listener.notifyNotEnoughCash();
+			System.out.println("Out of Cash");
 		}
+		funds -= changeIssued;
+		System.out.println("After Return: " + funds);
+		if (funds < station.coinDenominations.get(station.coinDenominations.size() - 1).longValue()) funds = 0;
 		return changeIssued;
 	}
 
@@ -187,6 +220,12 @@ public class CashPaymentManager extends PaymentManager implements BanknoteValida
 	public long pay(long amount) {
 		long max = Math.min(amount, funds);
 		funds -= max;
+		System.out.println("Cash Paid:" + funds);
 		return max;
+	}
+	
+	public void register(CashIssueListener listener) {
+		if (!listeners.contains(listener))
+			listeners.add(listener);
 	}
 }

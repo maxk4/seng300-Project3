@@ -81,7 +81,6 @@ public class CustomerUI {
 				new PlaceBagGUI(this),
 				new StationDisabledGUI(this)
 		};
-		mainFrame.setAlwaysOnTop(true);
 		setView(START);
 		station.screen.setVisible(true);
 	}
@@ -195,6 +194,11 @@ public class CustomerUI {
 			currentMember = customerName;
 		}
 		((ScanScreenGUI) views[SCAN]).updateMember(customerName);
+		setView(SCAN);
+	}
+	
+	public void useMemberName(int memberId) {
+		useMemberName(MembershipDatabase.MEMBER_DATABASE.get(memberId));
 	}
 	//Updated in Iteration @Simrat (Ends)
 	
@@ -204,5 +208,9 @@ public class CustomerUI {
 
 	public void itemPlaced() {
 		for (CustomerUIListener listener : listeners) listener.itemPlaced();
+	}
+
+	public void requestNoBag() {
+		for (CustomerUIListener listener : listeners) listener.requestNoBag();
 	}
 }

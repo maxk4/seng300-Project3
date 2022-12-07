@@ -35,10 +35,21 @@ public class PrinterController implements ReceiptPrinterListener {
 		this.listeners = new ArrayList<PrinterListener>();
 
 		//Added In Iteration 3 @Simrat (Starts)
-		listeners.add(new PrintListener());
 		//Added In Iteration 3 @Simrat (Ends)
 
 		station.printer.register(this);
+	}
+	
+	public boolean register(PrinterListener listener) {
+		if (listeners.contains(listener)) return false;
+		listeners.add(listener);
+		return true;
+	}
+	
+	public boolean deregister(PrinterListener listener) {
+		if (!listeners.contains(listener)) return false;
+		listeners.remove(listener);
+		return true;
 	}
 
 	@Override
@@ -137,6 +148,7 @@ public class PrinterController implements ReceiptPrinterListener {
 			} catch (EmptyException e) {
 				// Notify attendant and stop printing, otherwise it will try to print every character and will show dialog box
 				//Added in Iteration 3 @Simrat (Starts)
+				for (PrinterListener listener : listeners) listener.empty(station);
 				break;
 				//Added in Iteration 3 @Simrat (ends)
 			} catch (OverloadException e) {

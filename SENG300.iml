@@ -4,29 +4,12 @@
     <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/com.diy.hardware_0.4/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/com.diy.software/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/com.diy.software.test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/com.diy.hardware_0.4.1/src" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.hamcrest.core_1.3.0.v20180420-1519.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Desktop/Files/School/4th Year/Fall 2022/SENG 300/org.junit_4.13.2.v20211018-1956.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="junit" level="project" />
   </component>
 </module>

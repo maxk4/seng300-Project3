@@ -11,4 +11,5 @@ public interface CustomerUIListener {
 	public abstract void itemPlaced();
 	public abstract void requestUsePersonalBag();
 	public abstract void addPLUProduct(PLUCodedProduct product);
+	public abstract void requestNoBag();
 }
