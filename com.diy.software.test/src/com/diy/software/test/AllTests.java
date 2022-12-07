@@ -11,7 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
 		  AttendantDatabaseTest.class,
 		  AttendantUITest.class,
 		  AttendantViewTest.class,
-		  //BaggingOptionsTests.class,
 		  CustomerUITests.class,
 		  LowInkPaperTest.class,
 		  MembershipTestUnit.class,
@@ -21,6 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		  PaymentControllerTest.class, 
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
+		  ProductListTests.class,
 		  ScaleTests.class })
 public class AllTests {
 	
