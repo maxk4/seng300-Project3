@@ -55,12 +55,10 @@ public class LowInkPaperTest {
 				System.out.println("Abort Printing");
 			}
 		};
-		
-		// Turn the printer on
-		printController.enabled(station.printer);
-		printController.turnedOn(station.printer);
-		// Register the print listener
 		station.printer.register(printController);
+		// Turn the printer on
+		station.printer.enable();
+		station.printer.turnOn();
 		
 	}
 	
@@ -69,9 +67,10 @@ public class LowInkPaperTest {
 		try {
 			// End the customer session and turn the station off
 			customer.endSession();
+			station.printer.disable();
+			station.printer.turnOff();
 			station.turnOff();
-			printController.disabled(station.printer);
-			printController.turnedOff(station.printer);
+
 		} catch(Exception e) {
 			
 		}
@@ -89,41 +88,6 @@ public class LowInkPaperTest {
 		station.printer.addPaper(MAXIMUM_PAPER);
 	}
 
-
-	/**
-	 * Test that when printing with low ink, the listener notices
-	 * @throws EmptyException
-	 * @throws OverloadException
-	 */
-	@Test
-	public void testLowInk() throws EmptyException, OverloadException {
-		//Adding Paper and Ink to the printer hardware
-		station.printer.addPaper(MAXIMUM_PAPER);
-		station.printer.addInk(1);
-
-		//Trying to print
-		printController.print("A");
-		//Returns true if low ink
-		assertTrue(printController.getLowInk());
-
-	}
-	
-	/**
-	 * Test that when printing with low paper, the listener notices
-	 * 
-	 * @throws EmptyException
-	 * @throws OverloadException
-	 */
-	@Test
-	public void testLowPaper() throws EmptyException, OverloadException {
-		//Adding Paper and Ink to the printer hardware
-		station.printer.addInk(MAXIMUM_INK);
-		station.printer.addPaper(1);
-		//printing one line on paper
-		printController.print("A\nA");
-		//Returns true if low paper
-		assertTrue(printController.getLowPaper());
-	}
 	
 	/**
 	 * Test that an empty exception is thrown when printer prints with no ink
@@ -192,5 +156,24 @@ public class LowInkPaperTest {
 		printController.print("A");
 		//Returns true if no ink	
 		assertTrue(printController.getNoInk());
+	}
+	/**
+	 * Test overload of printer
+	 * @throws OverloadException
+	 */
+	@Test
+	public void testOverload() throws NoPowerException, OverloadException {
+		//adding more lines in paper, will thorw overload exception
+		station.printer.addPaper(MAXIMUM_PAPER*2);
+		station.printer.addInk(ReceiptPrinterND.CHARACTERS_PER_LINE + 5);
+		try
+		{
+			printController.print(String.valueOf("A" .repeat(ReceiptPrinterND.CHARACTERS_PER_LINE + 1)));
+			//Returns true if overloaded
+		}catch (Exception e){
+			assertTrue(e instanceof OverloadException);
+		}
+
+
 	}
 }
