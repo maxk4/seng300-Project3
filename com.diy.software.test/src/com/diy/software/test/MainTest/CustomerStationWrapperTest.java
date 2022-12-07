@@ -16,6 +16,7 @@ import com.diy.hardware.AttendantStation;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
+import com.diy.hardware.PriceLookUpCode;
 import com.diy.simulation.Customer;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.Numeral;
@@ -59,23 +60,51 @@ public class CustomerStationWrapperTest{
 		attendantUI.startupStation(station);
 		Simulation.main(new String[] {"1"});
 		assertFalse(customerWrapper == null);
-		ArrayList listeners = (ArrayList) attendantUI.returnListeners();
-		AttendantUIListener listener = (AttendantUIListener) listeners.get(0);
-		listener.requestProductInfo(station);
+		ArrayList aListeners = (ArrayList) attendantUI.returnListeners();
+		AttendantUIListener aListener = (AttendantUIListener) aListeners.get(0);
+		aListener.requestProductInfo(station);
 		
-		listener.approveOwnBag(station);
-		listener.denyOwnBag(station);
-		listener.disableStation(station);
-		listener.enableStation(station);
-		listener.shutdownStation(station);
-		listener.approveWeight(station);
-		listener.approveNoBag(station);
-		listener.approveOwnBag(station);
+		aListener.approveOwnBag(station);
+		aListener.denyOwnBag(station);
+		aListener.disableStation(station);
+		aListener.enableStation(station);
+		aListener.shutdownStation(station);
+		aListener.approveWeight(station);
+		aListener.approveNoBag(station);
+		aListener.approveOwnBag(station);
 		
 		Barcode barcode = new Barcode(new Numeral[] {Numeral.one});
 		BarcodedProduct product = new BarcodedProduct(barcode, "apple", 1, 2.3);
-		listener.addItem(station, product, "apple");
-		listener.removeItem(station, product, "apple", 1, 2.3);
+		aListener.addItem(station, product, "apple");
+		aListener.removeItem(station, product, "apple", 1, 2.3);
 		
+		//Test membership
+		customerWrapper.membershipListener.notifyMembershipCardRead(1111);
+		
+		//Test payment
+		customerWrapper.paymentListener.cashInserted();
+		customerWrapper.paymentListener.cardPaymentSucceeded();
+		
+		
+		//test cart
+		customerWrapper.cartListener.notifyItemAdded(product, 1, 2.3);
+		customerWrapper.cartListener.notifyItemRemoved(product, 1, 2.3);
+		
+		//test weight
+		//customerWrapper.scaleListener.notifyWeightDiscrepancyDetected();
+		//customerWrapper.scaleListener.notifyWeightDiscrepancyResolved();
+		
+		//test customer
+		PriceLookUpCode appleCode = new PriceLookUpCode("3283");
+		PLUCodedProduct apple = new PLUCodedProduct(appleCode, "Apple", 4 * 100);
+		customerWrapper.customerUIListener.beginSession();
+		customerWrapper.customerUIListener.addPLUProduct(apple);
+		
+		customerWrapper.customerUIListener.selectItem(apple, "apple");
+		customerWrapper.customerUIListener.itemPlaced();
+		customerWrapper.customerUIListener.purchaseBags(3);
+		//customerWrapper.customerUIListener.requestUsePersonalBag();
+		
+		//customerWrapper.customerUIListener.endSession();
 	}
 }

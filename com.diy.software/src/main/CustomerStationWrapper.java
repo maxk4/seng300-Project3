@@ -35,11 +35,11 @@ public class CustomerStationWrapper {
 	private Product waitingFor = null;
 	private String waitingForDescription = null;
 	
-	private PaymentListener paymentListener;
-	private CartListener cartListener;
-	private ScaleListener scaleListener;
-	private CustomerUIListener customerUIListener;
-	private MembershipListener membershipListener;
+	public PaymentListener paymentListener;
+	public CartListener cartListener;
+	public ScaleListener scaleListener;
+	public CustomerUIListener customerUIListener;
+	public MembershipListener membershipListener;
 	
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
