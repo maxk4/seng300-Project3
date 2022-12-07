@@ -196,6 +196,21 @@ public class PaymentControllerTest {
         public void cashInserted() {
             ifCashInserted  = true;
         }
+
+        @Override
+        public void notifyNotEnoughCash() {
+
+        }
+
+        @Override
+        public void notifyRequiresAdditionalBanknote(int req) {
+
+        }
+
+        @Override
+        public void notifyRequiresAdditionalCoins(long neededCoinDenomination) {
+
+        }
     }
 
 }
