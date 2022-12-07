@@ -1,22 +1,29 @@
 package ui;
 
+import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import com.diy.hardware.AttendantStation;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.Product;
+import com.jimmyselectronics.AbstractDevice;
+import com.jimmyselectronics.AbstractDeviceListener;
+import com.jimmyselectronics.nightingale.Keyboard;
+import com.jimmyselectronics.nightingale.KeyboardListener;
 
 import ui.views.attendant.AttendantGUI;
-import ui.views.attendant.AttendantSearchCatalogueGUI;
 import ui.views.attendant.AttendentLoginWithKeyboardGUI;
 import ui.views.util.AttendantView;
 import util.ProductInfo;
 
-public class AttendantUI {
+public class AttendantUI implements KeyboardListener {
 	
 	public static final int LOGIN = 0, MAIN = 1;
 	
@@ -27,6 +34,8 @@ public class AttendantUI {
 	private JFrame mainFrame;
 
 	private final AttendantView[] views;
+	private Set<String> keysDown = new HashSet<String>();
+	private boolean isCapLock = false;
 	
 	/**
 	 * Make a new AttendantUI attached to the touch screen of the provided AttendantStation
@@ -41,7 +50,7 @@ public class AttendantUI {
 		mainFrame = station.screen.getFrame();
 		gui = new AttendantGUI(this, mainFrame);
 		
-		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this), gui};
+		views = new AttendantView[]{new AttendentLoginWithKeyboardGUI(this, mainFrame), gui};
 		
 		setView(LOGIN);
 		
@@ -189,6 +198,11 @@ public class AttendantUI {
 	
 		return choice == 0;
 	}
+	
+	public void requiresBanknotes(int banknote) {
+		JOptionPane.showConfirmDialog(gui, "Requires more " + banknote + " banknotes");
+		JOptionPane.showMessageDialog(mainFrame, gui);
+	}
 
 	public void disableStation(DoItYourselfStation station){
 		for (AttendantUIListener listener : listeners) listener.disableStation(station);
@@ -205,4 +219,72 @@ public class AttendantUI {
 	public void shutdownStation(DoItYourselfStation station) {
 		for (AttendantUIListener listener : listeners) listener.shutdownStation(station);
 	}
+
+	public boolean requestNoBag(DoItYourselfStation station) {
+		int index  = idOf(station);
+		
+		int choice = JOptionPane.showConfirmDialog(gui, String.format("Approve No Bag Request from station %d?", index), "Aprove/Deny No Bag Request", JOptionPane.YES_NO_OPTION);
+	
+		return choice == 0;
+	}
+
+	@Override
+	public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {}
+
+	@Override
+	public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {}
+
+	@Override
+	public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {}
+
+	@Override
+	public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {}
+
+	@Override
+	public void keyPressed(Keyboard keyboard, String label) {
+		keysDown.add(label);
+		if (label.equals("CapsLock")) isCapLock = true;
+	}
+
+	@Override
+	public void keyReleased(Keyboard keyboard, String label) {
+		if (label.length() == 1) {
+			boolean capital = isCapLock;
+			if (keysDown.contains("Shift (Right)") || keysDown.contains("Shift (Left)")) capital = !capital;
+			if (capital) pressKey(label.toUpperCase());
+			else pressKey(label.toLowerCase());
+		} else {
+			if (label.equals("Spacebar")) pressKey(" ");
+			else if (label.equals("Delete") || label.equals("Backspace")) deleteKey();
+			else {
+				if (label.contains(" ")) {
+					String[] split = label.split(" ");
+					String start = split[0];
+					String end = split[1];
+					if (start.length() == 1 && end.length() == 1) {
+						if (keysDown.contains("Shift")) pressKey(start);
+						else pressKey(end);
+					}
+				}
+			}
+		}
+		keysDown.remove(label);
+	}
+	
+	public void pressKey(String key) {
+		Component comp = mainFrame.getFocusOwner();
+		if (comp instanceof JTextField) {
+			JTextField textField = (JTextField) comp;
+			textField.setText(textField.getText() + key);
+		}
+	}
+	
+	public void deleteKey() {
+		Component comp = mainFrame.getFocusOwner();
+		if (comp instanceof JTextField) {
+			JTextField textField = (JTextField) comp;
+			textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+		}
+	}
+	
  }

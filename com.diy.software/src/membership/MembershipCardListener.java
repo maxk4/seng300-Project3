@@ -47,6 +47,7 @@ public class MembershipCardListener implements CardReaderListener, BarcodeScanne
 
 	@Override
 	public void cardDataRead(CardReader reader, Card.CardData data) {
+		if (!data.getType().equalsIgnoreCase("Membership")) return;
 		if (!MembershipDatabase.MEMBER_DATABASE.containsKey(Integer.valueOf(data.getNumber()))) return;
 		
 		controller.notifyMemberCardRead(Integer.valueOf(data.getNumber()));

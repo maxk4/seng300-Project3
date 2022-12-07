@@ -18,6 +18,30 @@ public class PaymentController {
 		cardManager = new CardPaymentManager(this, station);
 		cashManager = new CashPaymentManager(this, station);
 		listeners = new ArrayList<PaymentListener>();
+		cashManager.register(new CashIssueListener() {
+
+			@Override
+			public void notifyNotEnoughCash() {
+				for (PaymentListener listener : listeners) {
+					listener.notifyNotEnoughCash();
+				}
+			}
+
+			@Override
+			public void notifyRequireAdditionalBanknotes(int neededBanknoteDenomination) {
+				for (PaymentListener listener : listeners) {
+					listener.notifyRequiresAdditionalBanknote(neededBanknoteDenomination);
+				}
+			}
+
+			@Override
+			public void notifyRequireAdditionalCoins(long neededCoinDenomination) {
+				for (PaymentListener listener : listeners) {
+					listener.notifyRequiresAdditionalCoins(neededCoinDenomination);
+				}
+			}
+			
+		});
 	}
 	
 	public boolean hasRemainingBalance() {
@@ -31,6 +55,10 @@ public class PaymentController {
 		long remaining = balance - cashManager.pay(balance);
 		remaining -= cardManager.pay(remaining);
 		if (remaining < 0) cashManager.returnFunds(-remaining);
+		if (cashManager.availableFunds() > 0) {
+			System.out.println(cashManager.availableFunds());
+			cashManager.returnFunds(cashManager.availableFunds());
+		}
 		balance = 0;
 	}
 	

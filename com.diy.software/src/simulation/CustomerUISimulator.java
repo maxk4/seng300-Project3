@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -42,6 +43,8 @@ public class CustomerUISimulator{
 	
 	private Item scanWeightItem;
 	private double scanWeight;
+	
+	private List<Item> bagged = new ArrayList<Item>();
 	
 	public CustomerUISimulator(DoItYourselfStation station, Customer customer, String title) {
 		
@@ -91,12 +94,14 @@ public class CustomerUISimulator{
 				customerSim.revalidate();
 				customerSim.repaint();
 				station.baggingArea.remove(item);
+				bagged.remove(item);
 			});
 			button.addActionListener(e -> {
 				if (station.baggingArea.isDisabled()) return;
 				customer.shoppingCart.add(item);
 				customer.selectNextItem();
 				customer.placeItemInBaggingArea();
+				bagged.add(item);
 				remove.add(removeBtn);
 				customerSim.validate();
 				customerSim.revalidate();
@@ -112,8 +117,10 @@ public class CustomerUISimulator{
 		JTextField scanningWeight = new JTextField();
 		scanningWeight.setDocument(new IntegerOnlyDocument(() -> {
 			try {
-				if (scanWeightItem != null)
+				if (scanWeightItem != null) {
 					station.scanningArea.remove(scanWeightItem);
+					bagged.remove(scanWeightItem);
+				}
 			} catch(InvalidArgumentSimulationException | NoPowerException e) {
 				System.out.println("Failed" + e.toString());
 			} try {
@@ -132,15 +139,26 @@ public class CustomerUISimulator{
 		
 		JButton addScanningToBagging = new JButton("Add Weight to Bagging Area:");
 		addScanningToBagging.addActionListener(e -> {
-			station.baggingArea.add(new Item(scanWeight) {});
+			Item weight = new Item(scanWeight) {};
+			station.baggingArea.add(weight);
+			bagged.add(weight);
 		});
 		
 		scanningArea.add(scanningAreaLabel);
 		scanningArea.add(scanningWeight);
 		scanningArea.add(addScanningToBagging);
 		
+		JButton clearBaggingArea = new JButton("Clear Bagging Area");
+		clearBaggingArea.addActionListener(e -> {
+			while (!bagged.isEmpty()) {
+				Item item = bagged.remove(bagged.size() - 1);
+				station.baggingArea.remove(item);
+			}
+		});
+		
 		scales.add(remove);
 		scales.add(scanningArea);
+		scales.add(clearBaggingArea);
 		
 		
 		JPanel wallet = new JPanel();
@@ -150,6 +168,7 @@ public class CustomerUISimulator{
 		wallet.add(walletLabel);
 		
 		for (Card card : customer.wallet.cards) {
+			if (card.kind.equalsIgnoreCase("Membership")) continue;
 			JButton button = new JButton(String.format("(%s): %s", card.number, card.kind));
 			button.addActionListener(e -> {
 				customer.wallet.cards.add(card);

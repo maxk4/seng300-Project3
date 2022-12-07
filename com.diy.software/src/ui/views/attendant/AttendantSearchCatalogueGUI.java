@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import java.awt.Insets;
@@ -50,8 +51,8 @@ public class AttendantSearchCatalogueGUI extends AttendantView {
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public AttendantSearchCatalogueGUI(AttendantUI controller, AttendantView previousView, DoItYourselfStation station) {
-		super(controller);
+	public AttendantSearchCatalogueGUI(AttendantUI controller, AttendantView previousView, DoItYourselfStation station, JFrame parent) {
+		super(controller, parent);
 		setBounds(100, 100, 657, 659);
 		setBackground(new Color(94, 193, 255));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
