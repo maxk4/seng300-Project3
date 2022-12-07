@@ -56,7 +56,7 @@ public class AttendantUITest {
 			addOwnBagApproved = 0;
 			noBagApproved = 0;
 			itemAdded = 0;
-		}
+		} 
 		
 		@Override
 		public void approveWeight(DoItYourselfStation station) {
@@ -164,7 +164,7 @@ public class AttendantUITest {
 	@Test
 	public void testDeregisterListener() {
 		attendant.register(listener);
-		assertFalse(attendant.deregister(listener));
+		assertTrue(attendant.deregister(listener));
 		AttendantUIListenerImpl listener2 = new AttendantUIListenerImpl();
 		assertFalse(attendant.deregister(listener2));
 	}
