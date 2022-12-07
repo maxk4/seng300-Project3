@@ -3,7 +3,9 @@ package simulation;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
@@ -16,12 +18,17 @@ import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
+import com.unitedbankingservices.TooMuchCashException;
+import com.unitedbankingservices.coin.Coin;
+import com.unitedbankingservices.coin.CoinDispenserAR;
 
 import athourization.AttendantDatabase;
 import ca.powerutility.PowerGrid;
+import ca.ucalgary.seng300.simulation.SimulationException;
 import main.CustomerStationWrapper;
 import ui.AttendantUI;
 import util.Bank;
+import util.GiftCardIssuer;
 import util.MembershipDatabase;
 
 public class Simulation {
@@ -74,7 +81,17 @@ public class Simulation {
 		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
-			station.screen.getFrame().setLocation(0, 150);
+			station.screen.getFrame().setLocation(100 * i, 150);
+			station.plugIn();
+			station.turnOn();
+			for (BigDecimal coin : station.coinDispensers.keySet()) {
+				for (int j = 0; j < 10; j++)
+					try {
+						station.coinDispensers.get(coin).load(new Coin(Currency.getInstance(Locale.CANADA), coin));
+					} catch (SimulationException | TooMuchCashException e) {
+						e.printStackTrace();
+					}
+			}
 			attendant.addStation(station);
 		}
 		
@@ -176,7 +193,14 @@ public class Simulation {
 			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
 			Calendar expiry = Calendar.getInstance();
 			expiry.set(2025, 1, 1);
-			Bank.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry, card.cvv, Double.MAX_VALUE);
+			Bank.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, Double.MAX_VALUE);
+			cards.add(card);
+		}
+		for (int i = 0; i < 3; i++) {
+			Card card = new Card("Giftcard", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
+			Calendar expiry = Calendar.getInstance();
+			expiry.set(2025, 1, 1);
+			GiftCardIssuer.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, 1000 * i + 100);
 			cards.add(card);
 		}
 

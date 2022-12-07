@@ -12,6 +12,7 @@ import membership.MembershipListener;
 import payment.PaymentController;
 import payment.PaymentListener;
 import printing.PrinterController;
+import printing.PrinterListener;
 import scale.ScaleController;
 import scale.ScaleListener;
 import ui.AttendantUI;
@@ -136,6 +137,22 @@ public class CustomerStationWrapper {
 						updateCashGUI();
 						updateProductList();
 					}
+
+					@Override
+					public void notifyNotEnoughCash() {
+						attendant.notifyOutOfChange(diyStation);
+					}
+
+					@Override
+					public void notifyRequiresAdditionalBanknote(int req) {
+						
+					}
+					
+					@Override
+					public void notifyRequiresAdditionalCoins(long neededCoinDenomination) {
+						// TODO Auto-generated method stub
+						
+					}
 				};
 				payment.register(paymentListener);
 				
@@ -226,6 +243,13 @@ public class CustomerStationWrapper {
 						if (approved) scale.approveWeight();
 						
 					}
+
+					@Override
+					public void requestNoBag() {
+						if (attendant.requestNoBag(station)) {
+							scale.approveWeight();
+						}
+					}
 					
 				};
 				customer.register(customerUIListener);
@@ -260,6 +284,34 @@ public class CustomerStationWrapper {
 					
 				};
 				membership.register(membershipListener);
+				print.register(new PrinterListener() {
+
+					@Override
+					public void notifyLowInk(DoItYourselfStation station) {
+						attendant.notifyLowInkDetected(diyStation);
+					}
+
+					@Override
+					public void notifyLowPaper(DoItYourselfStation station) {
+						attendant.notifyLowPaperDetected(diyStation);
+					}
+
+					@Override
+					public void notifyInkRefilled(DoItYourselfStation station) {
+						attendant.notifyLowInkResolved(diyStation);
+					}
+
+					@Override
+					public void notifyPaperRefilled(DoItYourselfStation station) {
+						attendant.notifyLowPaperResolved(diyStation);
+					}
+
+					@Override
+					public void empty(DoItYourselfStation station) {
+						attendant.notifyPrintFailure(diyStation);
+					}
+					
+				});
 				
 				customer.disable();
 			}
@@ -267,12 +319,13 @@ public class CustomerStationWrapper {
 			@Override
 			public void shutdownStation(DoItYourselfStation station) {
 				if(station != diyStation) return;
-				// TO DO: If an attendant is in an active station the Attendant should have a button to confirm shutdown.
 				payment.deregister(paymentListener);
 				cart.deregister(cartListener);
 				scale.deregister(scaleListener);
 				customer.deregister(customerUIListener);
-				diyStation.screen.getFrame().dispose();
+				//diyStation.screen.getFrame().dispose();
+				System.out.println("Shutdown");
+				diyStation.screen.setVisible(false);
 				station.turnOff();
 			}
 		});

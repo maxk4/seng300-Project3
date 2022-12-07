@@ -1,5 +1,6 @@
 package ui.views.customer;
 
+
 import javax.swing.border.EmptyBorder;
 
 import com.diy.hardware.DoItYourselfStation;
@@ -79,7 +80,7 @@ public class ScanScreenGUI extends CustomerView {
 		});
 		
 		JButton button_PayWithGiftCard = new JButton("Gift Card");
-		button_PayWithGiftCard.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-mastercard-credit-card-100.png")));
+		button_PayWithGiftCard.setIcon(new ImageIcon(ScanScreenGUI.class.getResource("/resources/icons8-gift-card-100.png")));
 		button_PayWithGiftCard.addActionListener(e -> {
 			controller.setView(CustomerUI.PAY_WITH_GIFT);
 			station.cardReader.enable();
@@ -153,41 +154,36 @@ public class ScanScreenGUI extends CustomerView {
 								.addComponent(textField_Remaining, Alignment.LEADING, 0, 0, Short.MAX_VALUE))))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(button_BuyBags, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+								.addComponent(button_UsePersonalBags, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+								.addComponent(button_SearchProductCatalogue, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+								.addComponent(button_EnterMemberNum, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+								.addComponent(button_Attendant, Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(6)
-									.addComponent(textField_MemberNumber, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE))
-								.addComponent(button_AddPLUCodeButton, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-								.addComponent(button_BuyBags, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(button_UsePersonalBags, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-								.addComponent(button_SearchProductCatalogue, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-								.addComponent(button_EnterMemberNum, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(button_Attendant, Alignment.TRAILING))
-							.addGap(26))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(textField_MemberNumber, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+									.addContainerGap())
+								.addComponent(button_AddPLUCodeButton, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(button_CompleteAndPrintReceipt, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGap(100)
-										.addComponent(label_Pay_Text, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-									.addGap(26))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(button_CompleteAndPrintReceipt, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+									.addGap(18)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(button_PayWithCash, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(button_PayWithDebit, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPane.createSequentialGroup()
 											.addGap(18)
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(button_PayWithCash, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
-													.addGap(12)
-													.addComponent(button_PayWithCredit, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(button_PayWithDebit, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-													.addGap(18)
-													.addComponent(button_PayWithGiftCard)))))
-									.addGap(20)))
-							.addContainerGap())))
+											.addComponent(button_PayWithGiftCard))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(17)
+											.addComponent(button_PayWithCredit, GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+											.addContainerGap())))))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(label_Pay_Text, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addGap(156))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -222,8 +218,8 @@ public class ScanScreenGUI extends CustomerView {
 							.addComponent(button_CompleteAndPrintReceipt))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lbl_Total_Text, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(textField_OrderTotal_Number, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))

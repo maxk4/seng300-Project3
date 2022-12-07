@@ -142,12 +142,12 @@ public class MaintenanceSimulator {
 					String parse = "";
 					for (char c : coinDenomField.getText().toCharArray())
 						if (Character.isDigit(c)) parse += c;
-					long denomination = Long.parseLong(parse);
+					BigDecimal denomination = BigDecimal.valueOf(Long.parseLong(parse));
 					parse = "";
 					for (char c : coinAmountField.getText().toCharArray())
 						if (Character.isDigit(c)) parse += c;
 					Coin[] coins = new Coin[Integer.parseInt(parse)];
-					Arrays.fill(coins, new Coin(Currency.getInstance(Locale.CANADA), BigDecimal.valueOf(denomination)));
+					Arrays.fill(coins, new Coin(Currency.getInstance(Locale.CANADA), denomination));
 					station.coinDispensers.get(denomination).load(coins);
 				} catch (Exception e1) {
 					e1.printStackTrace();

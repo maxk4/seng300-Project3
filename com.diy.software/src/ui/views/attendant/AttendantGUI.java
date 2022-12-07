@@ -34,7 +34,7 @@ public class AttendantGUI extends AttendantView {
 	 * Create the frame.
 	 */
 	public AttendantGUI(AttendantUI attendant, JFrame frame) {
-		super(attendant);
+		super(attendant, frame);
 		this.attendant = attendant;
 		this.parent = frame;
 		stationComponents = new ArrayList<StationComponent>();
@@ -81,7 +81,7 @@ public class AttendantGUI extends AttendantView {
 	}
 	
 	public void requestOpenStation(DoItYourselfStation station) {
-		controller.setView(new CustomerCart(station, attendant, controller.requestProductList(station)));
+		controller.setView(new CustomerCart(station, attendant, parent, controller.requestProductList(station)));
 	}
 	
 	public void notifyWeightDiscrepancyDetected(DoItYourselfStation station) {
@@ -161,5 +161,21 @@ public class AttendantGUI extends AttendantView {
 		attendant.enableStation(station);
 	}
 
+	public void notifyPrintFailure(DoItYourselfStation station) {
+		StationComponent sc = componentMap.get(station);
+		sc.notifyDectected(StationComponent.PRINT_FAILURE, new StationComponent.Action() {
+			@Override
+			public void deny() {
+				attendant.denyOwnBag(station);
+				sc.notifyResolved(StationComponent.PRINT_FAILURE);
+			}
+			
+			@Override
+			public void approve() {
+				attendant.approveOwnBag(station);
+				sc.notifyResolved(StationComponent.PRINT_FAILURE);
+			}
+		});
+	}
 
 }

@@ -8,12 +8,12 @@ import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 public class ScanningAreaListener implements ElectronicScaleListener {
 	
 	private double weight;
+	private boolean enabled;
+	@Override
+	public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {enabled = true;}
 
 	@Override
-	public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {}
-
-	@Override
-	public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {}
+	public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {enabled = false;}
 
 	@Override
 	public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {}
@@ -23,6 +23,7 @@ public class ScanningAreaListener implements ElectronicScaleListener {
 
 	@Override
 	public void weightChanged(ElectronicScale scale, double weightInGrams) {
+		if (!enabled) { return; };
 		weight = weightInGrams;
 	}
 

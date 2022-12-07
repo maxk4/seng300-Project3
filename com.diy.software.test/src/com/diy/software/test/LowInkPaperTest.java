@@ -89,20 +89,6 @@ public class LowInkPaperTest {
 		station.printer.addPaper(MAXIMUM_PAPER);
 	}
 
-	/**
-	 * Test that when printing is turned off, an exception is thrown
-	 * @throws OverloadException
-	 */
-	@Test
-	public void testOverload() throws NoPowerException, OverloadException {
-		//Adding Paper and ink to the printer hardware, should result in an exception
-		station.printer.addPaper(MAXIMUM_PAPER*2);
-		station.printer.addInk(ReceiptPrinterND.CHARACTERS_PER_LINE + 5);
-		printController.print(String.valueOf("AA" + "A".repeat(ReceiptPrinterND.CHARACTERS_PER_LINE + 1)));
-		//Returns true if overloaded
-		assertTrue(printController.getIsOverload());
-	}
-
 
 	/**
 	 * Test that when printing with low ink, the listener notices
