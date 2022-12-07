@@ -191,6 +191,17 @@ public class CustomerUITests {
 		assertTrue(itemPlaced);
 	}
 	
+	/*
+	 * Test for requesting no bag with a listener.
+	 */
+	@Test
+	public void testRequestNoBag() {
+		customerUI.register(listener);
+		assertEquals(0, requestNoBag);
+		customerUI.requestNoBag();
+		assertEquals(1, requestNoBag);
+	}
+	
 	
 	int purchasedBags = 0;
 	boolean sessionRunning = false;
@@ -198,6 +209,7 @@ public class CustomerUITests {
 	boolean itemPlaced = false;
 	int requestPersonalBag = 0;
 	int PLUProductAdded = 0;
+	int requestNoBag = 0;
 	
 	public class CUL implements CustomerUIListener {
 
@@ -233,6 +245,11 @@ public class CustomerUITests {
 		@Override
 		public void addPLUProduct(PLUCodedProduct product) {
 			PLUProductAdded++;
+		}
+
+		@Override
+		public void requestNoBag() {
+			requestNoBag++;
 		}
 		
 	}
