@@ -162,7 +162,6 @@ public class AddItemTests {
   
    		int actual = sil.getSuccessfulScan();
    		assertEquals(1, actual);
-   		assertEquals(1, scans);
    	}
    	/*
    	 * Test for the size of the product list after adding an item.
