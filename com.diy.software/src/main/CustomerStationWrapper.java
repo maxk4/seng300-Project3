@@ -1,8 +1,6 @@
 package main;
 
 
-import java.awt.event.WindowEvent;
-
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.Product;
@@ -14,6 +12,7 @@ import membership.MembershipListener;
 import payment.PaymentController;
 import payment.PaymentListener;
 import printing.PrinterController;
+import printing.PrinterListener;
 import scale.ScaleController;
 import scale.ScaleListener;
 import ui.AttendantUI;
@@ -285,6 +284,34 @@ public class CustomerStationWrapper {
 					
 				};
 				membership.register(membershipListener);
+				print.register(new PrinterListener() {
+
+					@Override
+					public void notifyLowInk(DoItYourselfStation station) {
+						attendant.notifyLowInkDetected(diyStation);
+					}
+
+					@Override
+					public void notifyLowPaper(DoItYourselfStation station) {
+						attendant.notifyLowPaperDetected(diyStation);
+					}
+
+					@Override
+					public void notifyInkRefilled(DoItYourselfStation station) {
+						attendant.notifyLowInkResolved(diyStation);
+					}
+
+					@Override
+					public void notifyPaperRefilled(DoItYourselfStation station) {
+						attendant.notifyLowPaperResolved(diyStation);
+					}
+
+					@Override
+					public void empty(DoItYourselfStation station) {
+						attendant.notifyPrintFailure(diyStation);
+					}
+					
+				});
 				
 				customer.disable();
 			}

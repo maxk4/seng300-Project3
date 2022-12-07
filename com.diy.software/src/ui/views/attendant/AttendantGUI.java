@@ -161,5 +161,21 @@ public class AttendantGUI extends AttendantView {
 		attendant.enableStation(station);
 	}
 
+	public void notifyPrintFailure(DoItYourselfStation station) {
+		StationComponent sc = componentMap.get(station);
+		sc.notifyDectected(StationComponent.PRINT_FAILURE, new StationComponent.Action() {
+			@Override
+			public void deny() {
+				attendant.denyOwnBag(station);
+				sc.notifyResolved(StationComponent.PRINT_FAILURE);
+			}
+			
+			@Override
+			public void approve() {
+				attendant.approveOwnBag(station);
+				sc.notifyResolved(StationComponent.PRINT_FAILURE);
+			}
+		});
+	}
 
 }

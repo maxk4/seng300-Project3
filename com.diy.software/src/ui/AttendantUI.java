@@ -286,5 +286,9 @@ public class AttendantUI implements KeyboardListener {
 			textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
 		}
 	}
+
+	public void notifyPrintFailure(DoItYourselfStation diyStation) {
+		gui.notifyPrintFailure(diyStation);
+	}
 	
  }
