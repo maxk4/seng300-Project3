@@ -40,6 +40,7 @@ public class CustomerStationWrapperTest{
 	List<DoItYourselfStation> stations;
 	List<AttendantUIListener> aListeners;
 	AttendantUIListener aListener;
+	boolean wDiscrep; 
 	
 	@Before
 	public void setUp() {
@@ -52,9 +53,22 @@ public class CustomerStationWrapperTest{
 		attendantStation.add(station);
 		stations = new ArrayList<DoItYourselfStation>();
 		stations.add(station);
-		attendantUI = new AttendantUI(attendantStation, 1);
+		attendantUI = new AttendantUI(attendantStation, 1) { 
+			//Stubs
+			@Override
+			public void notifyWeightDiscrepancyDetected(DoItYourselfStation station) {
+				super.notifyWeightDiscrepancyDetected(station);
+				wDiscrep = true;
+			}
+			@Override
+			public void notifyWeightDiscrepancyResolved(DoItYourselfStation station) {
+				super.notifyWeightDiscrepancyResolved(station);
+				wDiscrep = false;
+			}
+		};
 		customerWrapper = new CustomerStationWrapper(station, attendantUI);
 		
+		attendantUI.addCustomerUI(station);
 		attendantUI.startupStation(station);
 		Simulation.main(new String[] {"1"});
 		
@@ -74,13 +88,13 @@ public class CustomerStationWrapperTest{
 		
 		//Test station screens when station is disabled
 		aListener.disableStation(station);
-		assertFalse(station.screen == null); //non null since there is a disabled
-											//gui screen
+		assertTrue(station.screen.isDisabled());
 		aListener.enableStation(station);
 		assertFalse(station.screen.isDisabled());
 		
 		//Test station when they are turned on and shut off
 		customerWrapper.customerUIListener.beginSession();
+		assertTrue(customerWrapper.inProgress);
 		assertTrue(station.baggingArea.isPoweredUp());
 		assertTrue(station.cardReader.isPoweredUp());
 		assertTrue(station.handheldScanner.isPoweredUp());
@@ -90,16 +104,18 @@ public class CustomerStationWrapperTest{
 		assertFalse(station.cardReader.isPoweredUp());
 		assertFalse(station.handheldScanner.isPoweredUp());
 		
-		//TODO
-		aListener.approveWeight(station);
-		//assertFalse(station.scanningArea.)
+		station.turnOn();
 		
+		//When approve weight or approve bag is called, bagging are
+		//is able to detect weight again
+		aListener.approveWeight(station);
+		assertFalse(station.baggingArea.isDisabled());
 		aListener.approveNoBag(station);
-		//assert
+		assertFalse(station.baggingArea.isDisabled());
 		
 		Barcode barcode = new Barcode(new Numeral[] {Numeral.one});
 		BarcodedProduct product = new BarcodedProduct(barcode, "apple", 1, 2.3);
-		station.turnOn();
+		
 		
 		aListener.addItem(station, product, "apple");
 		//when apple is added, weight is greater than 0
@@ -121,27 +137,26 @@ public class CustomerStationWrapperTest{
 		//Test payment
 		//test if gui is updated properly
 		customerWrapper.paymentListener.cashInserted();
-		//assertEquals();
-		
 		customerWrapper.paymentListener.cardPaymentSucceeded();
-		//assertEquals;
 		
 		
 		//test cart
 		customerWrapper.cartListener.notifyItemAdded(product, 1, 2.3);
-		//assert
+		assertEquals(customerWrapper.getCurrentDue(), 1);
 		customerWrapper.cartListener.notifyItemRemoved(product, 1, 2.3);
-		//assert
+		assertEquals(customerWrapper.getCurrentDue(), 0);
 		
 		//Test weight
-		//customerWrapper.scaleListener.notifyWeightDiscrepancyDetected();
-		//customerWrapper.scaleListener.notifyWeightDiscrepancyResolved();
+		customerWrapper.scaleListener.notifyWeightDiscrepancyDetected();
+		assertTrue(wDiscrep);
+		customerWrapper.scaleListener.notifyWeightDiscrepancyResolved();
+		assertFalse(wDiscrep);
 		
 		//Test customer
 		PriceLookUpCode appleCode = new PriceLookUpCode("3283");
 		PLUCodedProduct apple = new PLUCodedProduct(appleCode, "Apple", 4 * 100);
 		
-		//The 2 method below gets the description of the product
+		//The 3 method below gets the description of the product
 		//without adding it to the bagging area yet
 		customerWrapper.customerUIListener.addPLUProduct(apple);
 		assertFalse(station.baggingArea.getCurrentWeight() > 0.3);
@@ -149,19 +164,24 @@ public class CustomerStationWrapperTest{
 		customerWrapper.customerUIListener.selectItem(apple, "apple");
 		assertFalse(station.baggingArea.getCurrentWeight() > 0.4);
 		
-		//The method below puts apple into bagging area,
-		//so bagging area weight will be updated 
 		customerWrapper.customerUIListener.itemPlaced();
-		//assertTrue(station.scanningArea.getCurrentWeight() >= 1);
-		System.out.println("Scanning: " + station.scanningArea.getCurrentWeight());
-		System.out.println("Baggigng: " + station.baggingArea.getCurrentWeight());
+		assertFalse(station.scanningArea.getCurrentWeight() > 0.5);
 		
 		
 		//100 bags = 10 grams
-		//customerWrapper.customerUIListener.purchaseBags(100);
-		//assertTrue(station.baggingArea.getCurrentWeight() >= 2.3);
+		//Each bag weights 0.01 gram, so its weights added to the 
+		//scale is ignored
+		customerWrapper.customerUIListener.purchaseBags(100);
+		assertFalse(station.baggingArea.getCurrentWeight() >= 10.5);
 		
-		//customerWrapper.customerUIListener.requestUsePersonalBag();
-		//customerWrapper.customerUIListener.endSession();
+		//The bagging area should be enabled to detect weight discrepancy
+		customerWrapper.customerUIListener.requestUsePersonalBag();
+		assertFalse(station.baggingArea.isDisabled());
+		
+		//session ends, in progress is false
+		customerWrapper.customerUIListener.endSession();
+		assertFalse(customerWrapper.inProgress);
+
+		
 	}
 }

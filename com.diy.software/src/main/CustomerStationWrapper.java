@@ -29,7 +29,7 @@ public class CustomerStationWrapper {
 	private ScaleController scale;
 	private CustomerUI customer;
 	private MembershipController membership;
-	private boolean inProgress = true;
+	public boolean inProgress = true;
 	
 	
 	private Product waitingFor = null;
@@ -45,10 +45,11 @@ public class CustomerStationWrapper {
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
 			@Override
-			public void approveWeight(DoItYourselfStation station) {
+			public boolean approveWeight(DoItYourselfStation station) {
 				if (station == diyStation) {
 					scale.approveWeight();
 				}
+				return true;
 			}
 
 			// Do Not Place Item in Bagging Area Use Case
@@ -70,13 +71,16 @@ public class CustomerStationWrapper {
 					}
 					//Customer Session currently in progress
 					customer.disable();
+					station.screen.disable();
 				}
+				
 			}
 
 			//Enables the use of a station by customers, after it has been disabled
 			@Override
 			public void enableStation(DoItYourselfStation station) {
 				if (station == diyStation) {
+					station.screen.enable();
 					if (inProgress)
 						customer.enable();
 					else
@@ -267,7 +271,9 @@ public class CustomerStationWrapper {
 			}
 		});
 	}
-	
+	public long getCurrentDue() {
+		return payment.getBalance() - payment.getAvailableFunds();
+	}
 	private void updateProductList() {
 		customer.updateProductList(payment.getBalance(), payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
 	}

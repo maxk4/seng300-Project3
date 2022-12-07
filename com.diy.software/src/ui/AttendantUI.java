@@ -73,11 +73,11 @@ public class AttendantUI {
 	}
 	
 	public void approveOwnBag(DoItYourselfStation station) {
-		for (AttendantUIListener listener : listeners) listener.approveOwnBag(station);
+		//for (AttendantUIListener listener : listeners) listener.approveOwnBag(station);
 	}
 	
 	public void denyOwnBag(DoItYourselfStation station) {
-		for (AttendantUIListener listener : listeners) listener.denyOwnBag(station);
+		//for (AttendantUIListener listener : listeners) listener.denyOwnBag(station);
 	}
 	
 	public boolean register(AttendantUIListener listener) {
