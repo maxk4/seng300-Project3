@@ -13,13 +13,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.diy.hardware.AttendantStation;
+import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.hardware.PLUCodedProduct;
 import com.diy.simulation.Customer;
+import com.jimmyselectronics.necchi.Barcode;
+import com.jimmyselectronics.necchi.Numeral;
 
 import main.CustomerStationWrapper;
 import simulation.Simulation;
 import ui.AttendantUI;
+import ui.AttendantUIListener;
 
 public class CustomerStationWrapperTest{
 	CustomerStationWrapper customerWrapper;
@@ -55,12 +59,23 @@ public class CustomerStationWrapperTest{
 		attendantUI.startupStation(station);
 		Simulation.main(new String[] {"1"});
 		assertFalse(customerWrapper == null);
-		//attendantUI.approveWeight(station);
-		attendantUI.approveOwnBag(station);
-		attendantUI.denyOwnBag(station);
-		attendantUI.disableStation(station);
-		attendantUI.enableStation(station);
-		attendantUI.shutdownStation(station);
-		//attendantUI.notifyWeightDiscrepancyResolved(station);
+		ArrayList listeners = (ArrayList) attendantUI.returnListeners();
+		AttendantUIListener listener = (AttendantUIListener) listeners.get(0);
+		listener.requestProductInfo(station);
+		
+		listener.approveOwnBag(station);
+		listener.denyOwnBag(station);
+		listener.disableStation(station);
+		listener.enableStation(station);
+		listener.shutdownStation(station);
+		listener.approveWeight(station);
+		listener.approveNoBag(station);
+		listener.approveOwnBag(station);
+		
+		Barcode barcode = new Barcode(new Numeral[] {Numeral.one});
+		BarcodedProduct product = new BarcodedProduct(barcode, "apple", 1, 2.3);
+		listener.addItem(station, product, "apple");
+		listener.removeItem(station, product, "apple", 1, 2.3);
+		
 	}
 }

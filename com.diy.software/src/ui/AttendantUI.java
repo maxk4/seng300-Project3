@@ -205,4 +205,7 @@ public class AttendantUI {
 	public void shutdownStation(DoItYourselfStation station) {
 		for (AttendantUIListener listener : listeners) listener.shutdownStation(station);
 	}
+	public List<AttendantUIListener> returnListeners() {
+		return listeners;
+	}
  }

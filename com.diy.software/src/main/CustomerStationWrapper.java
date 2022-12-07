@@ -51,14 +51,10 @@ public class CustomerStationWrapper {
 			}
 
 			@Override
-			public void approveOwnBag(DoItYourselfStation station) {
-			}
+			public void approveOwnBag(DoItYourselfStation station) {}
 
 			@Override
-			public void denyOwnBag(DoItYourselfStation station) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void denyOwnBag(DoItYourselfStation station) {}
 
 			// Do Not Place Item in Bagging Area Use Case
 			@Override
@@ -206,7 +202,6 @@ public class CustomerStationWrapper {
 						customer.setView(CustomerUI.PLACE_ITEM);
 					}
 
-					@Override
 					public void itemPlaced() {
 						if (waitingFor == null) return;
 						
