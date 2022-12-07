@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.diy.hardware.DoItYourselfStation;
+import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 
@@ -25,7 +26,17 @@ public class MaintenanceSimulator {
 	
 	private List<DoItYourselfStation> stations;
 	private JFrame frame;
-
+	public JTextField banknoteDenomField;
+	public JTextField banknoteAmountField;
+	public JButton banknoteBtn;
+	public JTextField coinDenomField;
+	public JTextField coinAmountField;
+	public JButton coinBtn;
+	public JTextField inkAmmountField;
+	public JButton inkBtn;
+	public JTextField paperAmmountField;
+	public JButton paperBtn;
+	
 	public MaintenanceSimulator(AttendantUI attendant, List<DoItYourselfStation> stations) {
 		this.stations = stations;
 		
@@ -47,14 +58,14 @@ public class MaintenanceSimulator {
 		JPanel ink = new JPanel();
 		ink.setLayout(new BoxLayout(ink, BoxLayout.PAGE_AXIS));
 		JLabel inkLabel = new JLabel("Stations: Click to add Ink");
-		JTextField inkAmmountField = new JTextField();
+		inkAmmountField = new JTextField();
 		inkAmmountField.setToolTipText("Enter ammount to add");
 		ink.add(inkLabel);
 		ink.add(inkAmmountField);
 		ink.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 16));
 		for (int i = 0; i < stations.size(); i++) {
 			DoItYourselfStation station = stations.get(i);
-			JButton inkBtn = new JButton("Station " + (i + 1));
+			inkBtn = new JButton("Station " + (i + 1));
 			inkBtn.addActionListener(e -> {
 				try {
 					String parse = "";
@@ -72,13 +83,13 @@ public class MaintenanceSimulator {
 		JPanel paper = new JPanel();
 		paper.setLayout(new BoxLayout(paper, BoxLayout.PAGE_AXIS));
 		JLabel paperLabel = new JLabel("Stations: Click to add Paper");
-		JTextField paperAmmountField = new JTextField(); //who misspelled this
+		paperAmmountField = new JTextField(); 
 		paperAmmountField.setToolTipText("Enter ammount to add");
 		paper.add(paperLabel);
 		paper.add(paperAmmountField);
 		for (int i = 0; i < stations.size(); i++) {
 			DoItYourselfStation station = stations.get(i);
-			JButton paperBtn = new JButton("Station " + (i + 1));
+			paperBtn = new JButton("Station " + (i + 1));
 			paperBtn.addActionListener(e -> {
 				try {
 					String parse = "";
@@ -95,16 +106,16 @@ public class MaintenanceSimulator {
 		JPanel banknote = new JPanel();
 		banknote.setLayout(new BoxLayout(banknote, BoxLayout.PAGE_AXIS));
 		JLabel banknoteLabel = new JLabel("Stations: Click to add Banknotes");
-		JTextField banknoteDenomField = new JTextField();
+		banknoteDenomField = new JTextField();
 		banknoteDenomField.setToolTipText("Enter banknote denomination to add");
-		JTextField banknoteAmountField = new JTextField();
+		banknoteAmountField = new JTextField();
 		banknoteAmountField.setToolTipText("Enter amount to add");
 		banknote.add(banknoteLabel);
 		banknote.add(banknoteDenomField);
 		banknote.add(banknoteAmountField);
 		for (int i = 0; i < stations.size(); i++) {
 			DoItYourselfStation station = stations.get(i);
-			JButton banknoteBtn = new JButton("Station " + (i + 1));
+			banknoteBtn = new JButton("Station " + (i + 1));
 			banknoteBtn.addActionListener(e -> {
 				try {
 					String parse = "";
@@ -117,8 +128,8 @@ public class MaintenanceSimulator {
 					Banknote[] banknotes = new Banknote[Integer.parseInt(parse)];
 					Arrays.fill(banknotes, new Banknote(Currency.getInstance(Locale.CANADA), denomination));
 					station.banknoteDispensers.get(denomination).load(banknotes);
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				} catch (TooMuchCashException e1) {
+					System.out.println("Too much cash");
 				}
 			});
 			banknote.add(banknoteBtn);
@@ -127,16 +138,16 @@ public class MaintenanceSimulator {
 		JPanel coin = new JPanel();
 		coin.setLayout(new BoxLayout(coin, BoxLayout.PAGE_AXIS));
 		JLabel coinLabel = new JLabel("Stations: Click to add Coins");
-		JTextField coinDenomField = new JTextField();
+		coinDenomField = new JTextField();
 		coinDenomField.setToolTipText("Enter coin denomination to add\n Available denominations:");
-		JTextField coinAmountField = new JTextField();
+		coinAmountField = new JTextField();
 		coinAmountField.setToolTipText("Enter amount to add");
 		coin.add(coinLabel);
 		coin.add(coinDenomField);
 		coin.add(coinAmountField);
 		for (int i = 0; i < stations.size(); i++) {
 			DoItYourselfStation station = stations.get(i);
-			JButton coinBtn = new JButton("Station " + (i + 1));
+			coinBtn = new JButton("Station " + (i + 1));
 			coinBtn.addActionListener(e -> {
 				try {
 					String parse = "";
