@@ -30,7 +30,7 @@ public class AttendantDatabaseTest {
 		newUsername = username + Integer.toString(counter); 
 	}
 	
-	@Test
+	@Test 
 	public void testValidLogin() {
 		boolean isValid = db.validate(username, pswd);
 		assertTrue(isValid);
@@ -46,6 +46,41 @@ public class AttendantDatabaseTest {
 	public void testIncorrectPasswordLogin() {
 		boolean isValid = db.validate(username, newpswd);
 		assertFalse(isValid);
+	}
+	
+	@Test
+	public void testAddExistingUsernameWithNewPassword() {
+		db.add(username, newpswd);
+		boolean isValid = db.validate(username, newpswd);
+		assertFalse(isValid);
+	}
+
+	@Test
+	public void testAddWithNullStringUsername() {
+		db.add(null, pswd);
+		boolean isValid = db.validate(null, pswd);
+		assertFalse(isValid); 
+	}
+	
+	@Test
+	public void testAddWithNullStringPassword() {
+		db.add(newUsername, null);
+		boolean isValid = db.validate(newUsername, null);
+		assertFalse(isValid); 
+	}
+	
+	@Test
+	public void testAddWithEmptyStringUsername() {
+		db.add("", pswd);
+		boolean isValid = db.validate("", pswd);
+		assertFalse(isValid); 
+	}
+	
+	@Test
+	public void testAddWithEmptyStringPassword() {
+		db.add(newUsername, "");
+		boolean isValid = db.validate(newUsername, "");
+		assertFalse(isValid); 
 	}
 	
 	@Test
