@@ -2,7 +2,7 @@ package com.diy.software.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -223,49 +223,33 @@ public class AddItemTests {
    		
    		sil.barcodeScanned(station.mainScanner, null);
    	}
-   
-   	/*
-   	 * Test when adding an item and then remove that item.
-   	 */
-   	@Test
-   	public void testAddItemThenRemove() {
-   		cartController.register(listener);
-   		station.mainScanner.enable();
-   		
-   		customer.shoppingCart.add(item2);
-   		customer.selectNextItem();
-   		customer.scanItem(false);
-   		customer.placeItemInBaggingArea();
-   		
-   		assertTrue(cartController.productList.containsProduct(prod2));
-   		
-   		station.baggingArea.remove(item2);
-   		cartController.removeItem(prod2, prod2.getDescription(), prod2.getPrice(), prod2.getExpectedWeight());
-   		
-   		assertFalse(cartController.productList.containsProduct(prod2));
-   		assertEquals(2, found);
-   	}
-   	
-   	/*
-   	 * Test for removing an item.
-   	 */
    	@Test
    	public void testRemove() {
-   		cartController.productList.add(prod1, prod1.getDescription(), price1, weight1);
-   		assertTrue(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+   		assertEquals(1, cartController.productList.size());
    		
-   		assertFalse(cartController.productList.remove(prod2, prod2.getDescription(), price2, weight2));
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+   		cartController.removeItem(prod2, prod2.getDescription(), price2, weight2);
+   		assertEquals(1, cartController.productList.size());
    		
-   		cartController.productList.add(prod1, "Not matched", price1, weight1);
-   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		assertEquals(0, cartController.productList.size());
    		
-   		cartController.productList.add(prod1, prod1.getDescription(), 1, weight1);
-   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		cartController.addItem(prod1, "Not matched", price1, weight1);
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		assertEquals(1,cartController.productList.size());
    		
-   		cartController.productList.add(prod1, prod1.getDescription(), price1, 2);
-   		assertFalse(cartController.productList.remove(prod1, prod1.getDescription(), price1, weight1));
+   		cartController.removeItem(prod1, "Not matched", price1, weight1);
+   		cartController.addItem(prod1, prod1.getDescription(), 1, weight1);
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		assertEquals(1, cartController.productList.size());
    		
-   		
+   		cartController.removeItem(prod1, prod1.getDescription(), 1, weight1);
+   		cartController.addItem(prod1, prod1.getDescription(), price1, 2);
+   		cartController.removeItem(prod1, prod1.getDescription(), price1, weight1);
+   		assertEquals(1, cartController.productList.size());
    	}
  
    	/*
@@ -386,6 +370,16 @@ public class AddItemTests {
 		String expected = "(ScanItemListener) barcode exists in membership database";
 		
 		assertEquals(expected, content.toString());
+	}
+	
+	/*
+	 * Test for getting invalid items in the product list.
+	 */
+	@Test
+	public void testGetProductInvalidIndex() {
+		cartController.addItem(prod1, prod1.getDescription(), price1, weight1);
+		assertNull(cartController.productList.get(-1));
+		assertNull(cartController.productList.get(2));
 	}
 	
 	/*
