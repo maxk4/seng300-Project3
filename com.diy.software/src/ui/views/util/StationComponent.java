@@ -27,7 +27,8 @@ public class StationComponent extends JPanel {
 			LOW_INK = "Low Ink",
 			LOW_PAPER = "Low Paper",
 			ADD_OWN_BAG = "Added Own Bag",
-			OUT_OF_CHANGE = "Out of Change";
+			OUT_OF_CHANGE = "Out of Change",
+			PRINT_FAILURE = "Print Failure";
 	
 	public static interface Action {
 		public void approve();

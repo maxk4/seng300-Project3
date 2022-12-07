@@ -81,7 +81,7 @@ public class Simulation {
 		
 		for (int i = 0; i < diyStations; i++) {
 			DoItYourselfStation station = new DoItYourselfStation();
-			station.screen.getFrame().setLocation(0, 150);
+			station.screen.getFrame().setLocation(100 * i, 150);
 			station.plugIn();
 			station.turnOn();
 			for (BigDecimal coin : station.coinDispensers.keySet()) {
