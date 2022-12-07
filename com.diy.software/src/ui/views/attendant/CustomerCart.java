@@ -9,6 +9,7 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,8 +37,8 @@ public class CustomerCart extends AttendantView {
 		}
 	}
 	
-	public CustomerCart(DoItYourselfStation station, AttendantUI attendant, ProductInfo ... products) {
-		super(attendant);
+	public CustomerCart(DoItYourselfStation station, AttendantUI attendant, JFrame parent, ProductInfo ... products) {
+		super(attendant, parent);
 		
 		JScrollPane productListContainer = new JScrollPane();
 		
@@ -75,7 +76,7 @@ public class CustomerCart extends AttendantView {
 		
 		JButton add = new JButton("Add an Item");
 		add.addActionListener(e -> {
-			attendant.setView(new AttendantSearchCatalogueGUI(attendant, this, station));
+			attendant.setView(new AttendantSearchCatalogueGUI(attendant, this, station, parent));
 		});
 		add.setMaximumSize(new Dimension(Short.MAX_VALUE, 50));
 		add.setMinimumSize(new Dimension(0, 50));
@@ -84,7 +85,7 @@ public class CustomerCart extends AttendantView {
 		
 		JButton refresh = new JButton("Refresh");
 		refresh.addActionListener(e -> {
-			attendant.setView(new CustomerCart(station, attendant, controller.requestProductList(station)));
+			attendant.setView(new CustomerCart(station, attendant, parent, controller.requestProductList(station)));
 		});
 		refresh.setMaximumSize(new Dimension(Short.MAX_VALUE, 50));
 		refresh.setMinimumSize(new Dimension(0, 50));

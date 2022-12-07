@@ -17,6 +17,7 @@ import java.awt.Color;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import java.awt.Insets;
@@ -65,8 +66,8 @@ public class AttendentLoginWithKeyboardGUI extends AttendantView {
 	 * 
 	 * @param controller		A CustomerUI object
 	 */
-	public AttendentLoginWithKeyboardGUI(AttendantUI controller) {
-		super(controller);
+	public AttendentLoginWithKeyboardGUI(AttendantUI controller, JFrame parent) {
+		super(controller, parent);
 		
 		setBounds(100, 100, 653, 445);
 		setBackground(new Color(94, 193, 255));
