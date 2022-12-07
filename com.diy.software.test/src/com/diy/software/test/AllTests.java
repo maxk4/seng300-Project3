@@ -11,7 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
 		  AttendantDatabaseTest.class,
 		  AttendantUITest.class,
 		  AttendantViewTest.class,
-		  //BaggingOptionsTests.class,
 		  CustomerUITests.class,
 		  LowInkPaperTest.class,
 		  MembershipTestUnit.class,
