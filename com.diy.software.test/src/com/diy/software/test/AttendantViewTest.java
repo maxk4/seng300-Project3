@@ -1,6 +1,7 @@
 package com.diy.software.test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.swing.JFrame;
@@ -39,6 +40,6 @@ public class AttendantViewTest {
 	@Test 
 	public void testGetTitle() {
 		String s = view.getTitle();
-		assertFalse(null == s);
+		assertNull(s);
 	}
 }

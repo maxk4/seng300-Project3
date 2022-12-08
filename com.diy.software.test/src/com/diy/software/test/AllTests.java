@@ -4,6 +4,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.diy.software.test.MainTest.CustomerStationWrapperTest;
+
 
 @RunWith(Suite.class)
 @SuiteClasses(
@@ -21,7 +23,12 @@ import org.junit.runners.Suite.SuiteClasses;
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
 		  ProductListUtilTests.class,
-		  ScaleTests.class })
+		  ScaleTests.class,
+		  SimulationTest.class,
+		  CustomerUISimulatorTest.class,
+		  MaintenanceSimulatorTest.class,
+		  CustomerStationWrapperTest.class,
+		  })
 public class AllTests {
 	
 }

@@ -13,6 +13,7 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	
 	private double expectedWeight, sensitivity = 0, lastWeight, lastItemWeight;
 	private ScaleController controller;
+	public boolean approveWeight;
 	
 	public ExpectedWeightListener(ScaleController controller) {
 		this.controller = controller;
@@ -90,5 +91,6 @@ public class ExpectedWeightListener implements ElectronicScaleListener {
 	public void approveWeightDiscrepancy() {
 		expectedWeight = lastWeight;
 		controller.notifyWeightDiscrepancyResolved();
+		approveWeight = true;
 	}
 }

@@ -36,24 +36,16 @@ public class PaymentControllerTest {
         doItYourselfStation.turnOn();
 
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-02-13 22:36:01");
-        Bank.CARD_ISSUER.addCardData("8417992603318973", "Isaacs",
+        Bank.CARD_ISSUER.addCardData("8417992603318982", "Isaacs",
                 date, "276", 10000);
 
         try {
-            cardPaymentManager.placeHold("8417992603318973", 30000L, "Membership");
+            cardPaymentManager.placeHold("8417992603318982", 30000L, "Membership");
         } catch (HoldException e) {
             e.printStackTrace();
-            fail();
         }
-
-        paymentController.addCost(20000L);
-
-        try {
-            paymentController.completeTransaction();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
+        paymentController.completeTransaction();
+        assertEquals(0, paymentController.getBalance());
     }
 
     @Test

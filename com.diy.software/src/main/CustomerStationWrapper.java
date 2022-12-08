@@ -30,35 +30,27 @@ public class CustomerStationWrapper {
 	private ScaleController scale;
 	private CustomerUI customer;
 	private MembershipController membership;
-	private boolean inProgress = true;
+	public boolean inProgress = true;
 	
 	
 	private Product waitingFor = null;
 	private String waitingForDescription = null;
 	
-	private PaymentListener paymentListener;
-	private CartListener cartListener;
-	private ScaleListener scaleListener;
-	private CustomerUIListener customerUIListener;
-	private MembershipListener membershipListener;
+	public PaymentListener paymentListener;
+	public CartListener cartListener;
+	public ScaleListener scaleListener;
+	public CustomerUIListener customerUIListener;
+	public MembershipListener membershipListener;
+
 	
 	public CustomerStationWrapper(DoItYourselfStation diyStation, AttendantUI attendant) {
 		attendant.register(new AttendantUIListener() {
 			@Override
-			public void approveWeight(DoItYourselfStation station) {
+			public boolean approveWeight(DoItYourselfStation station) {
 				if (station == diyStation) {
 					scale.approveWeight();
 				}
-			}
-
-			@Override
-			public void approveOwnBag(DoItYourselfStation station) {
-			}
-
-			@Override
-			public void denyOwnBag(DoItYourselfStation station) {
-				// TODO Auto-generated method stub
-				
+				return true;
 			}
 
 			// Do Not Place Item in Bagging Area Use Case
@@ -80,13 +72,16 @@ public class CustomerStationWrapper {
 					}
 					//Customer Session currently in progress
 					customer.disable();
+					station.screen.disable();
 				}
+				
 			}
 
 			//Enables the use of a station by customers, after it has been disabled
 			@Override
 			public void enableStation(DoItYourselfStation station) {
 				if (station == diyStation) {
+					station.screen.enable();
 					if (inProgress)
 						customer.enable();
 					else
@@ -223,7 +218,6 @@ public class CustomerStationWrapper {
 						customer.setView(CustomerUI.PLACE_ITEM);
 					}
 
-					@Override
 					public void itemPlaced() {
 						if (waitingFor == null) return;
 						
@@ -278,8 +272,8 @@ public class CustomerStationWrapper {
 				
 				membershipListener = new MembershipListener() {
 					@Override
-					public void notifyMembershipCardRead(int memberId) {
-						customer.useMemberName(memberId);
+					public String notifyMembershipCardRead(int memberId) {
+						return customer.useMemberName(memberId);
 					}
 					
 				};
@@ -330,7 +324,9 @@ public class CustomerStationWrapper {
 			}
 		});
 	}
-	
+	public long getCurrentDue() {
+		return payment.getBalance() - payment.getAvailableFunds();
+	}
 	private void updateProductList() {
 		customer.updateProductList(payment.getBalance(), payment.getAvailableFunds(), cart.getProductString(), cart.getPriceString());
 	}
