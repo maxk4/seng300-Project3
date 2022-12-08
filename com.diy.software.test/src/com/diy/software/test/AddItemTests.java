@@ -30,6 +30,7 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import ca.powerutility.PowerGrid;
+import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import cart.CartController;
 import cart.CartListener;
 import cart.ScanItemListener;
@@ -47,12 +48,11 @@ public class AddItemTests {
 	CustomerUI ui;
 	DoItYourselfStation station;
 	CartController cartController;
-	ScanItemListener sil;
 	Barcode bc1, bc2, bc3;
 	BarcodedItem item1, item2, item3;
 	BarcodedProduct prod1, prod2;
 	CartListener listener;
-	BarcodeScannerListener bcListener;
+	BSL bcListener;
 	
 	public List<Card> cards = new ArrayList<Card>();
 	long price1 = 10L, price2 = 15L;
@@ -66,6 +66,7 @@ public class AddItemTests {
 	 */
 	@Before
 	public void setup() {
+		scans = 0;
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.clear();
 		   
 	    bc1 = new Barcode(new Numeral[] {Numeral.one});
@@ -96,9 +97,6 @@ public class AddItemTests {
 	    
 	    cartController = new CartController(station);
 	    
-	    sil = new ScanItemListener(station.mainScanner, cartController);
-	    //station.mainScanner.register(sil);
-	    
 	    customer = new Customer();
 	    customer.useStation(station);
 	    
@@ -110,7 +108,6 @@ public class AddItemTests {
 	@After
 	public void teardown() {
 		System.setOut(original);
-		station.mainScanner.deregister(sil);
 		station.mainScanner.deregisterAll();
 	}
 	
@@ -122,9 +119,8 @@ public class AddItemTests {
 		station.mainScanner.register(bcListener);
 		station.mainScanner.disable();
 		
-		sil.barcodeScanned(station.mainScanner, bc1);
+		bcListener.barcodeScanned(station.mainScanner, bc1);
 		
-		assertEquals(0, sil.getSuccessfulScan());
 		assertFalse(cartController.productList.containsProduct(prod1));
 		assertEquals(cartController.productList.size(), 0);
 		assertFalse(enabled);
@@ -162,9 +158,9 @@ public class AddItemTests {
    	public void testNumberOfSuccessfulScans() {
    		station.mainScanner.register(bcListener);
    		station.mainScanner.enable();
-   		sil.barcodeScanned(station.mainScanner, bc1);
+   		bcListener.barcodeScanned(station.mainScanner, bc1);
   
-   		int actual = sil.getSuccessfulScan();
+   		int actual = scans;
    		assertEquals(1, actual);
    	}
    	/*
@@ -214,21 +210,21 @@ public class AddItemTests {
    	public void testBarcodeScannedGetString() {
    		station.mainScanner.enable();
    		
-   		sil.barcodeScanned(station.mainScanner, bc1);
+   		bcListener.barcodeScanned(station.mainScanner, bc1);
    		
    		String expected = bc1.toString();
    		
-   		assertEquals(expected, sil.getBarcodeScanned_String());
+   		assertEquals(expected, bcListener.getBarcodeScanned_String());
    	}
    	
    	/*
    	 * Test when a null barcode is scanned.
    	 */
-   	@Test (expected = NullPointerException.class)
+   	@Test (expected = NullPointerSimulationException.class)
    	public void testNullBarcodeScanned() {
    		station.mainScanner.enable();
-   		
-   		sil.barcodeScanned(station.mainScanner, null);
+   		customer.shoppingCart.add(new BarcodedItem(null, weight1));
+   		customer.scanItem(false);
    	}
    	@Test
    	public void testRemove() {
@@ -407,10 +403,14 @@ public class AddItemTests {
    boolean isOn = false;
    int scans = 0;
    	public class BSL implements BarcodeScannerListener {
-
+   		private Barcode last;
 		@Override
 		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
 			enabled = true;
+		}
+
+		public String getBarcodeScanned_String() {
+			return last.toString();
 		}
 
 		@Override
@@ -431,6 +431,7 @@ public class AddItemTests {
 		@Override
 		public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 			scans++;
+			last = barcode;
 		}
    		
    	}
