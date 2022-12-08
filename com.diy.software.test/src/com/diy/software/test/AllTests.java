@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		  PaymentControllerTest.class, 
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
-		  ProductListTests.class,
+		  ProductListUtilTests.class,
 		  ScaleTests.class })
 public class AllTests {
 	

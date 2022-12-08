@@ -17,7 +17,12 @@ import com.jimmyselectronics.necchi.Numeral;
 import util.ProductList;
 import util.ProductList.Consumer;
 
-public class ProductListTests {
+/**
+ * Test suite to test the ProductList class in the util package.
+ * @author Matthias Kee
+ *
+ */
+public class ProductListUtilTests {
 	
 	ProductList list;
 	Consumer consumer;
