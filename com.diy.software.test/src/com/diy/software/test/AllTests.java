@@ -23,7 +23,6 @@ import com.diy.software.test.MainTest.CustomerStationWrapperTest;
 		  PaymentControllerTest.class, 
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
-		  //ProductListTests.class,
 		  ProductListUtilTests.class,
 		  ScaleTests.class,
 		  SimulationTest.class,
