@@ -22,12 +22,14 @@ import com.diy.software.test.MainTest.CustomerStationWrapperTest;
 		  PaymentControllerTest.class, 
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
-		  ProductListTests.class,
+		  //ProductListTests.class,
+		  ProductListUtilTests.class,
 		  ScaleTests.class,
 		  SimulationTest.class,
 		  CustomerUISimulatorTest.class,
 		  MaintenanceSimulatorTest.class,
-		  CustomerStationWrapperTest.class})
+		  CustomerStationWrapperTest.class,
+		  })
 public class AllTests {
 	
 }
