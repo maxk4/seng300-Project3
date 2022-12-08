@@ -170,6 +170,7 @@ public final class Customer {
 	 * @throws ClassCastException
 	 *             If the currently selected item does not have a barcode.
 	 */
+	
 	public void scanItem(boolean useHandheld) throws NoSuchElementException {
 		if(station == null)
 			throw new NullPointerSimulationException("station");
@@ -177,10 +178,14 @@ public final class Customer {
 		if(currentItem == null)
 			throw new NoSuchElementException();
 
-		if(useHandheld)
+		if(useHandheld) {
 			station.handheldScanner.scan((BarcodedItem)currentItem);
+			System.out.println("Scanned");
+		}
 		else
 			station.mainScanner.scan((BarcodedItem)currentItem);
+			System.out.println("Scanned");
+	
 	}
 
 	/**

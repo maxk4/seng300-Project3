@@ -111,7 +111,7 @@ public class PayByCashTest {
                 new BigDecimal(100));
 //        cashPaymentManager.validCoinDetected(new CoinValidator(Currency.getInstance(Locale.CANADA), Arrays.asList(200L, 100L, 25L, 10L, 5L)), 100L);
 
-        assertEquals(500L, cashPaymentManager.pay(600L));
+        assertEquals(600L, cashPaymentManager.pay(600L));
     }
 
     @Test
@@ -139,13 +139,9 @@ public class PayByCashTest {
                         Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
                 new BigDecimal(100));
         assertEquals(200L, cashPaymentManager.pay(200L));
-
-        try {
-            assertEquals(400L, cashPaymentManager.returnFunds(400L));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
+        long ret = 340L;
+        assertEquals(ret, cashPaymentManager.returnFunds(ret));
+       
     }
 
     @Test
@@ -173,12 +169,9 @@ public class PayByCashTest {
                         Currency.getInstance(Locale.CANADA), Arrays.asList(new BigDecimal(200), new BigDecimal(100), new BigDecimal(25), new BigDecimal(10), new BigDecimal(5))),
                 new BigDecimal(100));
         assertEquals(300L, cashPaymentManager.pay(300L));
-        try {
-            assertEquals(300L, cashPaymentManager.returnFunds(500L));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
+        long ret = 100000000L;
+        assertNotEquals(ret, cashPaymentManager.returnFunds(ret));
+        
     }
 
     @Test

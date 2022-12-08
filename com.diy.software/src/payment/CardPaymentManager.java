@@ -63,7 +63,8 @@ public class CardPaymentManager extends PaymentManager {
 			hold.issuer.releaseHold(hold.cardNumber, hold.id);
 			funds -= hold.amount * 100;
 		}
-		return (long) ((amount - rem) * 100);
+		System.out.println("remaining: " + rem);
+		return amount - (long) (rem * 100);
 	}
 	
 	public void placeHold(String cardNumber, long amount, String cardType) throws HoldException {

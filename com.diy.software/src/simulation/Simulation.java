@@ -189,21 +189,22 @@ public class Simulation {
 		
 		System.out.println("Successfully populated Barcoded Product Database and PLU Product Database");
 		
-		for (int i = 0; i < 10; i++) {
-			Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
-			Calendar expiry = Calendar.getInstance();
-			expiry.set(2025, 1, 1);
-			Bank.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, Double.MAX_VALUE);
-			cards.add(card);
-		}
-		for (int i = 0; i < 3; i++) {
-			Card card = new Card("Giftcard", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
-			Calendar expiry = Calendar.getInstance();
-			expiry.set(2025, 1, 1);
-			GiftCardIssuer.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, 1000 * i + 100);
-			cards.add(card);
-		}
-
+		try {
+			for (int i = 0; i < 10; i++) {
+				Card card = new Card(i % 2 == 0 ? "credit" : "debit", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
+				Calendar expiry = Calendar.getInstance();
+				expiry.set(2025, 1, 1);
+				Bank.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, Double.MAX_VALUE);
+				cards.add(card);
+			}
+			for (int i = 0; i < 3; i++) {
+				Card card = new Card("Giftcard", "841799260331897" + i, "Sir Fakeman", "564", "0000".intern(), true, true);
+				Calendar expiry = Calendar.getInstance();
+				expiry.set(2025, 1, 1);
+				GiftCardIssuer.CARD_ISSUER.addCardData(card.number, card.cardholder, expiry.getTime(), card.cvv, 1000 * i + 100);
+				cards.add(card);
+			}
+		}catch(Exception e) {}
 		//Updated code in Iteration 3 @Simrat (Start)
 		//members.add(12345678);
 		//members.add(23456789);

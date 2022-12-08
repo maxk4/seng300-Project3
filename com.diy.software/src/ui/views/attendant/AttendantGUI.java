@@ -22,7 +22,7 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class AttendantGUI extends AttendantView {
 
-	private List<StationComponent> stationComponents;
+	public List<StationComponent> stationComponents;
 	private Map<DoItYourselfStation, StationComponent> componentMap = new HashMap<DoItYourselfStation, StationComponent>();
 	private Map<StationComponent, DoItYourselfStation> stationMap = new HashMap<StationComponent, DoItYourselfStation>();
 	private JPanel stationPanel;
@@ -38,7 +38,6 @@ public class AttendantGUI extends AttendantView {
 		this.attendant = attendant;
 		this.parent = frame;
 		stationComponents = new ArrayList<StationComponent>();
-		title = "Attendant GUI";
 		setBounds(100, 100, 593, 298);
 		setBackground(new Color(65, 139, 212));
 		

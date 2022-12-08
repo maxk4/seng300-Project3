@@ -85,7 +85,8 @@ public class MembershipTestUnit {
 		membershipController = new MembershipControllerStub(station);
 		membershipController.register(new MembershipListener() {
 			@Override
-			public void notifyMembershipCardRead(int memberId) {
+			public String notifyMembershipCardRead(int memberId) {
+				return "";
 			}
 		});
 		station.plugIn();

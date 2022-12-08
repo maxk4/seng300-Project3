@@ -26,8 +26,9 @@ import util.ProductInfo;
 public class AttendantUI implements KeyboardListener {
 	
 	public static final int LOGIN = 0, MAIN = 1;
+	public static boolean debug = false;
 	
-	private AttendantGUI gui;
+	public AttendantGUI gui;
 	private List<DoItYourselfStation> stations;
 	private List<AttendantUIListener> listeners;
 	private AttendantStation station;
@@ -97,8 +98,7 @@ public class AttendantUI implements KeyboardListener {
 	
 	public boolean deregister(AttendantUIListener listener) {
 		if (!listeners.contains(listener)) return false;
-		listeners.remove(listener);
-		return false;
+		return listeners.remove(listener);
 	}
 	
 	/**
@@ -193,8 +193,8 @@ public class AttendantUI implements KeyboardListener {
 	 */
 	public boolean approveOwnBagRequest(DoItYourselfStation station) {
 		int index  = idOf(station);
-		
-		int choice = JOptionPane.showConfirmDialog(gui, String.format("Allow station %d to use their own bag?", index), "Aprove/Deny Own Bag Request", JOptionPane.YES_NO_OPTION);
+		int choice = 0;
+		if (!debug) choice = JOptionPane.showConfirmDialog(gui, String.format("Allow station %d to use their own bag?", index), "Aprove/Deny Own Bag Request", JOptionPane.YES_NO_OPTION);
 	
 		return choice == 0;
 	}

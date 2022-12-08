@@ -28,6 +28,7 @@ public class AttendantDatabase {
 	 * @return boolean true if match false otherwise
 	 */
 	public static boolean validate(String username, String password) {
+		if (username == null || password == null) return false;
 		if (!ATTENDANT_DATABASE.containsKey(username)) return false;
 		return ATTENDANT_DATABASE.get(username).equals(hash(password));
 	}
@@ -37,8 +38,11 @@ public class AttendantDatabase {
 	 * @param username String username of the attendant
 	 * @param password String their password
 	 */
-	public static void add(String username, String password) {
+	public static boolean add(String username, String password) {
+		if (username == null || password == null) return false;
+		if (ATTENDANT_DATABASE.containsKey(username)) return false;
 		ATTENDANT_DATABASE.put(username, hash(password));
+		return true;
 	}
 	
 	/**
@@ -64,5 +68,9 @@ public class AttendantDatabase {
 		if (!validate(username, oldPassword)) return false;
 		ATTENDANT_DATABASE.put(username, hash(newPassword));
 		return true;
+	}
+
+	public static void clear() {
+		ATTENDANT_DATABASE.clear();
 	}
 }

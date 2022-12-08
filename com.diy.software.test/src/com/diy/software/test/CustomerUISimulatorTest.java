@@ -7,6 +7,8 @@ import org.junit.Test;
 import com.diy.hardware.DoItYourselfStation;
 import com.diy.simulation.Customer;
 
+import ca.powerutility.NoPowerException;
+import ca.powerutility.PowerGrid;
 import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import simulation.CustomerUISimulator;
@@ -22,10 +24,13 @@ public class CustomerUISimulatorTest {
 	
 	@Before
 	public void setUp() {
+		PowerGrid.engageUninterruptiblePowerSource();
 		customer = new Customer();
 		sim = new Simulation();
 		station = new DoItYourselfStation();
+		station.turnOn();
 		customerSim = new CustomerUISimulator(station, customer, "Test");
+		
 	}
 	@After
 	public void tearDown() {
@@ -34,15 +39,16 @@ public class CustomerUISimulatorTest {
 		customerSim = null;
 	}
 	
-	@Test (expected = NullPointerSimulationException.class)
+	@Test (expected = NoPowerException.class)
 	public void testScanCardButtonNullClick() {
 		String[] args = new String[] {"1"};
 		sim.main(args);
+		station.turnOn();
 		customerSim.button_ScanCard.doClick();
 	}
 	
-	@Test (expected = InvalidArgumentSimulationException.class)
-	public void testButtonNullClick() {
+	@Test (expected = NullPointerException.class)
+	public void testButtonNullClickNoPower() {
 		String[] args = new String[] {"1"};
 		sim.main(args);
 		customerSim.button.doClick();

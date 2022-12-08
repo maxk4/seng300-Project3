@@ -4,13 +4,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.diy.software.test.MainTest.AttendantGUITest;
+import com.diy.software.test.MainTest.CustomerStationWrapperTest;
+
 
 @RunWith(Suite.class)
 @SuiteClasses(
 		{ AddItemTests.class,
 		  AttendantDatabaseTest.class,
 		  AttendantUITest.class,
-		  AttendantViewTest.class,
 		  CustomerUITests.class,
 		  LowInkPaperTest.class,
 		  MembershipTestUnit.class,
@@ -20,8 +22,16 @@ import org.junit.runners.Suite.SuiteClasses;
 		  PaymentControllerTest.class, 
 		  PaymentManagerTest.class,
 		  PurchaseBagsGUITest.class,
-		  ProductListTests.class,
-		  ScaleTests.class })
+		  ProductListUtilTests.class,
+		  ScaleTests.class,
+		  ProductListUtilTests.class,
+		  ScaleTests.class,
+		  SimulationTest.class,
+		  AttendantGUITest.class,
+		  CustomerUISimulatorTest.class,
+		  MaintenanceSimulatorTest.class,
+		  CustomerStationWrapperTest.class,
+		  })
 public class AllTests {
 	
 }

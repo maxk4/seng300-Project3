@@ -20,116 +20,95 @@ public class AttendantDatabaseTest {
 	
 	@Before
 	public void setup() {
-		db = new AttendantDatabase();
+		AttendantDatabase.clear();
 		username = "username";
 		pswd = "000000";
 		newpswd = pswd + "0";
-		db.add(username, pswd);
 		// make non-duplicated new username
 		counter++;
 		newUsername = username + Integer.toString(counter); 
+		AttendantDatabase.add(username, pswd);
 	}
 	
 	@Test 
 	public void testValidLogin() {
-		boolean isValid = db.validate(username, pswd);
+		boolean isValid = AttendantDatabase.validate(username, pswd);
 		assertTrue(isValid);
 	}
 	
 	@Test
 	public void testIncorrectUsernameLogin() {
-		boolean isValid = db.validate(newUsername, pswd);
+		boolean isValid = AttendantDatabase.validate(newUsername, pswd);
 		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testIncorrectPasswordLogin() {
-		boolean isValid = db.validate(username, newpswd);
+		boolean isValid = AttendantDatabase.validate(username, newpswd);
 		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testAddExistingUsernameWithNewPassword() {
-		db.add(username, newpswd);
-		boolean isValid = db.validate(username, newpswd);
+		AttendantDatabase.add(username, newpswd);
+		boolean isValid = AttendantDatabase.validate(username, newpswd);
 		assertFalse(isValid);
 	}
 
 	@Test
 	public void testAddWithNullStringUsername() {
-		db.add(null, pswd);
-		boolean isValid = db.validate(null, pswd);
-		assertFalse(isValid); 
-	}
-	
-	@Test
-	public void testAddWithNullStringPassword() {
-		db.add(newUsername, null);
-		boolean isValid = db.validate(newUsername, null);
-		assertFalse(isValid); 
-	}
-	
-	@Test
-	public void testAddWithEmptyStringUsername() {
-		db.add("", pswd);
-		boolean isValid = db.validate("", pswd);
-		assertFalse(isValid); 
-	}
-	
-	@Test
-	public void testAddWithEmptyStringPassword() {
-		db.add(newUsername, "");
-		boolean isValid = db.validate(newUsername, "");
+		AttendantDatabase.add(null, pswd);
+		boolean isValid = AttendantDatabase.validate(null, pswd);
 		assertFalse(isValid); 
 	}
 	
 	@Test
 	public void testChangePasswordCorrectUsernameAndPassword() {
-		boolean isChanged = db.changePassword(username, pswd, newpswd);
+		boolean isChanged = AttendantDatabase.changePassword(username, pswd, newpswd);
 		assertTrue(isChanged);
-		boolean isValid = db.validate(username, pswd);
+		boolean isValid = AttendantDatabase.validate(username, pswd);
 		assertFalse(isValid);
-		isValid = db.validate(username, newpswd);
+		isValid = AttendantDatabase.validate(username, newpswd);
 		assertTrue(isValid);
 	}
 	
 	@Test
 	public void testChangePasswordIncorrectUsername() {
-		boolean isChanged = db.changePassword(newUsername, pswd, newpswd);
+		boolean isChanged = AttendantDatabase.changePassword(newUsername, pswd, newpswd);
 		assertFalse(isChanged);
-		boolean isValid = db.validate(username, pswd);
+		boolean isValid = AttendantDatabase.validate(username, pswd);
 		assertTrue(isValid);
-		isValid = db.validate(username, newpswd);
+		isValid = AttendantDatabase.validate(username, newpswd);
 		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testChangePasswordIncorrectPassword() {
-		boolean isChanged = db.changePassword(username, newpswd, newpswd);
+		boolean isChanged = AttendantDatabase.changePassword(username, newpswd, newpswd);
 		assertFalse(isChanged);
-		boolean isValid = db.validate(username, pswd);
+		boolean isValid = AttendantDatabase.validate(username, pswd);
 		assertTrue(isValid);
-		isValid = db.validate(username, newpswd);
+		isValid = AttendantDatabase.validate(username, newpswd);
 		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testAlphabeticPassword() {
 		String alphabeticpswd = "abcdefg";
-		db.add(newUsername, alphabeticpswd);
-		boolean isValid = db.validate(newUsername, alphabeticpswd);
+		AttendantDatabase.add(newUsername, alphabeticpswd);
+		boolean isValid = AttendantDatabase.validate(newUsername, alphabeticpswd);
 		assertTrue(isValid);
-		isValid = db.validate(newUsername, alphabeticpswd.substring(1));
+		isValid = AttendantDatabase.validate(newUsername, alphabeticpswd.substring(1));
 		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testAlphaNumericPassword() {
 		String alphaNumericpswd = "abcdefg123";
-		db.add(newUsername, alphaNumericpswd);
-		boolean isValid = db.validate(newUsername, alphaNumericpswd);
+		AttendantDatabase.add(newUsername, alphaNumericpswd);
+		boolean isValid = AttendantDatabase.validate(newUsername, alphaNumericpswd);
 		assertTrue(isValid);
-		isValid = db.validate(newUsername, alphaNumericpswd.substring(1));
+		isValid = AttendantDatabase.validate(newUsername, alphaNumericpswd.substring(1));
 		assertFalse(isValid);
 	}
 }

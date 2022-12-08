@@ -44,6 +44,7 @@ public class CustomerStationWrapperTest{
 	
 	@Before
 	public void setUp() {
+		AttendantUI.debug = true;
 		PowerGrid.engageUninterruptiblePowerSource();
 		station = new DoItYourselfStation();
 		station.plugIn();
