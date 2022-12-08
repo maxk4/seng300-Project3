@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.diy.software.test.MainTest.AttendantGUITest;
 import com.diy.software.test.MainTest.CustomerStationWrapperTest;
 
 
@@ -26,6 +27,7 @@ import com.diy.software.test.MainTest.CustomerStationWrapperTest;
 		  ProductListUtilTests.class,
 		  ScaleTests.class,
 		  SimulationTest.class,
+		  AttendantGUITest.class,
 		  CustomerUISimulatorTest.class,
 		  MaintenanceSimulatorTest.class,
 		  CustomerStationWrapperTest.class,

@@ -22,7 +22,7 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class AttendantGUI extends AttendantView {
 
-	private List<StationComponent> stationComponents;
+	public List<StationComponent> stationComponents;
 	private Map<DoItYourselfStation, StationComponent> componentMap = new HashMap<DoItYourselfStation, StationComponent>();
 	private Map<StationComponent, DoItYourselfStation> stationMap = new HashMap<StationComponent, DoItYourselfStation>();
 	private JPanel stationPanel;
