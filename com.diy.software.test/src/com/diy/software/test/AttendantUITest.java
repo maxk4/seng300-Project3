@@ -59,18 +59,11 @@ public class AttendantUITest {
 		} 
 		
 		@Override
-		public void approveWeight(DoItYourselfStation station) {
+		public boolean approveWeight(DoItYourselfStation station) {
 			weightApproved++;
+			return true;
 		}
 
-		@Override
-		public void approveOwnBag(DoItYourselfStation station) {
-			addOwnBagApproved++;
-		}
-
-		@Override
-		public void denyOwnBag(DoItYourselfStation station) {
-		}
 
 		@Override
 		public void approveNoBag(DoItYourselfStation station) {
@@ -164,9 +157,8 @@ public class AttendantUITest {
 	@Test
 	public void testDeregisterListener() {
 		attendant.register(listener);
-		assertTrue(attendant.deregister(listener));
-		AttendantUIListenerImpl listener2 = new AttendantUIListenerImpl();
-		assertFalse(attendant.deregister(listener2));
+		attendant.deregister(listener);
+		assertFalse(attendant.returnListeners().contains(listener));
 	}
 	 
 	@Test
@@ -180,9 +172,8 @@ public class AttendantUITest {
 	@Test
 	public void testApproveOwnBagNotif() {
 		attendant.register(listener);
-		assertEquals(0, listener.addOwnBagApproved);		
 		attendant.approveOwnBag(customerStation);
-		assertEquals(1, listener.addOwnBagApproved);
+		assertEquals(0, listener.addOwnBagApproved);	
 	}	
 	
 	
@@ -293,11 +284,7 @@ public class AttendantUITest {
 		ProductInfo[] list = {new ProductInfo(p, description, price, weight)};
 		attendant.register(new AttendantUIListener() {
 			@Override
-			public void approveWeight(DoItYourselfStation station) {}
-			@Override
-			public void approveOwnBag(DoItYourselfStation station) {}
-			@Override
-			public void denyOwnBag(DoItYourselfStation station) {}
+			public boolean approveWeight(DoItYourselfStation station) {return true;}
 			@Override
 			public void approveNoBag(DoItYourselfStation station) {}
 			@Override

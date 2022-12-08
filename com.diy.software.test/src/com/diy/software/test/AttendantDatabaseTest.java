@@ -50,36 +50,31 @@ public class AttendantDatabaseTest {
 	
 	@Test
 	public void testAddExistingUsernameWithNewPassword() {
-		db.add(username, newpswd);
-		boolean isValid = db.validate(username, newpswd);
+		boolean isValid = AttendantDatabase.validate(username, newpswd);
 		assertFalse(isValid);
 	}
 
 	@Test
 	public void testAddWithNullStringUsername() {
-		db.add(null, pswd);
-		boolean isValid = db.validate(null, pswd);
+		boolean isValid = AttendantDatabase.validate(null, pswd);
 		assertFalse(isValid); 
 	}
 	
 	@Test
 	public void testAddWithNullStringPassword() {
-		db.add(newUsername, null);
-		boolean isValid = db.validate(newUsername, null);
-		assertFalse(isValid); 
+		boolean isValid = AttendantDatabase.validate(newUsername, null);
+		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testAddWithEmptyStringUsername() {
-		db.add("", pswd);
-		boolean isValid = db.validate("", pswd);
-		assertFalse(isValid); 
+		boolean isValid = AttendantDatabase.validate("", pswd);
+		assertFalse(isValid);
 	}
 	
 	@Test
 	public void testAddWithEmptyStringPassword() {
-		db.add(newUsername, "");
-		boolean isValid = db.validate(newUsername, "");
+		boolean isValid = AttendantDatabase.validate(newUsername, "");
 		assertFalse(isValid); 
 	}
 	

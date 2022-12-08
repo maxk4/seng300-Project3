@@ -43,6 +43,9 @@ public class CustomerUISimulator{
 	
 	private Item scanWeightItem;
 	private double scanWeight;
+	public JButton button_ScanCard;
+	public JButton button;
+	public JComboBox<String> comboBox_MemberCard_Barcodes;
 	
 	private List<Item> bagged = new ArrayList<Item>();
 	
@@ -63,7 +66,7 @@ public class CustomerUISimulator{
 		JLabel cartLabel = new JLabel("Cart: Click to Scan");
 		cart.add(cartLabel);
 		for (Item item : customer.shoppingCart) {
-			JButton button = new JButton(String.format("Item %d: Weight: %.2fkg", ++i, item.getWeight()));
+			button = new JButton(String.format("Item %d: Weight: %.2fkg", ++i, item.getWeight()));
 			button.addActionListener(e -> {
 				if (station.mainScanner.isDisabled()) return;
 				customer.shoppingCart.add(item);
@@ -255,7 +258,7 @@ public class CustomerUISimulator{
 		{
 			barcodes.add(memberBarcode.toString());
 		}
-		JComboBox<String> comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[memCardsList.size()]));
+		comboBox_MemberCard_Barcodes = new JComboBox<String>(barcodes.toArray(new String[memCardsList.size()]));
 		comboBox_MemberCard_Barcodes.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		//Added in 3rd Iteration ends
 				//Cancel Button (ends)
@@ -264,10 +267,11 @@ public class CustomerUISimulator{
 				/*
 				 * Scan Card button, once pressed, gets the value from the combo box field, gets the barcode from the barcode list from Simulation class, scans that using the barcode scanner using the scan() method, then checks if that exists in database and display the result on scan GUI
 				 */
-		JButton button_ScanCard = new JButton("Scan Card");
+		button_ScanCard = new JButton("Scan Card");
 		button_ScanCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String selectedBarcodeString = (String) comboBox_MemberCard_Barcodes.getSelectedItem();
+				
 				Barcode selectedMemberBarcode = null;
 				System.out.println("(EnterMemberNumber GUI) selected barcode " + selectedBarcodeString);
 				//Find this barcode in the list given in Simulation Class (as static list)
