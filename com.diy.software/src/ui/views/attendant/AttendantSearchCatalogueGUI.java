@@ -46,6 +46,7 @@ public class AttendantSearchCatalogueGUI extends AttendantView {
 	private JPanel product_panel;
 	private List<ProductButton> productButtons = new ArrayList<ProductButton>();
 	public List<KeyButton> keys = new ArrayList<KeyButton>();
+	private JButton button_Shift;
 	
 	public class KeyButton extends JButton {
 		private static final long serialVersionUID = 679785136510997134L;
@@ -57,7 +58,8 @@ public class AttendantSearchCatalogueGUI extends AttendantView {
 			setFont(new Font("Lucida Grande", Font.BOLD, 15));
 			setMargin(new Insets(0, 0, 0, 0));
 			addActionListener(e -> {
-				textField_Input.setText(textField_Input.getText() + (isShifted ? low : up));
+				textField_Input.setText(textField_Input.getText() + (!isShifted ? low : up));
+				if (isShifted) button_Shift.doClick();
 			});
 		}
 		
@@ -182,7 +184,7 @@ public class AttendantSearchCatalogueGUI extends AttendantView {
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		
-		JButton button_Shift = new JButton("Shift");
+		button_Shift = new JButton("Shift");
 		button_Shift.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isShifted = !isShifted;

@@ -1,6 +1,8 @@
 package com.diy.software.test.MainTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import simulation.Simulation;
 import ui.AttendantUI;
 import ui.AttendantUIListener;
 import ui.views.attendant.AttendantSearchCatalogueGUI;
-import ui.views.attendant.AttendantSearchCatalogueGUI.KeyButton;
+import ui.views.attendant.AttendentLoginWithKeyboardGUI;
 import ui.views.attendant.CustomerCart;
 import util.ProductInfo;
 
@@ -93,8 +95,15 @@ public class AttendantGUITest {
 		assertFalse(attendantUI.gui == null); //the gui opens a new scene
 		CustomerCart cart = new CustomerCart(station, attendantUI, attendantStation.screen.getFrame(), products);
 		AttendantSearchCatalogueGUI search = new AttendantSearchCatalogueGUI(attendantUI, cart, station, attendantStation.screen.getFrame());
-		for (KeyButton key : search.keys) key.doClick();
+		for (AttendantSearchCatalogueGUI.KeyButton key : search.keys) key.doClick();
 		attendantUI.setView(search);
 		assertFalse(attendantUI.gui == null);
+	}
+	
+	@Test
+	public void testLogin() {
+		AttendentLoginWithKeyboardGUI login = new AttendentLoginWithKeyboardGUI(attendantUI, attendantStation.screen.getFrame());
+		for (AttendentLoginWithKeyboardGUI.KeyButton key : login.keys) key.doClick();
+		assertEquals("qwertyuiopasdfghjklzxcvbnm,./;'[]\\1234567890-=", login.textField_UsernameInput.getText());
 	}
 }

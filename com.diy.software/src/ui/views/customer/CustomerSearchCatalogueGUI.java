@@ -13,6 +13,7 @@ import com.diy.hardware.PLUCodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 
 import ui.CustomerUI;
+import ui.views.attendant.AttendantSearchCatalogueGUI.KeyButton;
 import ui.views.util.CustomerView;
 import ui.views.util.ProductButton;
 import util.ActionDocument;
@@ -42,7 +43,29 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 	private boolean isShifted = false;
 	private JPanel product_panel;
 	private List<ProductButton> productButtons = new ArrayList<ProductButton>();
-
+	public List<KeyButton> keys = new ArrayList<KeyButton>();
+	private JButton button_Shift;
+	
+	public class KeyButton extends JButton {
+		private static final long serialVersionUID = 679785136510997134L;
+		String low, up;
+		public KeyButton(String low, String up) {
+			super(low);
+			this.low = low;
+			this.up = up;
+			setFont(new Font("Lucida Grande", Font.BOLD, 15));
+			setMargin(new Insets(0, 0, 0, 0));
+			addActionListener(e -> {
+				textField_Input.setText(textField_Input.getText() + (!isShifted ? low : up));
+				if (isShifted) button_Shift.doClick();
+			});
+		}
+		
+		public void update() {
+			if (isShifted) setText(up);
+			else setText(low);
+		}
+	}
 
 	/**
 	 * Create the keyboard frame.
@@ -55,521 +78,103 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 		setBackground(new Color(94, 193, 255));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JButton button_Q = new JButton("q");
-		button_Q.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Q.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Q.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Q.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_W = new JButton("w");
-		button_W.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_W.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_W.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_W.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_E = new JButton("e");
-		button_E.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_E.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_E.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_E.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_R = new JButton("r");
-		button_R.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_R.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_R.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_R.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_T = new JButton("t");
-		button_T.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_T.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_T.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_T.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Y = new JButton("y");
-		button_Y.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Y.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Y.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Y.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_U = new JButton("u");
-		button_U.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_U.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_U.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_U.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_I = new JButton("i");
-		button_I.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_I.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_I.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_I.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_O = new JButton("o");
-		button_O.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_O.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_O.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_O.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_P = new JButton("p");
-		button_P.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_P.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_P.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_P.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_A = new JButton("a");
-		button_A.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_A.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_A.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_A.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_S = new JButton("s");
-		button_S.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_S.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_S.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_S.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_D = new JButton("d");
-		button_D.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_D.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_D.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_D.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_F = new JButton("f");
-		button_F.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_F.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_F.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_F.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_G = new JButton("g");
-		button_G.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_G.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_G.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_G.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_H = new JButton("h");
-		button_H.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_H.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_H.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_H.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_J = new JButton("j");
-		button_J.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_J.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_J.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_J.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_K = new JButton("k");
-		button_K.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_K.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_K.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_K.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_L = new JButton("l");
-		button_L.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_L.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_L.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_L.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Z = new JButton("z");
-		button_Z.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Z.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Z.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Z.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_X = new JButton("x");
-		button_X.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_X.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_X.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_X.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_C = new JButton("c");
-		button_C.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_C.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_C.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_C.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_V = new JButton("v");
-		button_V.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_V.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_V.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_V.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_B = new JButton("b");
-		button_B.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_B.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_B.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_B.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_N = new JButton("n");
-		button_N.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_N.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_N.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_N.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_M = new JButton("m");
-		button_M.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_M.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_M.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_M.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Comma = new JButton(",");
-		button_Comma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Comma.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Comma.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Comma.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Period = new JButton(".");
-		button_Period.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Period.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Period.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Period.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_BackSlash = new JButton("/");
-		button_BackSlash.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_BackSlash.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_BackSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_BackSlash.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_SemiColon = new JButton(";");
-		button_SemiColon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_SemiColon.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_SemiColon.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_SemiColon.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Apostrophe = new JButton("'");
-		button_Apostrophe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Apostrophe.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Apostrophe.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Apostrophe.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_LeftBracket = new JButton("[");
-		button_LeftBracket.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_LeftBracket.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_LeftBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_LeftBracket.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_RightBracket = new JButton("]");
-		button_RightBracket.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_RightBracket.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_RightBracket.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_RightBracket.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_ForwardSlash = new JButton("\\");
-		button_ForwardSlash.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_ForwardSlash.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_ForwardSlash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_ForwardSlash.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_1 = new JButton("1");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_1.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_1.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_1.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_2 = new JButton("2");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_2.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_2.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_2.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_3 = new JButton("3");
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_3.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_3.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_4 = new JButton("4");
-		button_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_4.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_4.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_4.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_5 = new JButton("5");
-		button_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_5.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_5.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_6 = new JButton("6");
-		button_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_6.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_6.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_6.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_7 = new JButton("7");
-		button_7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_7.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_7.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_7.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_8 = new JButton("8");
-		button_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_8.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_8.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_8.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_9 = new JButton("9");
-		button_9.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_9.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_9.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_9.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_0 = new JButton("0");
-		button_0.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_0.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_0.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_0.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Dash = new JButton("-");
-		button_Dash.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Dash.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Dash.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Dash.setMargin(new Insets(0, 0, 0, 0));
-		
-		JButton button_Equals = new JButton("=");
-		button_Equals.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				currValue += button_Equals.getText();
-				textField_Input.setText(currValue);
-			}
-		});
-		button_Equals.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		button_Equals.setMargin(new Insets(0, 0, 0, 0));
-		
+
+		KeyButton button_Q = new KeyButton("q", "Q");
+		keys.add(button_Q);
+		KeyButton button_W = new KeyButton("w", "W");
+		keys.add(button_W);
+		KeyButton button_E = new KeyButton("e", "E");
+		keys.add(button_E);
+		KeyButton button_R = new KeyButton("r", "R");
+		keys.add(button_E);
+		KeyButton button_T = new KeyButton("t", "T");
+		keys.add(button_T);
+		KeyButton button_Y = new KeyButton("y", "Y");
+		keys.add(button_Y);
+		KeyButton button_U = new KeyButton("u", "U");
+		keys.add(button_U);
+		KeyButton button_I = new KeyButton("i", "I");
+		keys.add(button_I);
+		KeyButton button_O = new KeyButton("o", "O");
+		keys.add(button_O);
+		KeyButton button_P = new KeyButton("p", "P");
+		keys.add(button_P);
+		KeyButton button_A = new KeyButton("a", "A");
+		keys.add(button_A);
+		KeyButton button_S = new KeyButton("s", "S");
+		keys.add(button_S);
+		KeyButton button_D = new KeyButton("d", "D");
+		keys.add(button_D);
+		KeyButton button_F = new KeyButton("f", "F");
+		keys.add(button_F);
+		KeyButton button_G = new KeyButton("g", "G");
+		keys.add(button_G);
+		KeyButton button_H = new KeyButton("h", "H");
+		keys.add(button_H);
+		KeyButton button_J = new KeyButton("j", "J");
+		keys.add(button_J);
+		KeyButton button_K = new KeyButton("k", "K");
+		keys.add(button_K);
+		KeyButton button_L = new KeyButton("l", "L");
+		keys.add(button_L);
+		KeyButton button_Z = new KeyButton("z", "Z");
+		keys.add(button_Z);
+		KeyButton button_X = new KeyButton("x", "X");
+		keys.add(button_X);
+		KeyButton button_C = new KeyButton("c", "C");
+		keys.add(button_C);
+		KeyButton button_V = new KeyButton("v", "V");
+		keys.add(button_V);
+		KeyButton button_B = new KeyButton("b", "B");
+		keys.add(button_B);
+		KeyButton button_N = new KeyButton("n", "N");
+		keys.add(button_N);
+		KeyButton button_M = new KeyButton("m", "M");
+		keys.add(button_M);
+		KeyButton button_Comma = new KeyButton(",", "<");
+		keys.add(button_Comma);
+		KeyButton button_Period = new KeyButton(".", ">");
+		keys.add(button_Period);
+		KeyButton button_BackSlash = new KeyButton("/", "?");
+		keys.add(button_BackSlash);
+		KeyButton button_SemiColon = new KeyButton(";", ":");
+		keys.add(button_SemiColon);
+		KeyButton button_Apostrophe = new KeyButton("'", "\"");
+		keys.add(button_Apostrophe);
+		KeyButton button_LeftBracket = new KeyButton("[", "{");
+		keys.add(button_LeftBracket);
+		KeyButton button_RightBracket = new KeyButton("]", "}");
+		keys.add(button_RightBracket);
+		KeyButton button_ForwardSlash = new KeyButton("\\", "|");
+		keys.add(button_ForwardSlash);
+		KeyButton button_1 = new KeyButton("1", "!");
+		keys.add(button_1);
+		KeyButton button_2 = new KeyButton("2", "@");
+		keys.add(button_2);
+		KeyButton button_3 = new KeyButton("3", "#");
+		keys.add(button_3);
+		KeyButton button_4 = new KeyButton("4", "$");
+		keys.add(button_4);
+		KeyButton button_5 = new KeyButton("5", "%");
+		keys.add(button_5);
+		KeyButton button_6 = new KeyButton("6", "^");
+		keys.add(button_6);
+		KeyButton button_7 = new KeyButton("7", "&");
+		keys.add(button_7);
+		KeyButton button_8 = new KeyButton("8", "*");
+		keys.add(button_8);
+		KeyButton button_9 = new KeyButton("9", "(");
+		keys.add(button_9);
+		KeyButton button_0 = new KeyButton("0", ")");
+		keys.add(button_0);
+		KeyButton button_Dash = new KeyButton("-", "_");
+		keys.add(button_Dash);
+		KeyButton button_Equals = new KeyButton("=", "+");
+		keys.add(button_Equals);
 		JButton button_Del = new JButton("Del");
-		button_Del.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currValue = textField_Input.getText();
-				if(currValue.length() > 0) {
-					currValue = currValue.substring(0, currValue.length()-1);
-					textField_Input.setText(currValue);
-				}
-			}
+		button_Del.addActionListener(e -> {
+			if (textField_Input.getText().length() > 0) 
+				textField_Input.setText(textField_Input.getText().substring(0, textField_Input.getText().length() - 1));
 		});
 		button_Del.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		button_Del.setMargin(new Insets(0, 0, 0, 0));
@@ -578,107 +183,11 @@ public class CustomerSearchCatalogueGUI extends CustomerView {
 		button_Enter.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		button_Enter.setMargin(new Insets(0, 0, 0, 0));
 		
-		JButton button_Shift = new JButton("Shift");
+		button_Shift = new JButton("Shift");
 		button_Shift.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(isShifted) {
-					isShifted = false;
-					button_1.setText("1");
-					button_2.setText("2");
-					button_3.setText("3");
-					button_4.setText("4");
-					button_5.setText("5");
-					button_6.setText("6");
-					button_7.setText("7");
-					button_8.setText("8");
-					button_9.setText("9");
-					button_0.setText("0");
-					button_Q.setText("q");
-					button_W.setText("w");
-					button_E.setText("e");
-					button_R.setText("r");
-					button_T.setText("t");
-					button_Y.setText("y");
-					button_U.setText("u");
-					button_I.setText("i");
-					button_O.setText("o");
-					button_P.setText("p");
-					button_A.setText("a");
-					button_S.setText("s");
-					button_D.setText("d");
-					button_F.setText("f");
-					button_G.setText("g");
-					button_H.setText("h");
-					button_J.setText("j");
-					button_K.setText("k");
-					button_L.setText("l");
-					button_Z.setText("z");
-					button_X.setText("x");
-					button_C.setText("c");
-					button_V.setText("v");
-					button_B.setText("b");
-					button_N.setText("n");
-					button_M.setText("m");
-					button_Dash.setText("-");
-					button_Equals.setText("=");
-					button_RightBracket.setText("[");
-					button_LeftBracket.setText("]");
-					button_ForwardSlash.setText("\\");
-					button_SemiColon.setText(";");
-					button_Apostrophe.setText("'");
-					button_Comma.setText(",");
-					button_Period.setText(".");
-					button_BackSlash.setText("/");
-				}
-				else {
-					isShifted = true;
-					button_1.setText("!");
-					button_2.setText("@");
-					button_3.setText("#");
-					button_4.setText("$");
-					button_5.setText("%");
-					button_6.setText("^");
-					button_7.setText("&");
-					button_8.setText("*");
-					button_9.setText("(");
-					button_0.setText(")");
-					button_Q.setText("Q");
-					button_W.setText("W");
-					button_E.setText("E");
-					button_R.setText("R");
-					button_T.setText("T");
-					button_Y.setText("Y");
-					button_U.setText("U");
-					button_I.setText("I");
-					button_O.setText("O");
-					button_P.setText("P");
-					button_A.setText("A");
-					button_S.setText("S");
-					button_D.setText("D");
-					button_F.setText("F");
-					button_G.setText("G");
-					button_H.setText("H");
-					button_J.setText("J");
-					button_K.setText("K");
-					button_L.setText("L");
-					button_Z.setText("Z");
-					button_X.setText("X");
-					button_C.setText("C");
-					button_V.setText("V");
-					button_B.setText("B");
-					button_N.setText("N");
-					button_M.setText("M");
-					button_Dash.setText("_");
-					button_Equals.setText("+");
-					button_RightBracket.setText("{");
-					button_LeftBracket.setText("}");
-					button_ForwardSlash.setText("|");
-					button_SemiColon.setText(":");
-					button_Apostrophe.setText("\"");
-					button_Comma.setText("<");
-					button_Period.setText(">");
-					button_BackSlash.setText("?");
-				}
+				isShifted = !isShifted;
+				for (KeyButton key : keys) key.update();
 			}
 		});
 		button_Shift.setFont(new Font("Lucida Grande", Font.BOLD, 15));
