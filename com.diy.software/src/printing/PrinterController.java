@@ -20,10 +20,10 @@ public class PrinterController implements ReceiptPrinterListener {
 	private DoItYourselfStation station;
 	
 	
-	boolean lowPaper;
-	boolean lowInk;
-	boolean noPaper;
-	boolean noInk;
+	public boolean lowPaper;
+	public boolean lowInk;
+	public boolean noPaper;
+	public boolean noInk;
 	
 	//Constructor
 	public PrinterController(DoItYourselfStation station) {
