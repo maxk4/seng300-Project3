@@ -27,7 +27,7 @@ public class AttendantUI implements KeyboardListener {
 	
 	public static final int LOGIN = 0, MAIN = 1;
 	
-	private AttendantGUI gui;
+	public AttendantGUI gui;
 	private List<DoItYourselfStation> stations;
 	private List<AttendantUIListener> listeners;
 	private AttendantStation station;
